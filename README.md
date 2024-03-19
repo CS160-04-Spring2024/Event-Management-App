@@ -1,8 +1,14 @@
 Authors: Team 6 - Veronica Hu, Ejiro Igun, Jason Kai Mendoza, Pranav Pandey, Jared Soliven
+
 Project name: SJSU Events
+
 Technology used: Python, docker, html, css, django
+
 What this program does:
+
 How to use this program:
+
+
 
 usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]
            [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
