@@ -1,12 +1,14 @@
-h2 {
-    background-color: transparent;
-    color: rgb(from color 250 172 2);
-    padding-left: 5%;
-}
-
-h4 { 
+div h3 {
     background-color: transparent;
     color: blue;
+    font-family: Helvetica;
     text-align: left;
     padding-left: 2.5%;
+}
+
+h2 {
+    background-color: transparent;
+    color: rgb(250 172 2);
+    font-family: Helvetica;
+    padding-left: 5%;
 }
