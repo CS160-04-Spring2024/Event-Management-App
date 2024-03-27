@@ -7,8 +7,9 @@
     </head>
 
     <body>
+    
+    <!-- HEADER OF WEBSITE -->
     <div class="container-fluid">
-        <!-- HEADER OF WEBSITE -->
         <br>
         <div class="row">
             <div class="col-1"></div> <!--spacer col-->
@@ -32,86 +33,96 @@
             </div>
             <div class="col-1"></div> <!--spacer col-->
         </div>
+    </div>
         <!-- END OF HEADER -->
         
-        <br>
+    <br>
 
+    <div class="container-fluid">
         <!-- PROFILE IMAGE & NAME HEADER - ADD OPTION TO EDIT ON EACH ELEMENT? -->
         <div class="col bg-primary p-3" align="center">
             <div class="row-1">
                 <!-- GET PROFILE IMAGE FROM DATABASE HERE v -->
                 <img class="img-fluid rounded-circle" src="../images/head.png" width="150" height="150">
+                <!-- ADD EDIT BUTTON FOR USER -->
             </div>
             <br>
             <div class="row">
                 <h2 style="text-align:center"><!-- GET USER NAME FROM DATABASE HERE -->User Name</h2>
+                <!-- ADD EDIT BUTTON FOR USER -->
             </div>
         </div>
+    </div>
 
-        <br><br> 
+    <br><br> 
 
+    <div class="container-fluid">
         <!-- MORE GENERAL INFORMATION ABOUT USER -->
         <form> <!-- form for if user changes info-->
             <div class="row"> <!-- labels for major & department -->
-                <div class="col-3"></div> <!--spacer col-->
+                <div class="col-2"></div> <!--spacer col-->
                 <div class="col">
                     <label for="major">Major</label> 
                 </div>
+                <div class="col-1"></div> <!--spacer col-->
                 <div class="col">
                     <label for="department">Department</label> 
                 </div>
-                <div class="col-3"></div> <!--spacer col-->
+                <div class="col-2"></div> <!--spacer col-->
             </div>
             
             <br> 
             
             <div class="row"> <!-- dropdown selectors for major & department -->
-                <div class="col-3"></div>
+                <div class="col-2"></div>
                 <div class="col">
                     <select id="major" name="major" required> <!-- get list of majors from database and use function? to add them here-->
                         <option value="compsci">Computer Science</option>
                         <option value="business">Business</option>
                     </select>
                 </div>
+                <div class="col-1"></div> <!--spacer col-->
                 <div class="col">
                     <select id="'department" name="department" required> <!-- get list of departments from database and use function? to add them here-->
                         <option value="cos">College of Sciences</option>
                         <option value="cob">College of Business</option>
                     </select>
                 </div>
-                <div class="col-3"></div> <!--spacer col-->
+                <div class="col-2"></div> <!--spacer col-->
             </div>
             
             <br>
 
             <div class="row"> <!-- labels for minors -->
-                <div class="col-3"></div> <!--spacer col-->
+                <div class="col-2"></div> <!--spacer col-->
                 <div class="col">
                     <label for="minor1">Minor 1</label>
                 </div>
+                <div class="col-1"></div> <!--spacer col-->
                 <div class="col">
                     <label for="minor2">Minor 2</label>
                 </div>
-                <div class="col-3"></div> <!--spacer col-->
+                <div class="col-2"></div> <!--spacer col-->
             </div>
 
             <br>
             
             <div class="row"> <!-- dropdown selectors for minors-->
-                <div class="col-3"></div> <!--spacer col-->
+                <div class="col-2"></div> <!--spacer col-->
                 <div class="col">
                     <select id="minor2" name="minor1"> <!-- get list of minors from database and use function? to add them here-->
                         <option value="no-minor">Choose a Minor</option>
                         <option value="business">Business</option>
                     </select>
                 </div>
+                <div class="col-1"></div> <!--spacer col-->
                 <div class="col">
                     <select id="minor2" name="minor2"> <!-- get list of minors from database and use function? to add them here-->
                         <option value="no-minor">Choose a Minor</option>
                         <option value="business">Business</option>
                     </select>
                 </div>
-                <div class="col-3"></div> <!--spacer col-->
+                <div class="col-2"></div> <!--spacer col-->
             </div>
             
             <br>
@@ -122,7 +133,27 @@
                 </div>
             </div>
         </form>
+        
+        <br><br> 
 
+        <!-- USER INTERESTS-->
+        <div class="row">
+            <div class="col-1"></div> <!-- spacer col -->
+            <div class="col">
+                <h2>Interests</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-1"></div> <!-- spacer col -->
+            <div class="col">
+                <form><input type="text" id="intsearch" value="Search for interests..."></form>
+            </div>
+        </div>
+        
+        <br>
+        <!-- DISPLAY ALREADY SELECTED INTERESTS-->
+        <!-- THEN SUGGEST INTEREST TAGS OF EVENTS THEY'VE ALREADY ATTENDED -->
+        <!-- THEN SUGGEST X AMOUNT OF INTERESTS LISTED IN DATABASE -->
     </div>
     </body>
 </html>
