@@ -1,4 +1,6 @@
-div h4 {
+/* RENAME THIS FILE LATER */
+
+div h4 { /* used for main menu options (top line of website) */
     background-color: transparent;
     color: blue;
     font-family: Helvetica;
@@ -6,9 +8,23 @@ div h4 {
     padding-left: 2.5%;
 }
 
-h2 {
+h2 { /* general header */
     background-color: transparent;
     color: rgb(250 172 2);
     font-family: Helvetica;
     padding-left: 5%;
+}
+
+form div label { /* labels for forms */
+    background-color: transparent;
+    color: rgb(250 172 2);
+    font-family: Helvetica;
+    font-size: 32;
+}
+
+form div select {
+    width: 300;
+    height: 50;
+    font-family: Helvetica;
+    font-size: 24;
 }
