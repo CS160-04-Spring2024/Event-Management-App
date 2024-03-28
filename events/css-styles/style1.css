@@ -12,10 +12,21 @@ input {
     width: 400;
 }
 
+a { /* for links */
+    text-decoration: none;
+}
+
 h2 { /* general header */
     background-color: transparent;
     color: rgb(250 172 2);
     font-family: Helvetica;
+}
+
+p {
+    background-color: transparent;
+    color: black;
+    font-family: Helvetica;
+    font-size: 18;
 }
 
 form div label { /* labels for forms */
