@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+
+    {{ form.media }}
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SJSU Events App</title>
+
+    <style>
+        h1,
+        h2,
+        h3,h4,h5 {
+            font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+        }
+        body{
+            font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+            overflow-x: hidden;
+        }
+
+        .nav-link{
+            color: rgb(60, 102, 217);
+            font-weight: 500;
+            font-size: 1.05rem;
+            opacity: 90%;
+        }
+        .nav-link:hover{
+            text-decoration: underline;
+        }
+
+        .navbar-brand{
+            color: rgb(60, 102, 217);
+            font-weight: 600;
+            font-size: 1.86rem;
+            opacity: 95%;
+        }
+
+    .purple-bg {
+            background-color: rgb(60, 102, 217); /* Purple background color */
+            opacity: 0.7;
+            min-height: 100vh;
+            padding-top: 80px; /* Space for navbar */
+            padding-bottom: 180px;
+            position: relative;
+        }
+
+        .user-content {
+            background-color: #efebeb; /* White content area */
+            border-radius: 10px;
+            padding-top: 30px;
+            min-height: 80vh;
+            position: relative;
+            top: 20px;
+            right: 0;
+            left: 0;
+        }
+        
+
+
+        .wrapper {
+            display: flex;
+            align-items: stretch;
+        }
+
+        #sidebar {
+            background: #7386D5;
+            color: #fff;
+            transition: all 0.3s;
+            min-width: 350px;
+            max-width: 350px;
+            min-height: 100vh;
+            box-shadow: 15px 15px 20px 30px;
+        }
+        
+        #sidebarCollapse:hover{
+            cursor: pointer;
+        }
+
+
+        #sidebar.active {
+            margin-left: -350px;
+        }
+
+        a[data-toggle="collapse"] {
+            position: relative;
+        }
+
+        .dropdown-toggle::after {
+            display: block;
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+        }
+
+        @media (max-width: 768px) {
+            #sidebar {
+                margin-left: -350px;
+            }
+            #sidebar.active {
+                margin-left: 0;
+            }
+        }
+        /* .label-for-check{
+            color: grey;
+        }
+
+        .form-check-input:checked + .label-for-check{
+            color: rgb(60, 102, 217);
+            text-decoration: line-through;
+            font-weight: bold;
+        } */
+        .label-for-check {
+  color: grey;
+  cursor: pointer; /* Add pointer cursor for better UX */
+}
+
+/* Checked label color */
+.label-for-check.checked {
+  color: rgb(60, 102, 217);
+  text-decoration: line-through;
+  font-weight: bold;
+}
+    </style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@botom/quill-resize-module@2.0.0/dist/quill-resize-module.min.js"></script>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script>
+    $(document).ready(function () {
+        // Add click event listener to checkboxes
+        $('.form-check-input').change(function () {
+            var checkboxId = $(this).attr('for');
+            var labelForCheckbox = $('label[id="' + checkboxId + '"]');
+
+            if ($(this).is(':checked')) {
+                labelForCheckbox.addClass('checked');
+            } else {
+                labelForCheckbox.removeClass('checked');
+            }
+            
+        });
+        
+            $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active');
+        });
+    });
+
+
+
+
+    </script>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg  bg-primary bg-gradient shadow" style="--bs-bg-opacity: .3;">
+    <div class="container-fluid ">
+        
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse " id="navbarSupportedContent">
+            <ul class="navbar-nav ">
+                <li class="nav-item active">
+                    <a class="nav-link " href="#">Clubs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Departments</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'all_events'%}" tabindex="-1" >Events</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" tabindex="-1" >Registered</a>
+                </li>
+            </ul>
+                    <div class="mx-auto" style="padding-left: 10%;">
+                        <a class="navbar-brand" href="{% url 'real_homepage'%}">SJ Events</a>
+                    </div>
+
+            <div class="ms-auto">
+                <form class="row g-2 align-items-center">
+
+                        <div class="col-auto">
+                            <input class="form-control form-control-sm mr-2 rounded-pill" type="search" placeholder="Search" aria-label="Search" id="search-input">
+                        </div>
+                        <div class="col-auto mr-2">
+                            <button class="btn " type="button">
+                                <i class="bi bi-search h5"></i>
+                            </button>
+                        </div>
+                        <div class="col-auto">
+                            <select class="form-select form-select-sm rounded-pill" aria-label="Default select example"
+                            style="width: auto;">
+                                <option selected value="Event">Events</option>
+                                <option value="Club">Club</option>
+                                <option value="Major">Major</option>
+                            </select>
+                        </div>
+
+                        <!-- <button type="submit"><i class="fa fa-search"></i></button> -->
+                    </form>
+                
+            </div>
+        </div>
+        <a class="btn" href="{% url 'profile' %}" role="button">
+            <i class="bi bi-person-circle h3"></i>
+        </a>
+        <a class="btn " href="{% url 'account_logout' %}" role="button">
+            <i class="bi bi-box-arrow-right h3" ></i>
+        </a>
+    </div>
+</nav>
+
+    {% block content %}
+    {% endblock %}
+
+
+
+<footer class="w-100 py-4 flex-shrink-0 bg-primary bg-gradient shadow"
+style="--bs-bg-opacity: .3;position: relative;bottom: 0;">
+    <div class="container py-4">
+        <div class="row gy-4 gx-5">
+            <div class="col-lg-4 col-md-6">
+                <h5 class="h1 text-white">SJ Events</h5>
+                <p class="small text-muted">Brought to you by a couple of kids from San Jose State University. While the site bears no direct affiliation as of yet, we hope to establish that in the coming months</p>
+                <p class="small text-muted mb-0">&copy; Copyrights. All rights reserved. <a class="text-primary"
+                        href="#">San Jose State University</a></p>
+            </div>
+            <div class="col-lg-2 col-md-6">
+                <h5 class="text-white mb-3">Quick links</h5>
+                <ul class="list-unstyled text-muted">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Clubs</a></li>
+                    <li><a href="#">Deparments</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-2 col-md-6">
+                <h5 class="text-white mb-3">SJSU Quick links</h5>
+                <ul class="list-unstyled text-muted">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">List of Majors</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <h5 class="text-white mb-3">Join the Team!</h5>
+                <p class="small text-muted">Leave us your email and we'll get in contact with you in the coming days.</p>
+                <form action="#">
+                    <div class="input-group mb-3">
+                        <input class="form-control" type="text" placeholder="email@sjsu.edu"
+                            aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <button class="btn btn-primary" id="button-addon2" type="button"><i
+                                class="bi bi-patch-plus-fill"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</body>
+
+</html>
