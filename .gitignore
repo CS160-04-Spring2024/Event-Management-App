@@ -1,4 +1,5 @@
 env
+events\events\__pycache__
 .env
 *.sqlite3
 
