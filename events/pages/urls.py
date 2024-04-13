@@ -11,5 +11,6 @@ urlpatterns = [
     path('sjevents/event/id', views.event, name='event'),
     path('sjevents/club/id', views.club, name='club'),
     path('sjevents/admin/event/create', views.create_event, name='createEvent'),
-
+    path('sjevents/registered', views.user_registered_events, name='registeredEvents'), # user registered events
+    path('sjevents/search', views.search_results, name='searchResults'),
 ]

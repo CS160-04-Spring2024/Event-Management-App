@@ -23,6 +23,11 @@ def create_event(request):
    # form = EventForm(request.POST or None)
     return render(request, 'createEvent.html', {'form': EventForm()})
 
+def user_registered_events(request): # render user registered event page
+    return render(request, 'user_registered_events.html', {})
+
+def search_results(request): # render user's query {events, clubs, departments}
+    return render(request, 'search_results.html', {})
 
 def all_events(request):
     return render(request, 'all_events.html', {})
