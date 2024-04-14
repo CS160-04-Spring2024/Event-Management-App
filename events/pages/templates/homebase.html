@@ -119,16 +119,26 @@
             font-weight: bold;
         } */
         .label-for-check {
-  color: grey;
-  cursor: pointer; /* Add pointer cursor for better UX */
-}
+            color: grey;
+            cursor: pointer; /* Add pointer cursor for better UX */
+        }
 
-/* Checked label color */
-.label-for-check.checked {
-  color: rgb(60, 102, 217);
-  text-decoration: line-through;
-  font-weight: bold;
-}
+        /* Checked label color */
+        .label-for-check.checked {
+            color: rgb(60, 102, 217);
+            text-decoration: line-through;
+            font-weight: bold;
+        }
+
+        .carousel-inner {
+            display: flex;
+        }
+
+        .carousel-item {
+            margin-right: 0;
+            flex: 0 0 33.333333%;
+            display: block;
+        }
     </style>
 
 
@@ -187,7 +197,7 @@
                 </li>
             </ul>
                     <div class="mx-auto" style="padding-left: 10%;">
-                        <a class="navbar-brand" href="{% url 'real_homepage'%}">SJ Events</a>
+                        <a class="navbar-brand" href="{% url 'real_homepage'%}">SJSU Events</a>
                     </div>
 
             <div class="ms-auto">
@@ -228,13 +238,179 @@
     {% endblock %}
 
 
+<!-- CAROUSELS FOR HOMEPAGE -->
+<div id="carousels">
+    <div class="container-fluid">
+        
+        <!-- EVENT RECOMMENDATIONS -->
+        <div id="event_recs" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="row mt-4">
+                    
+                    <!-- event rec 1 -->
+                    <div class="col">
+                        <div class="carousel-item active"> <!-- ACTIVE = DISPLAY -->
+                            <div class="card position-relative shadow" style="width: 18rem; height: fit-content; border-radius: 10%;">
+                                <div class="card-body">
+                                    <h6 class="card-title">Competitive Programming</h6>
+                                    <h4 class="card-subtitle mb-2 text-muted">ICPC Intro Session</h4>
+                                    <div class="col d-flex">
+                                        <i class="bi bi-person mx-2"></i>
+                                        <p class="">In-Person</p>
+                                    </div>
+                                    <div class="col d-flex">
+                                        <i class="bi bi-clock mx-1"></i>
+                                        <p class="" style="font-size: medium;">Tue 10:00 am - 11:45am</p>
+                                    </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5><span class="badge rounded-pill bg-success shadow">Machine Learning</span></h5>
+                                            </div>
+                                            <div class="col">
+                                                <h5><span class="badge rounded-pill bg-success shadow">Programming</span></h5>
+                                            </div>
+                                            <div class="col">
+                                                <h5><span class="badge rounded-pill bg-success shadow">AI</span></h5>
+                                            </div>
+                                        </div>
+                                    <hr>
+                                    <a href="#" class="stretched-link" style="text-decoration: none;">12 students registered</a>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <!-- event rec 1-->
+
+                    <!-- event rec 2 -->
+                    <div class="col">
+                        <div class="carousel-item active">
+                            <div class="card position-relative shadow" style="width: 18rem; height: fit-content; border-radius: 10%;">
+                                <div class="card-body">
+                                    <h6 class="card-title">Competitive Programming</h6>
+                                    <h4 class="card-subtitle mb-2 text-muted">ICPC Intro Session</h4>
+                                    <div class="col d-flex">
+                                        <i class="bi bi-person mx-2"></i>
+                                        <p class="">In-Person</p>
+                                    </div>
+                                    <div class="col d-flex">
+                                        <i class="bi bi-clock mx-1"></i>
+                                        <p class="" style="font-size: medium;">Tue 10:00 am - 11:45am</p>
+                                    </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5><span class="badge rounded-pill bg-success shadow">Machine Learning</span></h5>
+                                            </div>
+                                            <div class="col">
+                                                <h5><span class="badge rounded-pill bg-success shadow">Programming</span></h5>
+                                            </div>
+                                            <div class="col">
+                                                <h5><span class="badge rounded-pill bg-success shadow">AI</span></h5>
+                                            </div>
+                                        </div>
+                                    <hr>
+                                    <a href="#" class="stretched-link" style="text-decoration: none;">12 students registered</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- event rec 2-->
+
+                    <!-- event rec 3 -->
+                    <div class="col">
+                        <div class="carousel-item active">
+                            <div class="card position-relative shadow" style="width: 18rem; height: fit-content; border-radius: 10%;">
+                                <div class="card-body">
+                                    <h6 class="card-title">Competitive Programming</h6>
+                                    <h4 class="card-subtitle mb-2 text-muted">ICPC Intro Session</h4>
+                                    <div class="col d-flex">
+                                        <i class="bi bi-person mx-2"></i>
+                                        <p class="">In-Person</p>
+                                    </div>
+                                    <div class="col d-flex">
+                                        <i class="bi bi-clock mx-1"></i>
+                                        <p class="" style="font-size: medium;">Tue 10:00 am - 11:45am</p>
+                                    </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5><span class="badge rounded-pill bg-success shadow">Machine Learning</span></h5>
+                                            </div>
+                                            <div class="col">
+                                                <h5><span class="badge rounded-pill bg-success shadow">Programming</span></h5>
+                                            </div>
+                                            <div class="col">
+                                                <h5><span class="badge rounded-pill bg-success shadow">AI</span></h5>
+                                            </div>
+                                        </div>
+                                    <hr>
+                                    <a href="#" class="stretched-link" style="text-decoration: none;">12 students registered</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- event rec 3-->
+
+                    <!-- event rec 4 -->
+                    <div class="col">
+                        <div class="carousel-item active">
+                            <div class="card position-relative shadow" style="width: 18rem; height: fit-content; border-radius: 10%;">
+                                <div class="card-body">
+                                    <h6 class="card-title">Competitive Programming</h6>
+                                    <h4 class="card-subtitle mb-2 text-muted">ICPC Intro Session</h4>
+                                    <div class="col d-flex">
+                                        <i class="bi bi-person mx-2"></i>
+                                        <p class="">In-Person</p>
+                                    </div>
+                                    <div class="col d-flex">
+                                        <i class="bi bi-clock mx-1"></i>
+                                        <p class="" style="font-size: medium;">Tue 10:00 am - 11:45am</p>
+                                    </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5><span class="badge rounded-pill bg-success shadow">Machine Learning</span></h5>
+                                            </div>
+                                            <div class="col">
+                                                <h5><span class="badge rounded-pill bg-success shadow">Programming</span></h5>
+                                            </div>
+                                            <div class="col">
+                                                <h5><span class="badge rounded-pill bg-success shadow">AI</span></h5>
+                                            </div>
+                                        </div>
+                                    <hr>
+                                    <a href="#" class="stretched-link" style="text-decoration: none;">12 students registered</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- event rec 4 -->
+                    
+                </div>
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#event_recs" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#event_recs" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+
+        </div>
+        
+        
+
+    </div>
+</div>
+
+<br>
 
 <footer class="w-100 py-4 flex-shrink-0 bg-primary bg-gradient shadow"
 style="--bs-bg-opacity: .3;position: relative;bottom: 0;">
     <div class="container py-4">
         <div class="row gy-4 gx-5">
             <div class="col-lg-4 col-md-6">
-                <h5 class="h1 text-white">SJ Events</h5>
+                <h5 class="h1 text-white">SJSU Events</h5>
                 <p class="small text-muted">Brought to you by a couple of kids from San Jose State University. While the site bears no direct affiliation as of yet, we hope to establish that in the coming months</p>
                 <p class="small text-muted mb-0">&copy; Copyrights. All rights reserved. <a class="text-primary"
                         href="#">San Jose State University</a></p>
