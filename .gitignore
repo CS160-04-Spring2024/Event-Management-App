@@ -1,2 +1,6 @@
 env
+.env
+*.sqlite3
+
+node_modules
 events\events\__pycache__

@@ -1,0 +1,87 @@
+{% extends 'homebase.html' %}
+{% block content %}
+
+<div class="purple-bg">
+    <!-- white overlay for content -->
+    <div class="user-content py-5 bg-white">
+        <form action="" class="mx-5 mb-5">
+            <div class="my-3">
+                <label for="title" class="form-label">
+                    Event Title
+                </label>
+                <input type="text" name="" id="title" class="form-control">
+            </div>
+            
+            
+            
+            <!-- text-area -->
+            <div class="my-3">
+                <label for="details" class="form-label col-md-12">Event Details</label>
+                <!-- <textarea id="details" class="form-control"></textarea> -->
+                {{ form.content }}
+            </div>
+
+            <!-- date and time -->
+            <div class="my-4 d-flex gap-3">
+                <div>
+                    <label for="startDate" class="mx-2">Start Date</label>
+                    <input type="datetime-local" name="" id="startDate">
+                </div>
+                <div>
+                    <label for="endDate" class="mx-2">End Date</label>
+                    <input type="datetime-local" name="" id="endDate">
+                </div>
+            </div>
+
+            <!-- Online / In-Person -->
+            <div class="my-3">
+                <h4>Event Options</h4>
+                <div class="d-flex gap-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="inPerson">
+                        <label class="form-check-label" for="inPerson">
+                            In-Person
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="online">
+                        <label class="form-check-label" for="online">
+                            Online
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="both">
+                        <label class="form-check-label" for="both">
+                            Both
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Location Choice -->
+            <div class="my-3">
+                <label for="location" class="form-label">Select Building</label>
+                <input class="form-control shadow-sm" list="locationList" id="location" placeholder="Type to search...">
+                <datalist id="locationList">
+                    <option value="MCQ">
+                    <option value="ISB">
+                    <option value="Library">
+                    <option value="SWH">
+                    <option value="Student Union">
+                </datalist>
+            </div>
+
+            <!-- Event Image -->
+            <div class="my-3">
+                <label for="eventImg" class="form-label">Upload Event Image</label>
+                <input type="file" class="form-control" id="eventImg" accept="image/png, image/jpg">
+            </div>
+
+            <input type="submit" value="Submit" class=" mb-5 btn btn-outline-primary rounded-pill float-end" >
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

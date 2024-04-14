@@ -1,0 +1,207 @@
+{% extends 'homebase.html' %}
+{%block content%}
+
+<div class="wrapper">
+    <!-- Sidebar -->
+<nav id="sidebar">
+    <div class="sidebar-header">
+        <h3>Filter Options</h3>
+    </div>
+
+    <form action="" class="mx-3">
+
+        <div class="my-3 px-2">
+            <div class="d-flex align-items-center"><label class="pe-3" id="DepartmentsList">Dept: </label>
+                <input class="form-control-sm shadow-sm" list="dept_list" id="DepartmentsList" placeholder="Type to search...">
+                <datalist id="dept_list">
+                    <option value="AAL">
+                    <option value="NYC">
+                    <option value="COMSCI">
+                    <option value="ENGR">
+                    <option value="MUSC">
+                </datalist>
+            </div>
+        </div>
+
+        <hr>
+        <div class="my-3">
+            <div class="d-flex mb-2">
+                <label for="minPrice" class="pe-2">Min Price:</label>
+                <input class="form-control-sm shadow-sm" type="number" min="0" max="100" step="any" name="" id="minPrice">
+            </div>
+            <div class="d-flex">
+                <label for="maxPrice" class="pe-2">Max Price:</label>
+                <input class="form-control-sm shadow-sm" min="0" max="100" step="any"  type="number" name="" id="maxPrice">
+            </div>
+        </div>
+
+        <hr>
+        <div class="my-3 mx-auto">
+            <label for="earliest">Start Date:</label>
+            <input class="d-md-inline form-control-sm" type="datetime-local" name="" id="earliest">
+        </div>
+        <div class="my-3">
+            <label for="latest">End Date:</label>
+            <input class="d-md-inline form-control-sm" type="datetime-local" name="" id="latest">
+        </div>
+        <button type="submit" class="btn btn-outline-warning rounded-pill">Apply</button>
+    </form>
+    <ul class="list-unstyled">
+        <li class="active">
+
+        </li>
+    </ul>
+</nav>
+
+
+
+<div id="content">
+        <div class="container-fluid">
+                <a class="text-primary" id="sidebarCollapse">Filter</a>
+
+
+                <div class="row mt-4">
+
+                    <!-- col/card begins -->
+                    <div class="col">
+
+                            <div class="card position-relative shadow" style="width: 18rem; height: fit-content; border-radius: 10%;">
+                                <div class="card-body">
+                                    <h6 class="card-title">Competitive Programming</h6>
+                                    <h4 class="card-subtitle mb-2 text-muted">ICPC Intro Session</h4>
+                                    <div class="col d-flex">
+                                        <i class="bi bi-person mx-2"></i>
+                                        <p class="">In-Person</p>
+                                    </div>
+                                    <div class="col d-flex">
+                                        <i class="bi bi-clock mx-1"></i>
+                                        <p class="" style="font-size: medium;">Tue 10:00 am - 11:45am</p>
+                                    </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5><span class="badge rounded-pill bg-success shadow">Machine Learning</span></h5>
+                                            </div>
+                                            <div class="col">
+                                                <h5><span class="badge rounded-pill bg-success shadow">Programming</span></h5>
+                                            </div>
+                                            <div class="col">
+                                                <h5><span class="badge rounded-pill bg-success shadow">AI</span></h5>
+                                            </div>
+                                        </div>
+                                    <hr>
+                                    <a href="#" class="stretched-link" style="text-decoration: none;">12 students registered</a>
+                                </div>
+                
+                            </div>
+
+
+                    </div>
+                    <!-- card end/begins -->
+                    <div class="col">
+
+                            <div class="card position-relative shadow" style="width: 18rem; height: fit-content; border-radius: 10%;">
+                                <div class="card-body">
+                                    <h6 class="card-title">Competitive Programming</h6>
+                                    <h4 class="card-subtitle mb-2 text-muted">ICPC Intro Session</h4>
+                                    <div class="col d-flex">
+                                        <i class="bi bi-person mx-2"></i>
+                                        <p class="">In-Person</p>
+                                    </div>
+                                    <div class="col d-flex">
+                                        <i class="bi bi-clock mx-1"></i>
+                                        <p class="" style="font-size: medium;">Tue 10:00 am - 11:45am</p>
+                                    </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5><span class="badge rounded-pill bg-success shadow">Machine Learning</span></h5>
+                                            </div>
+                                            <div class="col">
+                                                <h5><span class="badge rounded-pill bg-success shadow">Programming</span></h5>
+                                            </div>
+                                            <div class="col">
+                                                <h5><span class="badge rounded-pill bg-success shadow">AI</span></h5>
+                                            </div>
+                                        </div>
+                                    <hr>
+                                    <a href="#" class="stretched-link" style="text-decoration: none;">12 students registered</a>
+                                </div>
+                
+                            </div>
+
+
+                    </div>
+                    <div class="col">
+
+                            <div class="card position-relative shadow" style="width: 18rem; height: fit-content; border-radius: 10%;">
+                                <div class="card-body">
+                                    <h6 class="card-title">Competitive Programming</h6>
+                                    <h4 class="card-subtitle mb-2 text-muted">ICPC Intro Session</h4>
+                                    <div class="col d-flex">
+                                        <i class="bi bi-person mx-2"></i>
+                                        <p class="">In-Person</p>
+                                    </div>
+                                    <div class="col d-flex">
+                                        <i class="bi bi-clock mx-1"></i>
+                                        <p class="" style="font-size: medium;">Tue 10:00 am - 11:45am</p>
+                                    </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5><span class="badge rounded-pill bg-success shadow">Machine Learning</span></h5>
+                                            </div>
+                                            <div class="col">
+                                                <h5><span class="badge rounded-pill bg-success shadow">Programming</span></h5>
+                                            </div>
+                                            <div class="col">
+                                                <h5><span class="badge rounded-pill bg-success shadow">AI</span></h5>
+                                            </div>
+                                        </div>
+                                    <hr>
+                                    <a href="#" class="stretched-link" style="text-decoration: none;">12 students registered</a>
+                                </div>
+                
+                            </div>
+
+
+                    </div>
+                    <div class="col">
+
+                            <div class="card position-relative shadow" style="width: 18rem; height: fit-content; border-radius: 10%;">
+                                <div class="card-body">
+                                    <h6 class="card-title">Competitive Programming</h6>
+                                    <h4 class="card-subtitle mb-2 text-muted">ICPC Intro Session</h4>
+                                    <div class="col d-flex">
+                                        <i class="bi bi-person mx-2"></i>
+                                        <p class="">In-Person</p>
+                                    </div>
+                                    <div class="col d-flex">
+                                        <i class="bi bi-clock mx-1"></i>
+                                        <p class="" style="font-size: medium;">Tue 10:00 am - 11:45am</p>
+                                    </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5><span class="badge rounded-pill bg-success shadow">Machine Learning</span></h5>
+                                            </div>
+                                            <div class="col">
+                                                <h5><span class="badge rounded-pill bg-success shadow">Programming</span></h5>
+                                            </div>
+                                            <div class="col">
+                                                <h5><span class="badge rounded-pill bg-success shadow">AI</span></h5>
+                                            </div>
+                                        </div>
+                                    <hr>
+                                    <a href="#" class="stretched-link" style="text-decoration: none;">12 students registered</a>
+                                </div>
+                
+                            </div>
+
+
+                    </div>
+
+                </div>
+        </div>
+
+
+</div>
+</div>
+
+{%endblock%}
