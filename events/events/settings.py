@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sites",
+    'rest_framework',
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
@@ -52,7 +53,6 @@ INSTALLED_APPS = [
     'tinymce',
     'django_quill',
     'ckeditor'
-
 ]
 
 # TINYMCE_JS_URL = 'https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js'
@@ -108,7 +108,7 @@ CKEDITOR_CONFIGS = {
 
 
 SITE_ID = 5
-LOGIN_REDIRECT_URL = '/sjevents/'
+LOGIN_REDIRECT_URL = '/sjevents/signup'
 LOGOUT_REDIRECT_URL = '/'
 
 

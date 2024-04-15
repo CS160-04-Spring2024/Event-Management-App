@@ -5,6 +5,7 @@
     {% load bootstrap5 %}
     {% bootstrap_css %}
     {% bootstrap_javascript %}
+    {% load socialaccount %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
@@ -132,6 +133,8 @@
     </style>
 
 
+
+<!-- JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/@botom/quill-resize-module@2.0.0/dist/quill-resize-module.min.js"></script>
 
 
@@ -149,20 +152,51 @@
                 labelForCheckbox.removeClass('checked');
             }
             
+            $('input[name="selected_tags"]').change(function () {
+                var selectedTags = $('input[name="selected_tags"]:checked').map(function () {
+                    return this.value;
+                }).get();
+                $('#selectedTagsInput').val(selectedTags.join(','));
+            });
         });
         
             $('#sidebarCollapse').on('click', function () {
             $('#sidebar').toggleClass('active');
         });
+        checkSelectedValue();
     });
 
 
+      // Check the selected value on change
+        $('#userType').change(function () {
+            checkSelectedValue();
+        });
 
+        function checkSelectedValue() {
+            var selectedValue = $('#userType').val();
+            if (selectedValue === '2') {
+                $('#clubSelect').show();
+            } else if (selectedValue === '1') {
+                $('#clubSelect').hide();
+            }
+        }
+
+
+    document.getElementById('club').addEventListener('change', function () {
+        var selectedOption = document.querySelector('#club_list option[value="' + this.value + '"]');
+        if (selectedOption) {
+            var selectedId = selectedOption.getAttribute('data-id');
+            document.getElementById('selectedClubId').value = selectedId;
+        }
+    });
 
     </script>
+
+    <!-- End of Javascript code -->
 </head>
 
 <body>
+    {% if user.is_authenticated %}
 <nav class="navbar navbar-expand-lg  bg-primary bg-gradient shadow" style="--bs-bg-opacity: .3;">
     <div class="container-fluid ">
         
@@ -272,7 +306,14 @@ style="--bs-bg-opacity: .3;position: relative;bottom: 0;">
         </div>
     </div>
 </footer>
+{% else %}
 
+<p>Seems like you're not signed in... </p>
+        <a class="btn " href="{% url 'account_logout' %}" role="button">
+            Login Here
+        </a>
+
+{% endif %}
 </body>
 
 </html>
