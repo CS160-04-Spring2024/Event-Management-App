@@ -14,3 +14,9 @@ class eventPanel:
     meetingOption: str
     meetingTime: str
     meetingAttributes: list
+
+class searchData:
+    title: str
+    event: str
+    club: str
+    department: str

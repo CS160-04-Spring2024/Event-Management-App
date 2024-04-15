@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .forms import EventForm
-from .models import eventPanel
+from .models import eventPanel, searchData
 # Create your views here.
 
 
@@ -28,8 +28,8 @@ def create_event(request):
 tempData = {'val2':['Comp Prog', "ICPC Intro Session 2", "In person", "Mon 6:00pm - 7:15pm", "SWE"]}
 
 def user_registered_events(request): # render user registered event page
-# eventPanel class is in models.py
-# used to store events as objects
+    # eventPanel class is in models.py
+    # used to store events as objects to display on template
     event1 = eventPanel()
     event1.title = 'Comp Prog'
     event1.eventName = 'ICPC Intro Session'
@@ -49,7 +49,35 @@ def user_registered_events(request): # render user registered event page
     return render(request, 'user_registered_events.html', {'events': events})
 
 def search_results(request): # render user's query {events, clubs, departments}
-    return render(request, 'search_results.html', {})
+    # searchData class is in models.py
+    # used to store results as objects to display on template
+    # example of a user searching the SJSU gaming club
+    title = searchData() # display search keyword on template
+    title.title = 'SJSU Gaming'
+
+    # actual search results/queries
+    # search0 = searchData()
+    # search0.title = 'SJSU Gaming Club Page'
+    # search0.club = 'SJSU Gaming Club'
+
+    search1 = searchData()
+    search1.title = 'In-house Meeting'
+    search1.event = 'SJSU Valorant Tournament'
+    search1.club = 'SJSU Gaming Club'
+
+    search2 = searchData()
+    search2.title = 'In-house Meeting'
+    search2.event = 'SJSU League of Legends Tournament'
+    search2.club = 'SJSU Gaming Club'
+
+    search3 = searchData()
+    search3.title = 'Social Meeting'
+    search3.event = 'SJSU Movie Night: Dungeons and Dragons'
+    search3.club = 'SJSU Gaming Club'
+
+    searchResults =[search1, search2, search3]
+
+    return render(request, 'search_results.html', {'title' : title, 'results' : searchResults})
 
 def all_events(request):
     return render(request, 'all_events.html', {})
