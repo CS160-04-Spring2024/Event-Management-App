@@ -7,3 +7,10 @@ from ckeditor.fields import RichTextField
 class Event(models.Model):
     content = RichTextField()
 # Create your models here.
+
+class eventPanel:
+    title: str
+    eventName: str
+    meetingOption: str
+    meetingTime: str
+    meetingAttributes: list

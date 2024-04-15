@@ -64,107 +64,37 @@
                     <h3>Your registered events</h3>
 
                     <!-- col/card begins -->
+                    <!--col data format: title-top, main-title, meeting-location, meeting-time, meeting-attributes-->
+                    {% for event in events %}
                     <div class="col">
-
                             <div class="card position-relative shadow" style="width: 18rem; height: fit-content; border-radius: 10%;">
                                 <div class="card-body">
-                                    <h6 class="card-title">Competitive Programming</h6>
-                                    <h4 class="card-subtitle mb-2 text-muted">ICPC Intro Session</h4>
+                                    <h6 class="card-title">{{event.title}}</h6>
+                                    <h4 class="card-subtitle mb-2 text-muted">{{event.eventName}}</h4>
                                     <div class="col d-flex">
                                         <i class="bi bi-person mx-2"></i>
-                                        <p class="">In-Person</p>
+                                        <p class="">{{event.meetingOption}}</p>
                                     </div>
                                     <div class="col d-flex">
                                         <i class="bi bi-clock mx-1"></i>
-                                        <p class="" style="font-size: medium;">Tue 10:00 am - 11:45am</p>
+                                        <p class="" style="font-size: medium;">{{event.meetingTime}}</p>
                                     </div>
                                         <div class="row">
+                                            {% for attribute in event.meetingAttributes %}
                                             <div class="col">
-                                                <h5><span class="badge rounded-pill bg-success shadow">Machine Learning</span></h5>
+                                                <h5><span class="badge rounded-pill bg-success shadow">{{attribute}}</span></h5>
                                             </div>
-                                            <div class="col">
-                                                <h5><span class="badge rounded-pill bg-success shadow">Programming</span></h5>
-                                            </div>
-                                            <div class="col">
-                                                <h5><span class="badge rounded-pill bg-success shadow">AI</span></h5>
-                                            </div>
+                                            {% endfor %}
                                         </div>
                                     <hr>
                                     <a href="#" class="stretched-link" style="text-decoration: none;">Registered</a>
+                                    <br>
+                                    <button type="submit" class="btn btn-outline-warning rounded-pill">Cancel RSVP</button>
                                 </div>
                 
                             </div>
-
-
                     </div>
-                    <!-- card end/begins -->
-                    <div class="col">
-
-                            <div class="card position-relative shadow" style="width: 18rem; height: fit-content; border-radius: 10%;">
-                                <div class="card-body">
-                                    <h6 class="card-title">Competitive Programming</h6>
-                                    <h4 class="card-subtitle mb-2 text-muted">ICPC Intro Session</h4>
-                                    <div class="col d-flex">
-                                        <i class="bi bi-person mx-2"></i>
-                                        <p class="">In-Person</p>
-                                    </div>
-                                    <div class="col d-flex">
-                                        <i class="bi bi-clock mx-1"></i>
-                                        <p class="" style="font-size: medium;">Tue 10:00 am - 11:45am</p>
-                                    </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                <h5><span class="badge rounded-pill bg-success shadow">Machine Learning</span></h5>
-                                            </div>
-                                            <div class="col">
-                                                <h5><span class="badge rounded-pill bg-success shadow">Programming</span></h5>
-                                            </div>
-                                            <div class="col">
-                                                <h5><span class="badge rounded-pill bg-success shadow">AI</span></h5>
-                                            </div>
-                                        </div>
-                                    <hr>
-                                    <a href="#" class="stretched-link" style="text-decoration: none;">Registered</a>
-                                </div>
-                
-                            </div>
-
-
-                    </div>
-                    <div class="col">
-
-                            <div class="card position-relative shadow" style="width: 18rem; height: fit-content; border-radius: 10%;">
-                                <div class="card-body">
-                                    <h6 class="card-title">Social Activty</h6>
-                                    <h4 class="card-subtitle mb-2 text-muted">Intermediate Bouldering</h4>
-                                    <div class="col d-flex">
-                                        <i class="bi bi-person mx-2"></i>
-                                        <p class="">In-Person</p>
-                                    </div>
-                                    <div class="col d-flex">
-                                        <i class="bi bi-clock mx-1"></i>
-                                        <p class="" style="font-size: medium;">Tue 10:00 am - 11:45am</p>
-                                    </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                <h5><span class="badge rounded-pill bg-success shadow">Machine Learning</span></h5>
-                                            </div>
-                                            <div class="col">
-                                                <h5><span class="badge rounded-pill bg-success shadow">Programming</span></h5>
-                                            </div>
-                                            <div class="col">
-                                                <h5><span class="badge rounded-pill bg-success shadow">AI</span></h5>
-                                            </div>
-                                        </div>
-                                    <hr>
-                                    <a href="#" class="stretched-link" style="text-decoration: none;">12 students registered</a>
-                                </div>
-                
-                            </div>
-
-
-                    </div>
-
+                    {% endfor %}
                 </div>
         </div>
 
