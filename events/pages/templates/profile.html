@@ -1,0 +1,84 @@
+{% extends 'header_footer.html' %}
+{% block content %}
+<!-- https://www.terrainhopperusa.com/wp-content/uploads/2019/01/avatar-woman.png -->
+
+<div class="purple-bg">
+    <div class="d-flex flex-column align-items-center" style="position: absolute; margin-top: -100px; z-index: 99; margin-left: 50px;"><img class="rounded-circle mt-5" width="190px" height="200px"
+            src="https://www.terrainhopperusa.com/wp-content/uploads/2019/01/avatar-woman.png"></div>
+    <div class="user-content">
+        <h1 class="text-center" style="padding-top: 40px;">User Profile</h1>
+        <form action="">
+            <div class="row justify-content-center">
+                <div class="col-md-5">
+                    <div class="p-3 py-5">
+                        <div class="mb-3">
+                            <h4>Profile Settings</h4>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6"><label class="">Name</label><input type="text" class="form-control rounded-pill shadow-sm"
+                                    placeholder="first name" value=""></div>
+                            <div class="col-md-6"><label class="">Surname</label><input type="text" class="form-control rounded-pill shadow-sm"
+                                    value="" placeholder="Last Name"></div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-12"><label class="">Major</label>
+                    <input class="form-control shadow-sm" list="datalistOptions" id="exampleDataList" placeholder="Type to search...">
+                    <datalist id="datalistOptions">
+                        <option value="San Francisco">
+                        <option value="New York">
+                        <option value="Seattle">
+                        <option value="Los Angeles">
+                        <option value="Chicago">
+                    </datalist>
+                            </div>
+                            <div class="col-md-12"><label class="" id="DepartmentsList">Departments</label>
+                            <input class="form-control shadow-sm" list="dept_list" id="DepartmentsList" placeholder="Type to search...">
+                            <datalist id="dept_list">
+                                <option value="AAL">
+                                <option value="NYC">
+                                <option value="COMSCI">
+                                <option value="ENGR">
+                                <option value="MUSC">
+                            </datalist>
+                                </div>
+
+                    </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-3 py-5" style="margin-top: 10px;">
+                        <h4>Edit Tags List</h4>
+                        <div class="row">
+                            <div class="col mt-2 special">
+                                <label class="label-for-check" id="check1">
+                                    <input type="checkbox" class="form-check-input check-with-label" for="check1">
+                                    Hiking</label>
+                                    </div>
+                            <div class="col mt-2">
+                                <label class="label-for-check" id="check2">
+                                <input type="checkbox" class="form-check-input check-with-label" for="check2" style="display: none;">
+                                Pokemon</label>
+                                </div>
+                            <div class="col mt-2">
+                                <label class="label-for-check" id="check3">
+                                    <input type="checkbox" class="form-check-input check-with-label" for="check3" style="display: none;">
+                                    Designing</label>
+                                </div>
+                            <div class="form-check col mt-2">
+                                <label class="label-for-check" id="check4">
+                                    <input type="checkbox" class="form-check-input check-with-label" for="check4" style="display: none;">
+                                    Racing</label>
+                                
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="mt-2 pb-5 text-center"><button class="btn btn-outline-primary rounded-pill " type="button">Save
+                                Profile</button>
+                        </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

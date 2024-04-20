@@ -3,6 +3,7 @@ FROM python:3
 WORKDIR /code
 
 COPY requirements.txt ./
+COPY .env ./
 
 RUN pip install --no-cache-dir --upgrade pip \
     pip install --no-cache-dir -r requirements.txt
