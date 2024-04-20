@@ -1,160 +1,264 @@
 from django.shortcuts import render, redirect
 from rest_framework.decorators import api_view
-from .forms import EventForm
+from .forms import *
 from .models import *
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
+import random
+import json
+import datetime
+from django.db import connection
 # Create your views here.
 
 
+tags = Tag.objects.all()
+majors = Major.objects.all()
+departments = Department.objects.all()
+
+# json serialize for datetime object
+
+
+def default(o):
+    if isinstance(o, (datetime.date, datetime.datetime)):
+        return o.isoformat()
+
+
+def datetime_to_string(start_date, end_date):
+    dotw = start_date.strftime('%a')
+    dotw_end = end_date.strftime('%a')
+    format = '%H:%M %p'
+    totw = start_date.strftime(format)
+    totw_end = end_date.strftime(format)
+
+    if dotw != dotw_end:
+        return dotw + " " + totw + " - " + dotw_end + " " + totw_end
+
+    return dotw + " " + totw + " - " + totw_end
+
+
 def test(request):
-    return render(request, 'homebase.html', {})
+    person = User.objects.filter(pk=request.user.email).values()
+    return render(request, 'homebase.html', {'is_admin': person[0]['is_admin']})
+
+
+def main_page(request):
+    if request.method == 'GET':
+        user_email = request.user.email
+
+        # pull events based on matching tags
+        user_tags = UserInterest.objects.values('tag').filter(user=user_email)
+
+        events = set()
+        for user_tag in user_tags:
+            tag_events = EventTag.objects.filter(tag=user_tag.tag)
+
+            # assuming this gives the event ids of for all associated tags
+            for ev in tag_events:
+                events.add(ev.event)  # add to set to avoid repetitions
+
+        # get all events
+        tag_events_arr = []
+        for x in events:
+            one_event = Event.objects.filter(pk=x.event_id)
+            tag_events_arr.extend(one_event)
+
+        '''
+        # Pull events based on department
+        user_dept = User.objects.values('department').get(user=user_email)
+
+        if user_dept is not None:
+            dept_events_arr = []
+            dept_clubs = ClubDepartment.objects.filter(department = user_dept.department)
+
+            #shuffling array of clubs
+            random.shuffle(dept_clubs)
+            
+            if len(dept_clubs) > 2:
+                dept_clubs = dept_clubs[:2]
+            
+            for club in dept_clubs:
+                club_events = Event.objects.filter(organization = club.club_id)
+                dept_events_arr.extend(club_events)
+        
+            # pull clubs that the user may be interested in checking out
+
+            random.shuffle(dept_clubs)
+
+            club_list = []
+
+            if len(dept_clubs) > 2:
+                    dept_clubs = dept_clubs[:3]
+            
+
+            for club in dept_clubs:
+                clubs = Organization.objects.get(pk=club.id)
+
+                club_list.extend(clubs)
+        '''
 
 
 @api_view(['GET', 'POST'])
 def profile(request):
 
+    email = request.user.email
     if request.method == 'GET':
+        person = User.objects.get(pk=email)
+        # user_tags = User.objects.values('tag').filter(user=email)
+        # user_profile = UserInterest.objects.filter(user=email)
+        profile_form = ProfileForm(instance=person, initial={
+                                   'tags': person.tags.all()})
 
-        return render(request, 'profile.html', {})
+        return render(request, 'profile.html', {'person': User.objects.filter(pk=email).values(), 'form': profile_form})
 
     if request.method == 'POST':
-        # is_admin = request.POST.get('is_admin')
-        # if is_admin == 'True':
-        #     club = request.POST.get('selected_club_id')
-        email = request.user.email
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-        department = request.POST.get('dept')
-        major = request.POST.get('major')
-        funds = request.POST.get('funds')
-        role = request.POST.get('role')
+        person = User.objects.get(pk=request.user.email)
+        profile_form = ProfileForm(request.POST, instance=person)
 
-        # if test is None:
-        #     User.objects.create(user_email=email, first_name=first_name, last_name=last_name,
-        #                         role=role, department=department, funds=funds, major=major)
+        if profile_form.is_valid():
+            # print('saving FORM....')
+            # print(profile_form.cleaned_data)
+            profile_form.save()
+            # all_tags = person.tags.all()
+            # for tag in profile_form.cleaned_data['tags']:
+            #     if tag not in all_tags:
+            #         person.tags.add(tag)
 
-        # else:
-        curr_user = User.objects.get(pk=email)
-        old_funds = curr_user.funds
-        new_funds = old_funds + funds
-        User.objects.filter(pk=email).update(first_name=first_name, last_name=last_name,
-                                             role=role, department=department, funds=new_funds, major=major)
+            return HttpResponseRedirect(reverse('real_homepage'))
 
-    return render(request, 'profile.html', {})
+    return render(request, 'profile.html', {'form': profile_form})
 
 
 @api_view(['GET', 'POST'])
 def signup(request):
 
     email = request.user.email
-    if User.objects.filter(pk=email).exists():
-        return HttpResponseRedirect(reverse('real_homepage'))
+    # if User.objects.filter(pk=email).exists():
+    #     return HttpResponseRedirect(reverse('real_homepage'))
 
     if request.method == 'GET':
-        tags = Tag.objects.all()
-        departments = Department.objects.all()
-        majors = Major.objects.all()
-        clubs = Organization.objects.all()
-
-        return render(request, 'signup.html', {'tags': tags, 'departments': departments, 'majors': majors, 'clubs': clubs})
+        user_form = ProfileForm()
+        club_form = AdminForm()
+        return render(request, 'signup.html', {'form': user_form, 'club_form': club_form})
 
     if request.method == 'POST':
-        email = request.POST.get('email', None)
-        is_admin = request.POST.get('is_admin', None)
-        if is_admin == 'True':
-            club = request.POST.get('selected_club_id', None)
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-        department = request.POST.get('dept')
-        major = request.POST.get('major')
-        funds = request.POST.get('funds')
-        role = request.POST.get('role', None)
+        profile_form = ProfileForm(request.POST)
+        admin_form = AdminForm(request.POST)
 
-        print(dict(request.POST.items()))
-        if email is not None and is_admin != None and role != None:
-            # User.objects.create(user_email=email, first_name=first_name, last_name=last_name,
-            #                     role=role, department=department, funds=funds, major=major)
-            tags = request.POST.get('selectedTags', [])
+        if profile_form.is_valid() and admin_form.is_valid():
+            org = admin_form.cleaned_data['organization']
+            profile_form.save()
+
+            Admin.objects.create(user=email, organization=org)
+
             return HttpResponseRedirect(reverse('real_homepage'))
-        else:
-            return HttpResponse('Some Error has occured')
-        # if is_admin == 'True':
-        #     club = request.POST.get('selected_club_id', None)
-        #     Admin.objects.create(user_email=email, organization=club)
 
-    return render(request, 'signup.html', {})
+    return HttpResponseRedirect(reverse('signup'))
 
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def event(request, event_id):
+
     if request.method == 'GET':
-        event = Event.objects.get(pk=event_id)
-        return render(request, 'event.html', {'event_id': event})
+        event = Event.objects.filter(pk=event_id).values()[0]
+        # departments = Department.objects.all()
+        # tags = Tag.objects.all()
+        event['club_name'] = Organization.objects.filter(
+            pk=event['organization_id']).values_list('name', flat=True)
+        event['time'] = datetime_to_string(
+            event['start_time'], event['end_time'])
+        event['attendees'] = Registration.objects.filter(
+            event=event['event_id']).count()
+
+        new_event = Event.objects.get(pk=event['event_id'])
+        event['tag_list'] = new_event.tags.all().values_list(flat=True)
+
+        current_tags = event['tag_list']
+        all_events = Event.objects.all().values()
+        print(event)
+
+        similar_values = []
+        for eve in all_events:
+            new_event = Event.objects.get(pk=eve['event_id'])
+            if len(list(set(current_tags) & set(new_event.tags.all().values_list(flat=True)))) > 0 and eve['id'] != event_id:
+                similar_values.append(eve)
+
+        club = Organization.objects.filter(
+            pk=event['organization_id']).values()
+        location = Location.objects.filter(pk=event['location_id']).values()
+        registered = Registration.objects.filter(
+            user_email=request.user.email, event=event_id).exists()
+        print(registered)
+        '''
+        , 'club': club[0], 'location': location, 'similar_events': similar_events, 'registered': registered, 'event_tags': tags, 'time': event_time
+        '''
+
+        return render(request, 'event.html', {'event': event, 'similar_values': similar_values[:3], 'club': club[0], 'location': location[0], 'registered': registered})
+
+    if request.method == 'POST':
+        if request.POST.get('register'):
+            if Registration.objects.filter(
+                    user_email=request.user.email, event=event_id).exists() == False:
+                Registration.objects.create(
+                    user_email=User.objects.get(pk=request.user.email), event=Event.objects.get(pk=event_id))
+            else:
+                Registration.objects.filter(
+                    user_email=request.user.email, event=event_id).delete()
+
+            return HttpResponseRedirect(reverse('event', args=[event_id]))
+
+    print('Ending Up here?')
     return render(request, 'event.html', {})
 
 
 def club(request, cid):
     if request.method == 'GET':
-        # club = Organization.objects.get(pk=cid)
-        club = None
-        if club is None:
-            return render(request, 'club.html')
+        club = Organization.objects.filter(pk=cid).values()
 
-        all_club_events = Event.objects.get(club_id=cid)
-        return render(request, 'club.html', {'club': club, 'events': all_club_events})
-    return HttpResponse('Some Error has occured')
+        if club.exists() == False:
+            return HttpResponse('Some Error has occured')
 
+        all_club_events = Event.objects.filter(organization=cid).values()
 
-def edit_event(request, event_id):
-    if request.method == 'GET':
-        event = Event.objects.get(pk=event_id)
+        for event in all_club_events:
+            event['club_name'] = Organization.objects.values(
+                'name').filter(id=event['organization_id'])[0]['name']
+            event['time'] = datetime_to_string(
+                event['start_time'], event['end_time'])
+            event['attendance'] = Registration.objects.filter(
+                event=event['event_id']).count()
 
-        return render(request, 'editEvent.html', {'event': event})
+        location = Location.objects.filter(
+            location_id=club[0]['location_id']).values()
 
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        description = request.POST.get('description')
-        location = request.POST.get('location')
-        start = request.POST.get('start_time')
-        end = request.POST.get('end_time')
-        fees = request.POST.get('fees')
-        club = request.POST.get('club')
-
-        Event.objects.filter(pk=event_id).update(event_name=name, description=description,
-                                                 location=location, start_time=start, end_time=end, fees=fees, organization=club)
+        return render(request, 'club.html', {'club': club[0], 'events': all_club_events, 'location': location[0]})
 
     return HttpResponse('Some Error has occured')
-
-
-@api_view(['POST'])
-def create_event(request):
-   # form = EventForm(request.POST or None)
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        description = request.POST.get('description')
-        location = request.POST.get('location')
-        start = request.POST.get('start_time')
-        end = request.POST.get('end_time')
-        fees = request.POST.get('fees')
-        club = request.POST.get('club')
-
-    Event.objects.create(event_name=name, description=description, location=location,
-                         start_time=start, end_time=end, fees=fees, organization=club)
-    return render(request, 'createEvent.html', {'form': EventForm()})
 
 
 @api_view(['GET'])
 def user_events(request):
+    email = request.user.email
+
     if request.method == 'GET':
-        email = request.user.email
-        user_events = Registration.objects.get(user_email=email)
+        all_registered = Registration.objects.filter(user_email=email).values()
+        departments = Department.objects.all()
+        tags = Tag.objects.all()
 
-        my_events = []
-        for event in user_events:
-            my_events.append(Event.objects.get(pk=event.id))
+        all_events = [Event.objects.filter(
+            pk=reg['event']) for reg in all_registered]
 
-        return render(request, 'user_events.html', {'my_events': my_events})
+        for event in all_events:
+            event['club_name'] = Organization.objects.filter(
+                pk=event['organization']).values_list('name', flat=True)
+            event['time'] = datetime_to_string(
+                event['start_time'], event['end_time'])
+            event['attendees'] = Registration.objects.filter(
+                event=event['event_id']).count()
+
+            new_event = Event.objects.get(pk=event['event_id'])
+            event['tag_list'] = new_event.tags.all()
+
+        return render(request, 'all_events.html', {'events': all_events, 'departments': departments, 'tags': tags})
 
 
 def delete_user_event(request, event_id):
@@ -164,35 +268,84 @@ def delete_user_event(request, event_id):
 
 
 @api_view(['GET'])
+def all_clubs(request):
+    if request.method == 'GET':
+        all_clubs = Organization.objects.all()
+
+        return render(request, 'all_clubs.html', {'clubs': all_clubs, 'tags': tags, 'departments': departments})
+
+
+@api_view(['GET', 'POST'])
 def all_events(request):
+
     if request.method == 'GET':
-        all_events = Event.objects.all()
-        return render(request, 'all_events.html', {'events': all_events})
-    return render(request, 'all_events.html', {})
+        all_events = Event.objects.all().order_by('-start_time').values()
 
-
-def create_org(request):
-    if request.method == 'GET':
-
-        return render(request, 'create_club.html', {})
-
-    # if request.method == 'POST':
-
-
-def edit_org(request, id):
-    if request.method == 'GET':
-        org = Organization.objects.get(pk=id)
-
-        return render(request, 'edit_club.html', {'club': org})
+        # return render(request, 'all_events.html', {'events': all_events, 'departments': departments, 'tags': tags})
 
     if request.method == 'POST':
-        club_name = request.POST.get('name')
-        description = request.POST.get('description')
-        location_id = request.POST.get('location_id')
-        banner = request.POST.get('banner', None)
-        club_logo = request.POST.get('logo', None)
-        club_email = request.POST.get('email', None)
-        website = request.POST.get('website', None)
+        sort = request.POST.get('sort', 1)
+        dept = request.POST.get('dept', None)
+        minPrice = request.POST.get('min_price', None)
+        maxPrice = request.POST.get('max_price', None)
+        start_date = request.POST.get('start_date', None)
+        end_date = request.POST.get('end_date', None)
+        selected_tags = request.POST.get('selectedTags', None)
 
-        Organization.objects.filter(pk=id).update(name=club_name, description=description, location=location_id,
-                                                  banner=banner, club_logo=club_logo, club_email=club_email, website=website)
+        sorter = '-start_time' if sort == 1 else 'start_time'
+        print('selected: ', selected_tags)
+        all_events = Event.objects.all().order_by(sorter).values()
+
+        if minPrice:
+            all_events = all_events.filter(fees__gte=minPrice)
+        if maxPrice:
+            all_events = all_events.filter(fees__lte=maxPrice)
+
+        if start_date:
+            all_events = all_events.filter(start_time__gte=start_date)
+        if end_date:
+            all_events = all_events.filter(end_time__gte=end_date)
+
+        if dept:
+            new_all_events = []
+            for event in all_events:
+                dpt = Organization.objects.filter(
+                    pk=event['organization_id']).values()[0]['department_id']
+                if dpt == dept:
+                    new_all_events.append(event)
+            all_events = new_all_events
+        if selected_tags:
+            tags = selected_tags.split(',')
+            print(tags)
+            all_events = Event.objects.filter(
+                tags__in=tags).distinct().values()
+
+    for event in all_events:
+        event['club_name'] = Organization.objects.filter(
+            pk=event['organization_id']).values_list('name', flat=True)[0]
+        event['time'] = datetime_to_string(
+            event['start_time'], event['end_time'])
+        event['attendees'] = Registration.objects.filter(
+            event=event['event_id']).count()
+
+        new_event = Event.objects.get(pk=event['event_id'])
+        event['tag_list'] = new_event.tags.all()
+
+        # return redirect(reverse('all_events') )
+    departments = Department.objects.all()
+    all_tags = Tag.objects.all()
+    return render(request, 'all_events.html', {'events': all_events, 'departments': departments, 'tags': all_tags})
+
+
+# search page
+def search_page(request):
+    if request.method == 'GET':
+        option = request.GET.get('option', 1)
+        search_word = request.GET.get('search', None)
+
+        if option == 1:
+            results = Event.objects.filter(event_name__contains=search_word)
+        if option == 2:
+            results = Organization.objects.filter(name__contains=search_word)
+
+        # have to pass into events page or club page with the new results as query parameters

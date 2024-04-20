@@ -3,6 +3,7 @@
 
 <head>
     {% load bootstrap5 %}
+    {% load static %}
     {% bootstrap_css %}
     {% bootstrap_javascript %}
     {% load socialaccount %}
@@ -16,133 +17,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SJSU Events App</title>
 
-    <style>
-        h1,
-        h2,
-        h3,
-        h4,
-        h5 {
-            font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-            overflow-x: hidden;
-        }
-
-        .nav-link {
-            color: rgb(60, 102, 217);
-            font-weight: 500;
-            font-size: 1.05rem;
-            opacity: 90%;
-        }
-
-        .nav-link:hover {
-            text-decoration: underline;
-        }
-
-        .navbar-brand {
-            color: rgb(60, 102, 217);
-            font-weight: 600;
-            font-size: 1.86rem;
-            opacity: 95%;
-        }
-
-        .purple-bg {
-            background-color: rgb(60, 102, 217);
-            /* Purple background color */
-            opacity: 0.7;
-            min-height: 100vh;
-            padding-top: 80px;
-            /* Space for navbar */
-            padding-bottom: 180px;
-            position: relative;
-        }
-
-        .user-content {
-            background-color: #efebeb;
-            /* White content area */
-            border-radius: 10px;
-            padding-top: 30px;
-            min-height: 80vh;
-            position: relative;
-            top: 20px;
-            right: 0;
-            left: 0;
-        }
-
-
-
-        .wrapper {
-            display: flex;
-            align-items: stretch;
-        }
-
-        #sidebar {
-            background: #7386D5;
-            color: #fff;
-            transition: all 0.3s;
-            min-width: 350px;
-            max-width: 350px;
-            min-height: 100vh;
-            box-shadow: 15px 15px 20px 30px;
-        }
-
-        #sidebarCollapse:hover {
-            cursor: pointer;
-        }
-
-
-        #sidebar.active {
-            margin-left: -350px;
-        }
-
-        a[data-toggle="collapse"] {
-            position: relative;
-        }
-
-        .dropdown-toggle::after {
-            display: block;
-            position: absolute;
-            top: 50%;
-            right: 20px;
-            transform: translateY(-50%);
-        }
-
-        @media (max-width: 768px) {
-            #sidebar {
-                margin-left: -350px;
-            }
-
-            #sidebar.active {
-                margin-left: 0;
-            }
-        }
-
-        /* .label-for-check{
-            color: grey;
-        }
-
-        .form-check-input:checked + .label-for-check{
-            color: rgb(60, 102, 217);
-            text-decoration: line-through;
-            font-weight: bold;
-        } */
-        .label-for-check {
-            color: grey;
-            cursor: pointer;
-            /* Add pointer cursor for better UX */
-        }
-
-        /* Checked label color */
-        .label-for-check.checked {
-            color: rgb(60, 102, 217);
-            text-decoration: line-through;
-            font-weight: bold;
-        }
-    </style>
-
-
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
 
     <!-- JavaScript -->
     <script
@@ -150,58 +25,7 @@
 
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            // Add click event listener to checkboxes
-            $('.form-check-input').change(function () {
-                var checkboxId = $(this).attr('for');
-                var labelForCheckbox = $('label[id="' + checkboxId + '"]');
-
-                if ($(this).is(':checked')) {
-                    labelForCheckbox.addClass('checked');
-                } else {
-                    labelForCheckbox.removeClass('checked');
-                }
-
-                $('input[name="selected_tags"]').change(function () {
-                    var selectedTags = $('input[name="selected_tags"]:checked').map(function () {
-                        return this.value;
-                    }).get();
-                    $('#selectedTagsInput').val(selectedTags.join(','));
-                });
-            });
-
-            $('#sidebarCollapse').on('click', function () {
-                $('#sidebar').toggleClass('active');
-            });
-            checkSelectedValue();
-        });
-
-
-        // Check the selected value on change
-        $('#userType').change(function () {
-            checkSelectedValue();
-        });
-
-        function checkSelectedValue() {
-            var selectedValue = $('#userType').val();
-            if (selectedValue === '2') {
-                $('#clubSelect').show();
-            } else if (selectedValue === '1') {
-                $('#clubSelect').hide();
-            }
-        }
-
-
-        document.getElementById('club').addEventListener('change', function () {
-            var selectedOption = document.querySelector('#club_list option[value="' + this.value + '"]');
-            if (selectedOption) {
-                var selectedId = selectedOption.getAttribute('data-id');
-                document.getElementById('selectedClubId').value = selectedId;
-            }
-        });
-
-    </script>
+    <script src="{% static 'scripts/index.js' %}"></script>
 
     <!-- End of Javascript code -->
 </head>
@@ -209,148 +33,134 @@
 <body>
 
 
-<!-- {% with full_name as user.name %}
-{% with first_name as full_name.split(' ')[0] %}
-{% with last_name as full_name.split(' ')[1] %} -->
-
 <div class="purple-bg">
-    <div class="d-flex flex-column align-items-center"
-        style="position: absolute; margin-top: -100px; z-index: 99; margin-left: 50px;"><img class="rounded-circle mt-5"
-            width="190px" height="200px"
-            src="https://www.terrainhopperusa.com/wp-content/uploads/2019/01/avatar-woman.png"></div>
-    <div class="user-content">
-        <h1 class="text-center" style="padding-top: 40px;">User Profile</h1>
-        <form action="{% url 'signup' %}" method="post">
-            {% csrf_token %}
-            <div class="row justify-content-center">
-                <div class="col-md-5">
-                    <div class="p-3 py-5">
-                        <div class="mb-3">
-                            <h4>Profile Setup</h4>
-                        </div>
-                        <div class="row mt-3">
-                            <label for="userType">User Type</label>
-                            <select id="userType" class="form-select" aria-label="Default select example" name="is_admin" required>
-                                <option selected value="False">User</option>
-                                <option value="True">Club Admin</option>
-                            </select>
-                        </div>
-                        <!-- role: Student or Professor -->
-                        <div class="row mt-3">
-                            <label class="mx-2" for="userType">Role at SJSU</label>
-                            <select id="userType" class="form-select" aria-label="Default select example" name="role" required>
-                                <option selected value="Student">Student</option>
-                                <option value="Professor">Professor</option>
-                            </select>
+
+
+<div class="row justify-content-center" style="padding-top: 1rem">
+    <div class="col-md-5">
+        <div class="card " style="border-radius: 37px;">
+            <div class="card-header text-center">Profile Setup</div>
+            <div class="card-body">
+                <form action="{% url 'profile' %}" method="POST" class="">
+                    <div class="row justify-content-center">
+                        {% csrf_token %}
+
+
+                        <div class="col-md-4 my-2">
+                            <label>{{ form.first_name.label }}</label>
+                            {{ form.first_name }}
+                            {% for error in form.first_name.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
                         </div>
 
-                        <!-- Should optionally load club selection if user picks club admin option -->
-                        <div class="row mt-2" id="clubSelect" class="mt-3" style="display: none;">
-                            <div class="col"><label for="club">Select Club</label></div>
-                            <div class="col-md-12">
-                                <input class="form-control shadow-sm" list="club_list" id="club" placeholder="Type to search..." name="club">
-                                
-                                <input type="hidden" id="selectedClubId" name="selected_club_id" value="">
-                                <!-- This is assuming I pass in a list of clubs -->
-                                
-                                <datalist id="club_list">
-                                {% for club in clubs %}
-                                <option value="{{ club.name }}" data-id="{{ club.id }}">
-                                    {% endfor %}
-                                </datalist>
-                            </div>
-                        </div>
-                        <!-- Enter in funds prompt -->
-                        <div class="row gap-2 mt-2">
-                            <div class="col-md-6">
-                                <label for="funds">Enter in Funds</label>
-                            </div>
-                            <div class="col-md-6">
-                                <input class="form-control" type="number" name="funds" id="funds">
-                            </div>
-                        </div>
 
-                        <div class="row mt-2">
-                            <div class="col-md-6"><label class="">Email</label><input type="text" class="form-control rounded-pill shadow-sm"
-                                    placeholder="" value="{{ user.email }}" name="email" required></div>
-                        </div>
-                        <!-- This is where we things begin to look exactly the same as the profile page -->
-                        <div class="row mt-2">
-                            <div class="col-md-6"><label class="">Name</label><input type="text"
-                                    class="form-control rounded-pill shadow-sm" name="first_name" placeholder="First Name" value="{{ user.first_name }}" required></div>
-                            <div class="col-md-6"><label class="">Surname</label><input type="text" name="last_name"
-                                    class="form-control rounded-pill shadow-sm" value="{{ user.last_name }}" placeholder="Last Name" required></div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-12"><label class="">Major</label>
-                                <input class="form-control shadow-sm" list="datalistOptions" id="exampleDataList"
-                                    placeholder="Type to search..." name="major">
-                                <datalist id="datalistOptions">
-                                {% for major in majors %}
-                                <option value="{{ major.major_name }}">
-                                    {% endfor %}
-                                </datalist>
-                            </div>
-                            <!-- Departments selector -->
-                            <div class="col-md-12"><label class="" id="DepartmentsList">Departments</label>
-                                <input class="form-control shadow-sm" list="dept_list" id="DepartmentsList" name="dept"
-                                    placeholder="Type to search...">
-
-                                <datalist id="dept_list">
-                                    {% for dept in departments %}
-                                    <option value="{{ dept.name }}">
-                                        {% endfor %}
-                                </datalist>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="p-3 py-5" style="margin-top: 10px;">
-                        <h4>Tags List</h4>
-                        <div class="row">
-                            <!-- <div class="col mt-2 special">
-                                <label class="label-for-check" id="check1">
-                                    <input type="checkbox" class="form-check-input check-with-label" for="check1">
-                                    Hiking</label>
-                            </div> -->
-                            {% for tag in tags %}
-                                <div class="col mt-2">
-                                    <label class="label-for-check" for="tag_{{tag.name}}">
-                                        <input type="checkbox" class="form-check-input check-with-label" name="selected_tags" id="tag_{{tag.name}}"
-                                            style="display: none;" value="{{ tag.name }}">
-                                        {{ tag.name }}</label>
-                                </div>
+                        <div class="form-group col-md-4 my-2">
+                            <label>{{ form.last_name.label }}</label>
+                            {{ form.last_name }}
+                            {% for error in form.last_name.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
                             {% endfor %}
 
-                            <input type="hidden" id="selectedTagsInput" name="selectedTags" value="">
-                            <!-- <div class="col mt-2">
-                                <label class="label-for-check" id="check3">
-                                    <input type="checkbox" class="form-check-input check-with-label" for="check3"
-                                        style="display: none;">
-                                    Designing</label>
-                            </div>
-                            <div class="form-check col mt-2">
-                                <label class="label-for-check" id="check4">
-                                    <input type="checkbox" class="form-check-input check-with-label" for="check4"
-                                        style="display: none;">
-                                    Racing</label>
-
-                            </div> -->
                         </div>
+
+                        <div class="col-md-5">
+                            <label>{{ form.user_email.label }}</label>
+                            {{ form.user_email }}
+                            {% for error in form.user_email.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-md-5">
+                            <label>{{ form.role.label }}</label>
+                            {{ form.role }}
+                            {% for error in form.role.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-md-5 my-2">
+                            <label>{{ form.major.label }}</label>
+                            {{ form.major }}
+                            {% for error in form.major.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="form-group col-md-4 my-2">
+                            <label>{{ form.department.label }}</label>
+                            {{ form.department }}
+                            {% for error in form.department.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="form-group col-md-4 ">
+                            <label>{{ form.funds.label }}</label>
+                            {{ form.funds }}
+                            {% for error in form.funds.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+
+                        <div class="col-md-5">
+                            <label>{{ form.is_admin.label }}</label>
+                            {{ form.is_admin }}
+                            {% for error in form.is_admin.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        {% if form.is_admin.value|get_digit:'1' == 0 %}
+                            <div class="col-md-6 my-3">
+                                <label>{{ club_form.organization.label }} (for Club Admins)</label>
+                                {{ club_form.organization }}
+                                {% for error in club_form.organization.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+
+                        {% endif %}
+
+                        <!-- Tags -->
+                        <div class="col-md-8">
+
+                            <hr class="my-3">
+                            <h4>Edit Tags (at least 1)</h4>
+                        </div>
+
+
+                        <div class="col-md-8">
+                            <label class="mt-2">{{ form.tags.label }}</label>
+                        </div>
+                        <div class="col-md-8">
+                            {% for t in form.tags %}
+                            <div class="mx-2 d-inline">
+                                {{ t }}
+                            </div>
+                            {% endfor %}
+                            {% for error in form.tags.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+
+
                     </div>
-                </div>
+                    <button type="submit"
+                        class="my-3 btn btn-outline-primary rounded-pill float-end px-4 mx-4">Save</button>
+                </form>
             </div>
-            <div class="mt-2 pb-5 text-center"><button class="btn btn-outline-primary rounded-pill " type="submit">Create
-                    Profile</button>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
-<!-- {% endwith %}
-{% endwith %}
-{% endwith %} -->
+
+
+</div>
+
+</div>
 
 </body>
 

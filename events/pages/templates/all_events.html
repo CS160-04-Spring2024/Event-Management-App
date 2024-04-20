@@ -1,24 +1,74 @@
 {% extends 'homebase.html' %}
 {%block content%}
 
+<style>
+
+        .label-for-check-events-all {
+            color: white;
+            cursor: pointer;
+            /* Add pointer cursor for better UX */
+        }
+
+        /* Checked label color */
+        .label-for-check-events-all.checked {
+            color: rgb(247, 242, 93);
+            text-decoration: line-through;
+            font-weight: bold;
+        }
+</style>
+
+
+<script>
+        $(document).ready(function () {
+                // Add click event listener to checkboxes
+                $('.form-check-input-events-all').change(function () {
+                    var checkboxId = $(this).attr('id');
+                    var labelForCheckbox = $('label[for="' + checkboxId + '"]');
+
+                    if ($(this).is(':checked')) {
+                        labelForCheckbox.addClass('checked');
+                    } else {
+                        labelForCheckbox.removeClass('checked');
+                    }
+
+                    $('input[name="selected_tags"]').change(function () {
+                        var selectedTags = $('input[name="selected_tags"]:checked').map(function () {
+                            return this.value;
+                        }).get();
+                        $('#selectedTagsInput').val(selectedTags.join(','));
+                    });
+                });
+            })
+</script>
+
 <div class="wrapper">
     <!-- Sidebar -->
 <nav id="sidebar">
+    <form action="{% url 'all_events' %}" method="post" class="mx-3">
+        {% csrf_token %}
     <div class="sidebar-header">
-        <h3>Filter Options</h3>
+        
+            <h4 class="text-center mt-3">Sort By</h4>
+            <div class="d-flex justify-content-center">
+                <select name="sort" class="form-select-sm mb-3 w-75 rounded-pill" aria-label="">
+                    <option value="1" selected>Most Recent</option>
+                    <option value="2">Least Recent</option>
+                    <!-- <option value="3">Most Relevant by Tag</option> -->
+                </select>
+
+            </div>
+
+        <h4 class="text-center mt-3">Filter Options</h4>
     </div>
 
-    <form action="" class="mx-3">
 
         <div class="my-3 px-2">
             <div class="d-flex align-items-center"><label class="pe-3" id="DepartmentsList">Dept: </label>
-                <input class="form-control-sm shadow-sm" list="dept_list" id="DepartmentsList" placeholder="Type to search...">
+                <input class="form-control-sm rounded-pill" list="dept_list" id="DepartmentsList" placeholder="Type to search..." name="dept">
                 <datalist id="dept_list">
-                    <option value="AAL">
-                    <option value="NYC">
-                    <option value="COMSCI">
-                    <option value="ENGR">
-                    <option value="MUSC">
+                            {% for dept in departments %}
+                            <option value="{{ dept.name }}">
+                                {% endfor %}
                 </datalist>
             </div>
         </div>
@@ -27,24 +77,46 @@
         <div class="my-3">
             <div class="d-flex mb-2">
                 <label for="minPrice" class="pe-2">Min Price:</label>
-                <input class="form-control-sm shadow-sm" type="number" min="0" max="100" step="any" name="" id="minPrice">
+                <input class="form-control-sm" type="number" min="0" max="100" step="any" name="min_price" id="minPrice">
             </div>
             <div class="d-flex">
                 <label for="maxPrice" class="pe-2">Max Price:</label>
-                <input class="form-control-sm shadow-sm" min="0" max="100" step="any"  type="number" name="" id="maxPrice">
+                <input class="form-control-sm" min="0" max="200" step="any"  type="number" name="max_price" id="maxPrice">
             </div>
         </div>
 
         <hr>
         <div class="my-3 mx-auto">
             <label for="earliest">Start Date:</label>
-            <input class="d-md-inline form-control-sm" type="datetime-local" name="" id="earliest">
+            <input class="d-md-inline form-control-sm" type="datetime-local" name="start_date" id="earliest">
         </div>
         <div class="my-3">
             <label for="latest">End Date:</label>
-            <input class="d-md-inline form-control-sm" type="datetime-local" name="" id="latest">
+            <input class="d-md-inline form-control-sm" type="datetime-local" name="end_date" id="latest">
         </div>
-        <button type="submit" class="btn btn-outline-warning rounded-pill">Apply</button>
+
+        <!-- Adding tags to filter -->
+
+        <hr>
+        <div class="row justify-content-center">
+            <!-- {% for tag in tags %}
+            <div class="col mt-2">
+                <label class="label-for-check-events-all" for="tag_{{ tag.name }}">
+                    <input type="checkbox" class="form-check-input-events-all" name="selected_tags" id="tag_{{ tag.name }}"
+                        style="display: none;" value="{{ tag.name }}">
+                    {{ tag.name }}</label>
+            </div>
+            {% endfor %}     -->
+            <select style="height: 150px; width: 70%;" name="selectedTags" id="" multiple>
+                {% for tag in tags %}
+                <option value="{{tag.name}}"> {{ tag.name }} </option>
+                {% endfor %}
+            </select>
+        </div>
+            <!-- <input type="hidden" id="selectedTagsInput" name="selectedTags" value=""> -->
+
+
+        <button type="submit" class="btn btn-outline-warning rounded-pill my-3">Apply</button>
     </form>
     <ul class="list-unstyled">
         <li class="active">
@@ -60,44 +132,46 @@
                 <a class="text-primary" id="sidebarCollapse">Filter</a>
 
 
-                <div class="row mt-4">
+                <div class="row mx-auto">
 
                     <!-- col/card begins -->
-                    <div class="col">
+                    
+                    {% for event in events %}
+                        <div class="col-md-auto col-sm-auto my-auto mt-4">
 
-                            <div class="card position-relative shadow" style="width: 18rem; height: fit-content; border-radius: 10%;">
+                            <div class="card position-relative align-items-stretch shadow" style="width: 15rem; border-radius: 10%;">
                                 <div class="card-body">
-                                    <h6 class="card-title">Competitive Programming</h6>
-                                    <h4 class="card-subtitle mb-2 text-muted">ICPC Intro Session</h4>
+                                    <h6 class="card-title"><a href="{% url 'club' cid=event.organization_id %}" style="text-decoration: none;">{{event.club_name}}</a></h6>
+                                    <h4 class="card-subtitle mb-2 text-muted" style="font-size: large;">{{event.event_name}}</h4>
                                     <div class="col d-flex">
                                         <i class="bi bi-person mx-2"></i>
-                                        <p class="">In-Person</p>
+                                        <p class="">{{event.mode_of_operation}}</p>
                                     </div>
                                     <div class="col d-flex">
                                         <i class="bi bi-clock mx-1"></i>
-                                        <p class="" style="font-size: medium;">Tue 10:00 am - 11:45am</p>
+                                        <p class="" style="font-size: small;">{{event.time}}</p>
                                     </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                <h5><span class="badge rounded-pill bg-success shadow">Machine Learning</span></h5>
-                                            </div>
-                                            <div class="col">
-                                                <h5><span class="badge rounded-pill bg-success shadow">Programming</span></h5>
-                                            </div>
-                                            <div class="col">
-                                                <h5><span class="badge rounded-pill bg-success shadow">AI</span></h5>
-                                            </div>
+                                        <div class="row gap-2">
+                                            {% for tag2 in event.tag_list %}
+                                                <div class="col-md-3">
+                                                    <h5><span class="badge rounded-pill bg-success shadow">{{tag2.tag_id}}</span></h5>
+                                                </div>
+                                            {% endfor %}
                                         </div>
                                     <hr>
-                                    <a href="#" class="stretched-link" style="text-decoration: none;">12 students registered</a>
+                                    <a href="{% url 'event' event_id=event.event_id %}" class="stretched-link" style="text-decoration: none;">{{event.attendees}} people registered</a>
                                 </div>
                 
                             </div>
 
 
-                    </div>
+                        </div>
+                        {% endfor %}
+
+
+
                     <!-- card end/begins -->
-                    <div class="col">
+                    <!-- <div class="col">
 
                             <div class="card position-relative shadow" style="width: 18rem; height: fit-content; border-radius: 10%;">
                                 <div class="card-body">
@@ -195,7 +269,7 @@
                             </div>
 
 
-                    </div>
+                    </div> -->
 
                 </div>
         </div>

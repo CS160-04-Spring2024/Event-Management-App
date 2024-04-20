@@ -48,39 +48,13 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.google",
     "startup",
     "pages",
+    "club_admin",
     "bootstrap5",
-    "fontawesomefree",
-    'tinymce',
     'django_quill',
     'ckeditor'
 ]
 
-# TINYMCE_JS_URL = 'https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js'
-# TINYMCE_COMPRESSOR = False
 
-
-# QUILL_CONFIGS = {
-#     'default': {
-#         'theme': 'snow',
-#         'modules': {
-#             'syntax': True,
-#             'toolbar': [
-#                 [
-#                     {'font': []},
-#                     {'header': []},
-#                     {'align': []},
-#                     'bold', 'italic', 'underline', 'strike', 'blockquote',
-#                     {'color': []},
-#                 ],
-#                 ['code-block'],
-#                 ['clean'],
-#             ],
-#             "resize": {
-#                 "locale": {},
-#             },
-#         },
-#     }
-# }
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
 AUTHENTICATION_BACKENDS = [
@@ -154,7 +128,7 @@ ROOT_URLCONF = "events.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, 'startup', 'templates'), os.path.join(BASE_DIR, 'pages', 'templates')],
+        "DIRS": [os.path.join(BASE_DIR, 'startup', 'templates'), os.path.join(BASE_DIR, 'pages', 'templates'), os.path.join(BASE_DIR, 'club_admin', 'templates')],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -223,5 +197,6 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

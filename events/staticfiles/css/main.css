@@ -1,0 +1,176 @@
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            overflow-x: hidden;
+        }
+
+        .nav-link {
+            color: rgb(60, 102, 217);
+            font-weight: 500;
+            font-size: 1.05rem;
+            opacity: 90%;
+        }
+
+        .nav-link:hover {
+            text-decoration: underline;
+        }
+
+        .navbar-brand {
+            color: rgb(60, 102, 217);
+            font-weight: 600;
+            font-size: 1.86rem;
+            opacity: 95%;
+        }
+
+        .purple-bg {
+            background-color: rgb(60, 102, 217);
+            /* Purple background color */
+            opacity: 0.7;
+            min-height: 100vh;
+            padding-top: 80px;
+            /* Space for navbar */
+            padding-bottom: 180px;
+            position: relative;
+        }
+
+        .user-content {
+            background-color: #efebeb;
+            /* White content area */
+            border-radius: 10px;
+            padding-top: 30px;
+            min-height: 80vh;
+            position: relative;
+            top: 20px;
+            right: 0;
+            left: 0;
+        }
+
+
+
+        .wrapper {
+            display: flex;
+            align-items: stretch;
+        }
+
+        #sidebar {
+            background: #7386D5;
+            color: #fff;
+            transition: all 0.3s;
+            min-width: 350px;
+            max-width: 350px;
+            min-height: 100vh;
+            box-shadow: 15px 15px 20px 30px;
+        }
+
+        #sidebarCollapse:hover {
+            cursor: pointer;
+        }
+
+
+        #sidebar.active {
+            margin-left: -350px;
+        }
+
+        a[data-toggle="collapse"] {
+            position: relative;
+        }
+
+        .dropdown-toggle::after {
+            display: block;
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+        }
+
+        @media (max-width: 768px) {
+            #sidebar {
+                margin-left: -350px;
+            }
+
+            #sidebar.active {
+                margin-left: 0;
+            }
+        }
+
+
+        /* Subnavbar */
+
+        /* The subnavigation menu */
+        .subnav {
+            float: left;
+            overflow: hidden;
+        }
+
+        /* Subnav button */
+        .subnav .subnavbtn {
+            font-size: 16px;
+            border: none;
+            outline: none;
+            /* color: inherit; */
+            /* padding: 14px 16px; */
+            /* background-color: inherit; */
+            font-family: inherit;
+            margin: 0;
+        }
+
+        /* Style the subnav content - positioned absolute */
+        .subnav-content {
+            display: none;
+            position: absolute;
+            left: 0;
+            padding-top: 0.3%;
+            background-color: rgb(60, 102, 217);
+            width: 100%;
+            height: 40px;
+            z-index: 1;
+        }
+
+        /* Style the subnav links */
+        .subnav-content a {
+            margin-left: 1rem;
+            color: white;
+            text-decoration: none;
+
+        }
+
+        /* Add a grey background color on hover */
+        .subnav-content a:hover {
+            text-decoration: underline;
+
+        }
+
+        /* When you move the mouse over the subnav container, open the subnav content */
+        .subnav:hover .subnav-content {
+            display: block;
+        }
+
+
+        /* .label-for-check{
+            color: grey;
+        }
+
+        .form-check-input:checked + .label-for-check{
+            color: rgb(60, 102, 217);
+            text-decoration: line-through;
+            font-weight: bold;
+        } */
+        .label-for-check {
+            color: grey;
+            cursor: pointer;
+            /* Add pointer cursor for better UX */
+        }
+
+        /* Checked label color */
+        .label-for-check.checked {
+            color: rgb(60, 102, 217);
+            text-decoration: line-through;
+            font-weight: bold;
+        }

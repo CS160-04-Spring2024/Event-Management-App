@@ -2,83 +2,167 @@
 {% block content %}
 <!-- https://www.terrainhopperusa.com/wp-content/uploads/2019/01/avatar-woman.png -->
 
+<style>
+    .label-for-check {
+        color: black;
+        cursor: pointer;
+        /* Add pointer cursor for better UX */
+    }
+
+    /* Checked label color */
+    .label-for-check.checked {
+        color: rgb(60, 102, 217);
+        text-decoration: line-through;
+        font-weight: bold;
+    }
+</style>
+
+
+<script>
+    $(document).ready(function () {
+        // Add click event listener to checkboxes
+        $('.form-check-input').change(function () {
+            var checkboxId = $(this).attr('id');
+            var labelForCheckbox = $('label[for="' + checkboxId + '"]');
+
+            if ($(this).is(':checked')) {
+                labelForCheckbox.addClass('checked');
+            } else {
+                labelForCheckbox.removeClass('checked');
+            }
+
+            $('input[name="selected_tags"]').change(function () {
+                var selectedTags = $('input[name="selected_tags"]:checked').map(function () {
+                    return this.value;
+                }).get();
+                $('#selectedTagsInput').val(selectedTags.join(','));
+            });
+        });
+    })
+</script>
+
 <div class="purple-bg">
-    <div class="d-flex flex-column align-items-center" style="position: absolute; margin-top: -100px; z-index: 99; margin-left: 50px;"><img class="rounded-circle mt-5" width="190px" height="200px"
-            src="https://www.terrainhopperusa.com/wp-content/uploads/2019/01/avatar-woman.png"></div>
-    <div class="user-content">
-        <h1 class="text-center" style="padding-top: 40px;">User Profile</h1>
-        <form action="">
-            <div class="row justify-content-center">
-                <div class="col-md-5">
-                    <div class="p-3 py-5">
-                        <div class="mb-3">
-                            <h4>Profile Settings</h4>
+
+<div class="row justify-content-center" style="padding-top: 1rem">
+    <div class="col-md-5">
+        <div class="card " style="border-radius: 37px;">
+            <div class="card-header text-center">Edit Profile Details</div>
+            <div class="card-body">
+                <form action="{% url 'profile' %}" method="POST" class="">
+                    <div class="row justify-content-center">
+                        {% csrf_token %}
+                        
+                        <div class="col-md-4 my-2">
+                            <label>{{ form.first_name.label }}</label>
+                            {{ form.first_name }}
+                            {% for error in form.first_name.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
                         </div>
-                        <div class="row mt-2">
-                            <div class="col-md-6"><label class="">Name</label><input type="text" class="form-control rounded-pill shadow-sm"
-                                    placeholder="first name" value=""></div>
-                            <div class="col-md-6"><label class="">Surname</label><input type="text" class="form-control rounded-pill shadow-sm"
-                                    value="" placeholder="Last Name"></div>
+                        
+                        
+                        <div class="form-group col-md-4 my-2">
+                            <label>{{ form.last_name.label }}</label>
+                            {{ form.last_name }}
+                            {% for error in form.last_name.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                            
                         </div>
-                        <div class="row mt-3">
-                            <div class="col-md-12"><label class="">Major</label>
-                    <input class="form-control shadow-sm" list="datalistOptions" id="exampleDataList" placeholder="Type to search...">
-                    <datalist id="datalistOptions">
-                        <option value="San Francisco">
-                        <option value="New York">
-                        <option value="Seattle">
-                        <option value="Los Angeles">
-                        <option value="Chicago">
-                    </datalist>
+
+                        <div class="col-md-5">
+                            <label>{{ form.user_email.label }}</label>
+                            {{ form.user_email }}
+                            {% for error in form.user_email.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-md-5">
+                            <label>{{ form.role.label }}</label>
+                            {{ form.role }}
+                            {% for error in form.role.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-md-5 my-2">
+                            <label>{{ form.major.label }}</label>
+                            {{ form.major }}
+                            {% for error in form.major.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="form-group col-md-4 my-2">
+                            <label>{{ form.department.label }}</label>
+                            {{ form.department }}
+                            {% for error in form.department.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="form-group col-md-4 ">
+                            <label>{{ form.funds.label }}</label>
+                            {{ form.funds }}
+                            {% for error in form.funds.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+
+                        <div class="col-md-5">
+                            <label>{{ form.is_admin.label }}</label>
+                            {{ form.is_admin }}
+                            {% for error in form.is_admin.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+
+                        <!-- Tags -->
+                        <div class="col-md-8">
+
+                            <hr class="my-3">
+                            <h4>Edit Tags (at least 1)</h4>
+                        </div>
+
+
+                        <div class="col-md-8">
+                            <label class="mt-2">{{ form.tag.label }}</label>
+                        </div>
+                        <div class="col-md-8">
+                            {% for t in form.tags %}
+                            <div class="mx-2 d-inline">
+                                {{ t }}
                             </div>
-                            <div class="col-md-12"><label class="" id="DepartmentsList">Departments</label>
-                            <input class="form-control shadow-sm" list="dept_list" id="DepartmentsList" placeholder="Type to search...">
-                            <datalist id="dept_list">
-                                <option value="AAL">
-                                <option value="NYC">
-                                <option value="COMSCI">
-                                <option value="ENGR">
-                                <option value="MUSC">
-                            </datalist>
-                                </div>
+                            {% endfor %}
+                            {% for error in form.tag.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+
 
                     </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="p-3 py-5" style="margin-top: 10px;">
-                        <h4>Edit Tags List</h4>
-                        <div class="row">
-                            <div class="col mt-2 special">
-                                <label class="label-for-check" id="check1">
-                                    <input type="checkbox" class="form-check-input check-with-label" for="check1">
-                                    Hiking</label>
-                                    </div>
-                            <div class="col mt-2">
-                                <label class="label-for-check" id="check2">
-                                <input type="checkbox" class="form-check-input check-with-label" for="check2" style="display: none;">
-                                Pokemon</label>
-                                </div>
-                            <div class="col mt-2">
-                                <label class="label-for-check" id="check3">
-                                    <input type="checkbox" class="form-check-input check-with-label" for="check3" style="display: none;">
-                                    Designing</label>
-                                </div>
-                            <div class="form-check col mt-2">
-                                <label class="label-for-check" id="check4">
-                                    <input type="checkbox" class="form-check-input check-with-label" for="check4" style="display: none;">
-                                    Racing</label>
-                                
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                        <div class="mt-2 pb-5 text-center"><button class="btn btn-outline-primary rounded-pill " type="button">Save
-                                Profile</button>
-                        </div>
-        </form>
+                    <button type="submit"
+                        class="my-3 btn btn-outline-primary rounded-pill float-end px-4 mx-4">Save</button>
+                </form>
+            </div>
+        </div>
     </div>
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
 </div>
 
 {% endblock %}

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="/Users/ejiroigun/Desktop/Event-Management-App/Event-Management-App/events/db.sqlite3" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="2629"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,20:mainaccount_emailaddress"/><default_encoding codec=""/><browse_table_settings/></tab_browse><tab_sql><sql name="SQL 1">-- INSERT  INTO department (name) VALUES(&quot;CS&quot;),(&quot;ENGR&quot;),(&quot;MUSC&quot;),(&quot;ART&quot;),(&quot;BUS1&quot;),(&quot;KIN&quot;)
+--INSERT INTO pages_tag (name) VALUES (&quot;coding&quot;),(&quot;sports&quot;),(&quot;extracurricular&quot;),(&quot;chill&quot;),(&quot;technical&quot;)
+-- INSERT INTO location (building_name,address,image) VALUES(&quot;Boccardo Business&quot;, &quot;1 Washington Sq, San Jose, CA 95112&quot;,&quot;https://www.sjsu.edu/mgmt/pics/BBC%20Building.jpg&quot;)
+-- Insert statement for Organization 3 with double-quotes
+--INSERT INTO organization (name, description, location_id, banner, club_logo, members, department_id, email, website_link)
+--VALUES (&quot;Innovation Hub&quot;, &quot;Empowering creativity and innovation in technology.&quot;, 1, &quot;https://as2.ftcdn.net/v2/jpg/02/09/19/15/1000_F_209191528_GYzxi0vEm0fV8oyqIWbmkgEM2BH4X47e.jpg&quot;, &quot;https://media.licdn.com/dms/image/C560BAQGRZzF33Ji0dg/company-logo_200_200/0/1630667094779/sjsumlclub_logo?e=1720051200&amp;v=beta&amp;t=G5IvvlTtCNLZGnpV1Nis_b4BKm6OW6d-1MOswkE4by0&quot;, 30, &quot;CS&quot;, &quot;innovationhub@example.com&quot;, &quot;https://example.com&quot;)
+
+-- Insert statement for Organization 4 with double-quotes
+--INSERT INTO organization (name, description, location_id, banner, club_logo, members, department_id, email, website_link)
+--VALUES (&quot;Tech Wizards&quot;, &quot;Exploring the magic of technology and programming.&quot;, 1, &quot;https://as2.ftcdn.net/v2/jpg/02/09/19/15/1000_F_209191528_GYzxi0vEm0fV8oyqIWbmkgEM2BH4X47e.jpg&quot;, &quot;https://media.licdn.com/dms/image/C560BAQGRZzF33Ji0dg/company-logo_200_200/0/1630667094779/sjsumlclub_logo?e=1720051200&amp;v=beta&amp;t=G5IvvlTtCNLZGnpV1Nis_b4BKm6OW6d-1MOswkE4by0&quot;, 25, &quot;CS&quot;, &quot;techwizards@example.com&quot;, &quot;https://example.com&quot;)
+
+--INSERT INTO organization (name, description, location_id, banner, club_logo, members, department_id, email, website_link)
+--VALUES (&quot;Robotics Society&quot;, &quot;Exploring the world of robotics and automation.&quot;, 1, &quot;https://as2.ftcdn.net/v2/jpg/02/09/19/15/1000_F_209191528_GYzxi0vEm0fV8oyqIWbmkgEM2BH4X47e.jpg&quot;, &quot;https://media.licdn.com/dms/image/C560BAQGRZzF33Ji0dg/company-logo_200_200/0/1630667094779/sjsumlclub_logo?e=1720051200&amp;v=beta&amp;t=G5IvvlTtCNLZGnpV1Nis_b4BKm6OW6d-1MOswkE4by0&quot;, 40, &quot;ENGR&quot;, &quot;robotics@example.com&quot;, &quot;https://example.com&quot;)
+
+--INSERT INTO organization (name, description, location_id, banner, club_logo, members, department_id, email, website_link)
+--VALUES (&quot;AI Enthusiasts&quot;, &quot;Exploring artificial intelligence and machine learning.&quot;, 1, &quot;https://as2.ftcdn.net/v2/jpg/02/09/19/15/1000_F_209191528_GYzxi0vEm0fV8oyqIWbmkgEM2BH4X47e.jpg&quot;, &quot;https://media.licdn.com/dms/image/C560BAQGRZzF33Ji0dg/company-logo_200_200/0/1630667094779/sjsumlclub_logo?e=1720051200&amp;v=beta&amp;t=G5IvvlTtCNLZGnpV1Nis_b4BKm6OW6d-1MOswkE4by0&quot;, 35, &quot;ENGR&quot;, &quot;ai@example.com&quot;, &quot;https://example.com&quot;)
+
+
+-- Insert statement for Event 1
+-- INSERT INTO event (event_name, description, mode_of_operation, location_id, start_time, end_time, fees, organization_id, event_image)
+-- VALUES ('Tech Summit 2024', 'A conference on the latest technology trends and innovations.', 'In-Person', 1, '2024-06-15 09:00:00', '2024-06-16 18:00:00', 50.00, 1, 'https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?q=80&amp;w=2940&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')
+-- 
+-- -- Insert statement for Event 2
+-- INSERT INTO event (event_name, description, mode_of_operation, location_id, start_time, end_time, fees, organization_id, event_image)
+-- VALUES ('AI Workshop Series', 'A series of workshops on artificial intelligence and machine learning.', 'In-Person', 1, '2024-07-10 13:00:00', '2024-07-12 17:00:00', 25.00, 2, 'https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?q=80&amp;w=2940&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')
+-- 
+-- -- Insert statement for Event 3
+-- INSERT INTO event (event_name, description, mode_of_operation, location_id, start_time, end_time, fees, organization_id, event_image)
+-- VALUES ('Hackathon 2024', 'A coding marathon to build innovative solutions.', 'In-Person', 1, '2024-08-20 10:00:00', '2024-08-22 15:00:00', 40.00, 3, 'https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?q=80&amp;w=2940&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')
+-- 
+-- -- Insert statement for Event 4
+-- INSERT INTO event (event_name, description, mode_of_operation, location_id, start_time, end_time, fees, organization_id, event_image)
+-- VALUES ('Data Science Symposium', 'A symposium on data science applications and best practices.', 'In-Person', 1, '2024-09-15 11:00:00', '2024-09-16 17:00:00', 30.00, 4, 'https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?q=80&amp;w=2940&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')
+
+--INSERT INTO major (major_name, department_id) VALUES (&quot;Data Science&quot;, &quot;CS&quot;), (&quot;Digital Media&quot;, &quot;Art&quot;),(&quot;Computer Science&quot;,&quot;CS&quot;),(&quot;Sports and Medicine&quot;,&quot;KIN&quot;)
+</sql><current_tab id="0"/></tab_sql></sqlb_project>

@@ -26,7 +26,8 @@ urlpatterns = [
     # path('tinymce/', include('tinymce.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('', include('startup.urls')),
-    path('', include('pages.urls'))
+    path('', include('pages.urls')),
+    path('', include('club_admin.urls')),
     # path('accounts/logout/', include('allauth.urls')),
     # path('accounts/', include('allauth.socialaccount.urls')),
     # path('accounts/login/', TemplateView.as_view(
