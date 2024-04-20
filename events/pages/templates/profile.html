@@ -1,0 +1,168 @@
+{% extends 'homebase.html' %}
+{% block content %}
+<!-- https://www.terrainhopperusa.com/wp-content/uploads/2019/01/avatar-woman.png -->
+
+<style>
+    .label-for-check {
+        color: black;
+        cursor: pointer;
+        /* Add pointer cursor for better UX */
+    }
+
+    /* Checked label color */
+    .label-for-check.checked {
+        color: rgb(60, 102, 217);
+        text-decoration: line-through;
+        font-weight: bold;
+    }
+</style>
+
+
+<script>
+    $(document).ready(function () {
+        // Add click event listener to checkboxes
+        $('.form-check-input').change(function () {
+            var checkboxId = $(this).attr('id');
+            var labelForCheckbox = $('label[for="' + checkboxId + '"]');
+
+            if ($(this).is(':checked')) {
+                labelForCheckbox.addClass('checked');
+            } else {
+                labelForCheckbox.removeClass('checked');
+            }
+
+            $('input[name="selected_tags"]').change(function () {
+                var selectedTags = $('input[name="selected_tags"]:checked').map(function () {
+                    return this.value;
+                }).get();
+                $('#selectedTagsInput').val(selectedTags.join(','));
+            });
+        });
+    })
+</script>
+
+<div class="purple-bg">
+
+<div class="row justify-content-center" style="padding-top: 1rem">
+    <div class="col-md-5">
+        <div class="card " style="border-radius: 37px;">
+            <div class="card-header text-center">Edit Profile Details</div>
+            <div class="card-body">
+                <form action="{% url 'profile' %}" method="POST" class="">
+                    <div class="row justify-content-center">
+                        {% csrf_token %}
+                        
+                        <div class="col-md-4 my-2">
+                            <label>{{ form.first_name.label }}</label>
+                            {{ form.first_name }}
+                            {% for error in form.first_name.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        
+                        
+                        <div class="form-group col-md-4 my-2">
+                            <label>{{ form.last_name.label }}</label>
+                            {{ form.last_name }}
+                            {% for error in form.last_name.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                            
+                        </div>
+
+                        <div class="col-md-5">
+                            <label>{{ form.user_email.label }}</label>
+                            {{ form.user_email }}
+                            {% for error in form.user_email.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-md-5">
+                            <label>{{ form.role.label }}</label>
+                            {{ form.role }}
+                            {% for error in form.role.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-md-5 my-2">
+                            <label>{{ form.major.label }}</label>
+                            {{ form.major }}
+                            {% for error in form.major.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="form-group col-md-4 my-2">
+                            <label>{{ form.department.label }}</label>
+                            {{ form.department }}
+                            {% for error in form.department.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="form-group col-md-4 ">
+                            <label>{{ form.funds.label }}</label>
+                            {{ form.funds }}
+                            {% for error in form.funds.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+
+                        <div class="col-md-5">
+                            <label>{{ form.is_admin.label }}</label>
+                            {{ form.is_admin }}
+                            {% for error in form.is_admin.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+
+                        <!-- Tags -->
+                        <div class="col-md-8">
+
+                            <hr class="my-3">
+                            <h4>Edit Tags (at least 1)</h4>
+                        </div>
+
+
+                        <div class="col-md-8">
+                            <label class="mt-2">{{ form.tag.label }}</label>
+                        </div>
+                        <div class="col-md-8">
+                            {% for t in form.tags %}
+                            <div class="mx-2 d-inline">
+                                {{ t }}
+                            </div>
+                            {% endfor %}
+                            {% for error in form.tag.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+
+
+                    </div>
+                    <button type="submit"
+                        class="my-3 btn btn-outline-primary rounded-pill float-end px-4 mx-4">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+</div>
+
+{% endblock %}

@@ -1,1 +1,6 @@
 env
+.env
+*.sqlite3
+*.sqbpro
+
+node_modules

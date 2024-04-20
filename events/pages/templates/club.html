@@ -1,0 +1,103 @@
+{% extends 'homebase.html' %}
+{% block content %}
+
+<!-- https://tecnico.ulisboa.pt/files/2021/05/cientistas-do-tecnico-voltam-a-estar-em-destaque-no-ranking-dos-melhores-do-mundo-em-ciencias-da-computacao.jpg -->
+<!-- https://media.licdn.com/dms/image/C560BAQGRZzF33Ji0dg/company-logo_200_200/0/1630667094779/sjsumlclub_logo?e=1720051200&v=beta&t=G5IvvlTtCNLZGnpV1Nis_b4BKm6OW6d-1MOswkE4by0 -->
+<!-- https://as2.ftcdn.net/v2/jpg/02/09/19/15/1000_F_209191528_GYzxi0vEm0fV8oyqIWbmkgEM2BH4X47e.jpg -->
+
+<div class="" style="width: 100%; height: fit-content;">
+<img src="{{club.banner}}" height="300px" width="100%" alt="" style="background-size:contain;"></div>
+<div class="container-fluid mb-5 mx-5">
+    <div class="row mt-2">
+        <div class="col-md-2">
+            <img src="{{club.club_logo}}" alt="" height="150px">
+        </div>
+        <div class="col-md-4 mt-5">
+            <h3>{{club.name}}</h3>
+            <div class="d-flex">
+                <i class="bi bi-people h4"></i>
+                <h6 class="">{{club.members}} members</h6>
+            </div>
+        </div>
+    </div>
+
+    <!-- divider -->
+
+    <hr class="my-3">
+
+    <div class="row gap-5">
+        <div class="col-md-6">
+            <h3>About Us</h3>
+            <p class="mt-3">{{club.description}}</p>
+            
+            <!-- Contact Info -->
+        <hr class="col-md-12 my-3">
+        <h2>Contact Us!</h2>
+        <p>Here are some links you can use to get in contact with us</p>
+        <div class="row gap-2">
+            <!-- <div class="col d-flex gap-1">
+                <i class="bi bi-linkedin"></i>
+                <a href="#" style="text-decoration: none;">{{club.linkedin}}</a>
+            </div> -->
+            <div class=" col d-flex gap-1">
+                <i class="bi bi-envelope"></i>
+                <a href="{{club.email}}" style="text-decoration: none;">{{club.email}}</a>
+            </div>
+            <div class="col d-flex gap-1">
+                <i class="bi bi-browser-chrome"></i>
+                <a href="{{club.website}}" style="text-decoration: none;">{{club.website_link}}</a>
+            </div>
+
+        </div>
+
+
+        <!-- Other Events -->
+        <hr class="col-md-12 my-3">
+        <h2>Our Incoming Events</h2>
+        <div class="d-flex gap-3">
+            {% for event in events %}
+                <div class="card position-relative" style="width: 18rem; height: fit-content; border-radius: 10%;">
+                    <div class="card-body">
+                        <h6 class="card-title">{{event.club_name}}</h6>
+                        <h4 class="card-subtitle mb-2 text-muted">{{event.event_name}}</h4>
+                        <div class="col d-flex">
+                            <i class="bi bi-person mx-2"></i>
+                            <p class="">{{event.mode_of_operation}}</p>
+                        </div>
+                        <div class="col d-flex">
+                            <i class="bi bi-clock mx-1"></i>
+                            <p class="" style="font-size: medium;">{{event.time}}</p>
+                        </div>
+                        <hr>
+                        <a href="{% url 'event' event_id=event.event_id %}" class="stretched-link" style="text-decoration: none;">{{event.attendance}} people registered</a>
+                    </div>
+            
+                </div>
+
+            {% endfor %}
+
+            <!-- Second Card -->
+        </div>
+
+        </div>
+
+
+<!-- Location and more -->
+
+        <div class="col-md-4">
+                <img src="{{ location.image }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Meeting Area</h5>
+                    <p class="card-text">{{location.building_name}}</p>
+                    <img src="{{ location.sjsu_roadmap_image }}" class="card-img-top" alt="...">
+                    <a href="#" class="btn btn-primary">Take Me There</a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+{% endblock %}
