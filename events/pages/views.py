@@ -37,8 +37,8 @@ def datetime_to_string(start_date, end_date):
 
 
 def test(request):
-    person = User.objects.filter(pk=request.user.email).values()
-    return render(request, 'homebase.html', {'is_admin': person[0]['is_admin']})
+    # person = User.objects.filter(pk=request.user.email).values()
+    return render(request, 'homebase.html', {'is_admin': User.objects.filter(pk=request.user.email).values()[0]['is_admin']})
 
 
 def main_page(request):
@@ -125,7 +125,7 @@ def profile(request):
 
             return HttpResponseRedirect(reverse('real_homepage'))
 
-    return render(request, 'profile.html', {'form': profile_form})
+    return render(request, 'profile.html', {'form': profile_form, 'is_admin': User.objects.filter(pk=request.user.email).values()[0]['is_admin']})
 
 
 @api_view(['GET', 'POST'])
@@ -174,7 +174,7 @@ def event(request, event_id):
 
         current_tags = event['tag_list']
         all_events = Event.objects.all().values()
-        print(event)
+        # print(event)
 
         similar_values = []
         for eve in all_events:
@@ -184,15 +184,16 @@ def event(request, event_id):
 
         club = Organization.objects.filter(
             pk=event['organization_id']).values()
+
         location = Location.objects.filter(pk=event['location_id']).values()
         registered = Registration.objects.filter(
             user_email=request.user.email, event=event_id).exists()
-        print(registered)
+        # print(registered)
         '''
         , 'club': club[0], 'location': location, 'similar_events': similar_events, 'registered': registered, 'event_tags': tags, 'time': event_time
         '''
 
-        return render(request, 'event.html', {'event': event, 'similar_values': similar_values[:3], 'club': club[0], 'location': location[0], 'registered': registered})
+        return render(request, 'event.html', {'event': event, 'similar_values': similar_values[:3], 'club': club[0], 'location': location[0], 'registered': registered, 'is_admin': User.objects.filter(pk=request.user.email).values()[0]['is_admin']})
 
     if request.method == 'POST':
         if request.POST.get('register'):
@@ -230,7 +231,7 @@ def club(request, cid):
         location = Location.objects.filter(
             location_id=club[0]['location_id']).values()
 
-        return render(request, 'club.html', {'club': club[0], 'events': all_club_events, 'location': location[0]})
+        return render(request, 'club.html', {'club': club[0], 'events': all_club_events, 'location': location[0], 'is_admin': User.objects.filter(pk=request.user.email).values()[0]['is_admin']})
 
     return HttpResponse('Some Error has occured')
 
@@ -258,7 +259,7 @@ def user_events(request):
             new_event = Event.objects.get(pk=event['event_id'])
             event['tag_list'] = new_event.tags.all()
 
-        return render(request, 'all_events.html', {'events': all_events, 'departments': departments, 'tags': tags})
+        return render(request, 'all_events.html', {'events': all_events, 'departments': departments, 'tags': tags, 'is_admin': User.objects.filter(pk=request.user.email).values()[0]['is_admin']})
 
 
 def delete_user_event(request, event_id):
@@ -272,7 +273,7 @@ def all_clubs(request):
     if request.method == 'GET':
         all_clubs = Organization.objects.all()
 
-        return render(request, 'all_clubs.html', {'clubs': all_clubs, 'tags': tags, 'departments': departments})
+        return render(request, 'all_clubs.html', {'clubs': all_clubs, 'tags': tags, 'departments': departments, 'is_admin': User.objects.filter(pk=request.user.email).values()[0]['is_admin']})
 
 
 @api_view(['GET', 'POST'])
@@ -334,7 +335,7 @@ def all_events(request):
         # return redirect(reverse('all_events') )
     departments = Department.objects.all()
     all_tags = Tag.objects.all()
-    return render(request, 'all_events.html', {'events': all_events, 'departments': departments, 'tags': all_tags})
+    return render(request, 'all_events.html', {'events': all_events, 'departments': departments, 'tags': all_tags, 'is_admin': User.objects.filter(pk=request.user.email).values()[0]['is_admin']})
 
 
 # search page

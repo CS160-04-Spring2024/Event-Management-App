@@ -60,7 +60,7 @@ class EventForm(forms.ModelForm):
         tag = self.cleaned_data.get('tags')
         print(tag)
         # print(datetime.datetime.now(datetime.timezone.utc).astimezone().tzinfo)
-        if start_time < datetime.datetime.now(datetime.timezone.utc):
+        if end_time < datetime.datetime.now(datetime.timezone.utc):
             raise forms.ValidationError('selected start time is invalid')
 
         if start_time >= end_time:
