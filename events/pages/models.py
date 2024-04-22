@@ -148,11 +148,26 @@ class Major(models.Model):
 #     content = RichTextField()
 # Create your models here.
 
+# <<<<<<< Jae2
+# class eventPanel:
+#     title: str
+#     eventName: str
+#     meetingOption: str
+#     meetingTime: str
+#     meetingAttributes: list
 
-# class ClubDepartment(models.Model):
-#     club_id = models.ForeignKey('Organization', on_delete=models.CASCADE)
-#     department = models.ForeignKey('Department', on_delete=models.CASCADE)
+# class searchData:
+#     title: str
+#     event: str
+#     club: str
+#     department: str
+# =======
 
-#     class Meta:
-#         db_table = 'club_department'
-#         unique_together = (('club_id', 'department'))
+# # class ClubDepartment(models.Model):
+# #     club_id = models.ForeignKey('Organization', on_delete=models.CASCADE)
+# #     department = models.ForeignKey('Department', on_delete=models.CASCADE)
+
+# #     class Meta:
+# #         db_table = 'club_department'
+# #         unique_together = (('club_id', 'department'))
+>#>>>>>> main
