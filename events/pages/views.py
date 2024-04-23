@@ -246,13 +246,23 @@ def user_events(request):
         all_registered = Registration.objects.filter(user_email=email).values()
         departments = Department.objects.all()
         tags = Tag.objects.all()
+        user_tag = request.GET.get('tag')
 
         all_events = [Event.objects.filter(
-            pk=reg['event']) for reg in all_registered]
+            pk=reg['event_id']).values()[0] for reg in all_registered]
+
+        if user_tag:
+            new_events = []
+
+            for event in all_events:
+                new_event = Event.objects.get(pk=event['event_id'])
+                if new_event.tags.exists() and user_tag in new_event.tags:
+                    new_events.append(event)
+            all_events = new_events
 
         all_events = extra_event_params(all_events)
 
-        return render(request, 'all_events.html', {'events': all_events, 'departments': departments, 'tags': tags, 'is_admin': User.objects.filter(pk=request.user.email).values()[0]['is_admin']})
+    return render(request, 'registered.html', {'events': all_events, 'departments': departments, 'tags': tags, 'is_admin': User.objects.filter(pk=request.user.email).values()[0]['is_admin']})
 
 
 def delete_user_event(request, event_id):
