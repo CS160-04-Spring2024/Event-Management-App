@@ -1,0 +1,35 @@
+{% extends 'homebase.html' %}
+{% block content %}
+
+<div class="purple-bg">
+    <!-- white overlay for content -->
+    <div class="row justify-content-center" style="padding-top: 1rem">
+        <div class="col-md-7">
+            <div class="card " style="border-radius: 37px;">
+                <div class="card-header text-center"><h3 style="margin: auto;">Welcome to the admin dashboard</h3></div>
+                <hr>
+                <!-- col/card begins -->
+                    <div class="container">
+                        <div class="row">
+                            {% for club in clubs %} <!--display clubs user is admin of-->
+                            <div class="col">
+                                <div class="card position-relative shadow" style="width: 18rem; height: fit-content; border-radius: 10%; color: yellow; margin: auto;">
+                                    <div class="card-body">
+                                        <h4 class="card-subtitle mb-2 text-muted" style="text-align: center;">{{club.name}}</h4>
+                                        <hr>
+                                        <a href="{% url 'adminDashClub' club.name %}" class="stretched-link" style="text-decoration: none;"></a>
+                                        <button type="submit" class="btn btn-outline-warning rounded-pill" style="width: 25vh; margin: auto;">Edit Club</button>
+                                        <!--select club, render page with the events of that club-->
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                <div class="card-body"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
