@@ -6,7 +6,42 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 
 # Create your views here.
+def admin_dash(request):
+    club1 = dummyClub()
+    club1.name = 'SJSU Gaming'
 
+    club2 = dummyClub()
+    club2.name = 'Innovators Club'
+
+    clubs = [club1, club2]
+
+    return render(request, 'admin_dash.html', {'clubs': clubs})
+
+def admin_dash_club(request, club):
+    gamingEvent1 = dummyEvent()
+    gamingEvent1.name = 'Val Tournament'
+
+    gamingEvent2 = dummyEvent()
+    gamingEvent2.name = 'LoL Tournament'
+
+    gamingEvent3 = dummyEvent()
+    gamingEvent3.name = 'Movie Night'
+
+    innovatorsEvent1 = dummyEvent()
+    innovatorsEvent1.name = 'AI Meeting'
+
+    innovatorsEvent2 = dummyEvent()
+    innovatorsEvent2.name = 'Fullstack Meeting'
+    events = []
+
+    if club == 'SJSU Gaming':
+        events = [gamingEvent1, gamingEvent2, gamingEvent3]
+        print("gaming club active")
+    elif club == 'Innovators Club':
+        events = [innovatorsEvent1, innovatorsEvent2]
+        print("inno club active")
+
+    return render(request, 'admin_dash_club.html', {'club': club, 'events': events})
 
 def edit_event(request, event_id):
     if request.method == 'GET':

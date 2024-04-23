@@ -1,0 +1,52 @@
+{% extends 'homebase.html' %}
+{% block content %}
+
+<div class="purple-bg">
+    <!-- white overlay for content -->
+    <div class="row justify-content-center" style="padding-top: 1rem">
+        <div class="col-md-7">
+            <div class="card " style="border-radius: 37px;">
+                <div class="card-header text-center">{{club}} Events</div>
+                <hr>
+                <!-- col/card begins -->
+                    <div class="container">
+                        <button type="submit" class="btn btn-outline-warning rounded-pill" style="width: 25vh;">Create an Event</button>
+                        <hr>
+                        <div class="row">
+                            {% for event in events %}
+                            <div class="col">
+                                <div class="card position-relative shadow" style="width: 18rem; height: fit-content; border-radius: 10%; margin: auto; padding-bottom: 2vh;">
+                                    <div class="card-body">
+                                        <h4 class="card-subtitle mb-2 text-muted">{{event.name}}</h4>
+                                        <div class="col d-flex">
+                                            <i class="bi bi-clock mx-1"></i>
+                                            <p class="" style="font-size: medium;">Tue 10:00 am - 11:45am</p>
+                                        </div>
+                                        <div class="col d-flex">
+                                            <i class="bi bi-person mx-2"></i>
+                                            <p class="">In-Person</p>
+                                        </div>
+                                        <div class="col d-flex">
+                                            <p class="" style="font-size: medium;">Extra data</p>
+                                        </div>
+                                        <hr>
+                                        <a href="" class="stretched-link" style="text-decoration: none;"></a>
+                                        <!--select club, render page with the events of that club-->
+                                    </div>
+                                    <button type="submit" class="btn btn-outline-warning rounded-pill" style="width: 25vh; margin: auto;">Edit Event</button>
+                                    <br>
+                                    <button type="submit" class="btn btn-outline-warning rounded-pill" style="width: 25vh; margin: auto;">Delete Event</button>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <hr>
+                        <a href="{% url 'adminDash' %}"><button type="submit" class="btn btn-outline-warning rounded-pill" style="width: 25vh;">Go back</button></a>
+                    </div>
+                <div class="card-body"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
