@@ -45,7 +45,7 @@
             <h2 class="my-3">Brought to you by:</h2>
             <h4 class="" style="font-weight: 700;"><a href="{% url 'club' cid=event.organization_id %}" style="text-decoration: none;">{{ club.name }}</a></h4>
             <p class="mt-2">{{ club.description }}</p>
-            <a href="{% url 'club' cid=event.organization_id %}" class="btn btn-outline-primary rounded-pill">Click to learn more ></a>
+            <a href="{% url 'club' cid=event.organization_id %}" class="btn btn-outline-primary rounded-pill">Click to learn more <i class="bi bi-caret-right-fill"></i></a>
             
             <!-- Other Events -->
             <hr class="col-md-8 my-3">

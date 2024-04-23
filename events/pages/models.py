@@ -170,4 +170,4 @@ class Major(models.Model):
 # #     class Meta:
 # #         db_table = 'club_department'
 # #         unique_together = (('club_id', 'department'))
->#>>>>>> main
+# >>>>>> main

@@ -1,0 +1,82 @@
+{% extends 'homebase.html' %}
+{% block content %}
+
+<div class="container-fluid">
+    <div class="my-4 " style="margin-right: 0px; margin-left: 80%;">
+        <form action="{% url 'all_clubs' %}" method="post">
+            {% csrf_token %}
+            <input class="form-control rounded-pill" list="dept_selector" id="DepartmentsList" placeholder="Filter by Dept..."
+                name="dept">
+            <datalist id="dept_selector">
+                {% for dept in departments %}
+                <option value="{{ dept.name }}" id="{{ dept.name }}">
+                    {% endfor %}
+            </datalist>
+
+        </form>
+    </div>
+
+    <!-- If search results are available -->
+                {% if search == -1 %}
+                    <h3>No results found</h3>
+
+                {% endif %}
+
+
+                {% if search|length > 0 %}
+                <div class="row mx-auto">
+                    <h4 class="text-center" style="text-decoration: underline;">Search Results</h4>
+                
+                    {% for org in search %}
+                
+                            <div class="col-md-4 p-4">
+                                <div class="card shadow mb-3" style="border-radius: 4%;">
+                                    <div class="d-flex gap-4">
+                                        <div class="card-body">
+                                            <h5 style="font-weight: 550;">{{ org.name }}</h5>
+                                            <p class="text-muted" style="font-size: 15px;">{{ org.description }}</p>
+                                        </div>
+                                        <img src="{{ org.club_logo }}" class="card-img-sm" alt="" style="color: transparent;">
+                                    </div>
+                            
+                                    <a href="{% url 'club' cid=org.id %}" class="btn btn-outline-success rounded-pill mb-2"
+                                        style="margin-left: 2%; width: 40%;">Learn More <i class="bi bi-caret-right-fill"></i></a>
+                                </div>
+                            </div>
+            
+                    {% endfor %}
+                
+                </div>
+                <hr>
+                {% endif %}
+
+
+
+
+        <div class="row my-5" id="all_orgs">
+            {% for card in clubs %}
+            <div class="col-md-4 p-4">
+                <div class="card shadow mb-3" style="border-radius: 4%;" id="{{ card.id }}_{{ card.department }}">
+                    <div class="d-flex gap-4">
+                        <div class="card-body">
+                            <h5 style="font-weight: 550;">{{ card.name }}</h5>
+                            <p class="text-muted" style="font-size: 15px;">{{ card.description }}</p>
+                        </div>
+                        <img src="{{ card.club_logo }}" class="card-img-sm" alt="" style="color: transparent;">
+                    </div>
+
+                    <a href="{% url 'club' cid=card.id %}" class="btn btn-outline-success rounded-pill mb-2" style="margin-left: 2%; width: 40%;">Learn More <i
+                            class="bi bi-caret-right-fill"></i></a>
+                </div>
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+
+</div>
+
+
+{% endblock %}

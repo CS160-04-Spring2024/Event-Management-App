@@ -1,19 +1,15 @@
-#<<<<<<< Jae2
-# from django.shortcuts import render
-# from .forms import EventForm
-# from .models import eventPanel, searchData
-#=======
+from urllib.parse import urlencode
 from django.shortcuts import render, redirect
 from rest_framework.decorators import api_view
 from .forms import *
 from .models import *
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
+from django.db.models import Q
 import random
 import json
 import datetime
 from django.db import connection
-#>>>>>>> main
 # Create your views here.
 
 
@@ -44,7 +40,7 @@ def datetime_to_string(start_date, end_date):
 
 def test(request):
     # person = User.objects.filter(pk=request.user.email).values()
-    return render(request, 'homebase.html', {'is_admin': User.objects.filter(pk=request.user.email).values()[0]['is_admin']})
+    return render(request, 'home.html', {'is_admin': User.objects.filter(pk=request.user.email).values()[0]['is_admin']})
 
 
 def main_page(request):
@@ -138,8 +134,8 @@ def profile(request):
 def signup(request):
 
     email = request.user.email
-    # if User.objects.filter(pk=email).exists():
-    #     return HttpResponseRedirect(reverse('real_homepage'))
+    if User.objects.filter(pk=email).exists():
+        return HttpResponseRedirect(reverse('real_homepage'))
 
     if request.method == 'GET':
         user_form = ProfileForm()
@@ -254,73 +250,10 @@ def user_events(request):
         all_events = [Event.objects.filter(
             pk=reg['event']) for reg in all_registered]
 
-        for event in all_events:
-            event['club_name'] = Organization.objects.filter(
-                pk=event['organization']).values_list('name', flat=True)
-            event['time'] = datetime_to_string(
-                event['start_time'], event['end_time'])
-            event['attendees'] = Registration.objects.filter(
-                event=event['event_id']).count()
-
-            new_event = Event.objects.get(pk=event['event_id'])
-            event['tag_list'] = new_event.tags.all()
+        all_events = extra_event_params(all_events)
 
         return render(request, 'all_events.html', {'events': all_events, 'departments': departments, 'tags': tags, 'is_admin': User.objects.filter(pk=request.user.email).values()[0]['is_admin']})
 
-# card: title(), subtitle, actual event name, meeting option, meeting time, more info about event
-#tempData = {'val2':['Comp Prog', "ICPC Intro Session 2", "In person", "Mon 6:00pm - 7:15pm", "SWE"]}
-
-# def user_registered_events(request): # render user registered event page
-#     # eventPanel class is in models.py
-#     # used to store events as objects to display on template
-#     event1 = eventPanel()
-#     event1.title = 'Comp Prog'
-#     event1.eventName = 'ICPC Intro Session'
-#     event1.meetingOption = 'In person'
-#     event1.meetingTime = 'Mon 6:00pm - 7:15pm'
-#     event1.meetingAttributes = ["SWE", "CS", "CE"]
-
-#     event2 = eventPanel()
-#     event2.title = 'CS160 - Team 6'
-#     event2.eventName = 'Project Meeting'
-#     event2.meetingOption = 'Hybrid: In person/Discord'
-#     event2.meetingTime = 'Friday - All Day'
-#     event2.meetingAttributes = ["SWE", "CS"]
-
-#     events = [event1, event2]
-
-#     return render(request, 'user_registered_events.html', {'events': events})
-
-# def search_results(request): # render user's query {events, clubs, departments}
-#     # searchData class is in models.py
-#     # used to store results as objects to display on template
-#     # example of a user searching the SJSU gaming club
-#     title = searchData() # display search keyword on template
-#     title.title = 'SJSU Gaming'
-
-#     # actual search results/queries
-#     # search0 = searchData()
-#     # search0.title = 'SJSU Gaming Club Page'
-#     # search0.club = 'SJSU Gaming Club'
-
-#     search1 = searchData()
-#     search1.title = 'In-house Meeting'
-#     search1.event = 'SJSU Valorant Tournament'
-#     search1.club = 'SJSU Gaming Club'
-
-#     search2 = searchData()
-#     search2.title = 'In-house Meeting'
-#     search2.event = 'SJSU League of Legends Tournament'
-#     search2.club = 'SJSU Gaming Club'
-
-#     search3 = searchData()
-#     search3.title = 'Social Meeting'
-#     search3.event = 'SJSU Movie Night: Dungeons and Dragons'
-#     search3.club = 'SJSU Gaming Club'
-
-#     searchResults =[search1, search2, search3]
-
-#     return render(request, 'search_results.html', {'title' : title, 'results' : searchResults})
 
 def delete_user_event(request, event_id):
     event = Event.objects.get(pk=event_id)
@@ -328,21 +261,45 @@ def delete_user_event(request, event_id):
     return HttpResponseRedirect(reverse('user_events'))
 
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def all_clubs(request):
+    all_clubs = Organization.objects.all()
+    search_word = None
     if request.method == 'GET':
-        all_clubs = Organization.objects.all()
+        search_word = request.GET.get('search')
+        if search_word:
+            results = Organization.objects.filter(Q(name__contains=search_word) | Q(
+                description__contains=search_word)).values()
 
-        return render(request, 'all_clubs.html', {'clubs': all_clubs, 'tags': tags, 'departments': departments, 'is_admin': User.objects.filter(pk=request.user.email).values()[0]['is_admin']})
+        for club in all_clubs.values():
+            club['description'] = ' '.join(club['description'].split(' ')[:10])
+
+    if request.method == 'POST':
+        dept = request.POST.get('dept')
+
+        if dept:
+            all_clubs = all_clubs.filter(
+                department_id=Department.objects.get(pk=dept)).values()
+
+    if not search_word:
+        results = None
+
+    if search_word and len(results) == 0:
+        results = -1
+
+    departments = Department.objects.all().values()
+    return render(request, 'all_clubs.html', {'search': results, 'clubs': all_clubs, 'departments': departments, 'is_admin': User.objects.filter(pk=request.user.email).values()[0]['is_admin']})
 
 
 @api_view(['GET', 'POST'])
 def all_events(request):
 
     if request.method == 'GET':
+        search_word = request.GET.get('search')
+        if search_word:
+            results = Event.objects.filter(Q(event_name__contains=search_word) | Q(
+                description__contains=search_word)).values()
         all_events = Event.objects.all().order_by('-start_time').values()
-
-        # return render(request, 'all_events.html', {'events': all_events, 'departments': departments, 'tags': tags})
 
     if request.method == 'POST':
         sort = request.POST.get('sort', 1)
@@ -354,7 +311,7 @@ def all_events(request):
         selected_tags = request.POST.get('selectedTags', None)
 
         sorter = '-start_time' if sort == 1 else 'start_time'
-        print('selected: ', selected_tags)
+        # print('selected: ', selected_tags)
         all_events = Event.objects.all().order_by(sorter).values()
 
         if minPrice:
@@ -377,36 +334,61 @@ def all_events(request):
             all_events = new_all_events
         if selected_tags:
             tags = selected_tags.split(',')
-            print(tags)
+            # print(tags)
+
             all_events = Event.objects.filter(
                 tags__in=tags).distinct().values()
 
-    for event in all_events:
+    if search_word:
+        results = extra_event_params(results)
+    all_events = extra_event_params(all_events)
+
+    if not search_word:
+        results = None
+    print(results)
+    # return redirect(reverse('all_events') )
+    departments = Department.objects.all()
+    all_tags = Tag.objects.all()
+    return render(request, 'all_events.html', {'events': all_events, 'departments': departments, 'tags': all_tags, 'is_admin': User.objects.filter(pk=request.user.email).values()[0]['is_admin'], 'search': results})
+
+
+# search page
+@api_view(['GET', 'POST'])
+def search_page(request):
+    view = 'all_events'
+    new_search = ''
+
+    if request.method == 'POST':
+        option = request.POST.get('option', '0')
+        search_word = request.POST.get('search', None)
+
+        if option == '0':
+            view = 'all_events'
+            new_search = '?search='+search_word
+
+        if option == '1':
+            view = 'all_clubs'
+            new_search = '?search=' + search_word
+
+        # have to pass into events page or club page with the new results as query parameters
+    return HttpResponseRedirect(reverse(view) + new_search)
+
+
+'''
+Takes a list of events and adds 
+extra params for detailed event card
+'''
+
+
+def extra_event_params(events):
+    for event in events:
         event['club_name'] = Organization.objects.filter(
             pk=event['organization_id']).values_list('name', flat=True)[0]
         event['time'] = datetime_to_string(
             event['start_time'], event['end_time'])
         event['attendees'] = Registration.objects.filter(
             event=event['event_id']).count()
-
         new_event = Event.objects.get(pk=event['event_id'])
         event['tag_list'] = new_event.tags.all()
 
-        # return redirect(reverse('all_events') )
-    departments = Department.objects.all()
-    all_tags = Tag.objects.all()
-    return render(request, 'all_events.html', {'events': all_events, 'departments': departments, 'tags': all_tags, 'is_admin': User.objects.filter(pk=request.user.email).values()[0]['is_admin']})
-
-
-# search page
-def search_page(request):
-    if request.method == 'GET':
-        option = request.GET.get('option', 1)
-        search_word = request.GET.get('search', None)
-
-        if option == 1:
-            results = Event.objects.filter(event_name__contains=search_word)
-        if option == 2:
-            results = Organization.objects.filter(name__contains=search_word)
-
-        # have to pass into events page or club page with the new results as query parameters
+    return events

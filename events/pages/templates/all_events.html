@@ -1,45 +1,6 @@
 {% extends 'homebase.html' %}
 {%block content%}
 
-<!-- <style>
-
-        .label-for-check-events-all {
-            color: white;
-            cursor: pointer;
-            /* Add pointer cursor for better UX */
-        }
-
-        /* Checked label color */
-        .label-for-check-events-all.checked {
-            color: rgb(247, 242, 93);
-            text-decoration: line-through;
-            font-weight: bold;
-        }
-</style>
-
-
-<script>
-        $(document).ready(function () {
-                // Add click event listener to checkboxes
-                $('.form-check-input-events-all').change(function () {
-                    var checkboxId = $(this).attr('id');
-                    var labelForCheckbox = $('label[for="' + checkboxId + '"]');
-
-                    if ($(this).is(':checked')) {
-                        labelForCheckbox.addClass('checked');
-                    } else {
-                        labelForCheckbox.removeClass('checked');
-                    }
-
-                    $('input[name="selected_tags"]').change(function () {
-                        var selectedTags = $('input[name="selected_tags"]:checked').map(function () {
-                            return this.value;
-                        }).get();
-                        $('#selectedTagsInput').val(selectedTags.join(','));
-                    });
-                });
-            })
-</script> -->
 
 <div class="wrapper">
     <!-- Sidebar -->
@@ -132,10 +93,58 @@
                 <a class="text-primary" id="sidebarCollapse">Filter</a>
 
 
+                {% if search|length > 0 %}
                 <div class="row mx-auto">
+                    <h4 class="text-center" style="text-decoration: underline;">Search Results</h4>
 
-                    <!-- col/card begins -->
+                {% for event in search %}
+                
+                <div class="col-md-auto col-sm-auto my-auto mt-4">
+                
+                    <div class="card position-relative align-items-stretch shadow" style="width: 15rem; border-radius: 10%;">
+                        <div class="card-body">
+                            <h6 class="card-title"><a href="{% url 'club' cid=event.organization_id %}"
+                                    style="text-decoration: none;">{{event.club_name}}</a></h6>
+                            <h4 class="card-subtitle mb-2 text-muted" style="font-size: large;">{{event.event_name}}</h4>
+                            <div class="col d-flex">
+                                <i class="bi bi-person mx-2"></i>
+                                <p class="">{{event.mode_of_operation}}</p>
+                            </div>
+                            <div class="col d-flex">
+                                <i class="bi bi-clock mx-1"></i>
+                                <p class="" style="font-size: small;">{{event.time}}</p>
+                            </div>
+                            <div class="row gap-2">
+                                {% for tag2 in event.tag_list %}
+                                <div class="col-md-3">
+                                    <h5><span class="badge rounded-pill bg-success shadow">{{tag2.tag_id}}</span></h5>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <hr>
+                            <a href="{% url 'event' event_id=event.event_id %}" class="stretched-link"
+                                style="text-decoration: none;">{{event.attendees}} people registered</a>
+                        </div>
+                
+                    </div>
+                
+                
+                </div>
+                
+                {% endfor %}
+
+
+                </div>
+                <hr>
+                {% endif %}
+                
+                <div class="row mx-auto mb-5">
+
+
                     
+                    <!-- col/card begins -->
+
+
                     {% for event in events %}
                         <div class="col-md-auto col-sm-auto my-auto mt-4">
 
@@ -168,108 +177,6 @@
                         </div>
                         {% endfor %}
 
-
-
-                    <!-- card end/begins -->
-                    <!-- <div class="col">
-
-                            <div class="card position-relative shadow" style="width: 18rem; height: fit-content; border-radius: 10%;">
-                                <div class="card-body">
-                                    <h6 class="card-title">Competitive Programming</h6>
-                                    <h4 class="card-subtitle mb-2 text-muted">ICPC Intro Session</h4>
-                                    <div class="col d-flex">
-                                        <i class="bi bi-person mx-2"></i>
-                                        <p class="">In-Person</p>
-                                    </div>
-                                    <div class="col d-flex">
-                                        <i class="bi bi-clock mx-1"></i>
-                                        <p class="" style="font-size: medium;">Tue 10:00 am - 11:45am</p>
-                                    </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                <h5><span class="badge rounded-pill bg-success shadow">Machine Learning</span></h5>
-                                            </div>
-                                            <div class="col">
-                                                <h5><span class="badge rounded-pill bg-success shadow">Programming</span></h5>
-                                            </div>
-                                            <div class="col">
-                                                <h5><span class="badge rounded-pill bg-success shadow">AI</span></h5>
-                                            </div>
-                                        </div>
-                                    <hr>
-                                    <a href="#" class="stretched-link" style="text-decoration: none;">12 students registered</a>
-                                </div>
-                
-                            </div>
-
-
-                    </div>
-                    <div class="col">
-
-                            <div class="card position-relative shadow" style="width: 18rem; height: fit-content; border-radius: 10%;">
-                                <div class="card-body">
-                                    <h6 class="card-title">Competitive Programming</h6>
-                                    <h4 class="card-subtitle mb-2 text-muted">ICPC Intro Session</h4>
-                                    <div class="col d-flex">
-                                        <i class="bi bi-person mx-2"></i>
-                                        <p class="">In-Person</p>
-                                    </div>
-                                    <div class="col d-flex">
-                                        <i class="bi bi-clock mx-1"></i>
-                                        <p class="" style="font-size: medium;">Tue 10:00 am - 11:45am</p>
-                                    </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                <h5><span class="badge rounded-pill bg-success shadow">Machine Learning</span></h5>
-                                            </div>
-                                            <div class="col">
-                                                <h5><span class="badge rounded-pill bg-success shadow">Programming</span></h5>
-                                            </div>
-                                            <div class="col">
-                                                <h5><span class="badge rounded-pill bg-success shadow">AI</span></h5>
-                                            </div>
-                                        </div>
-                                    <hr>
-                                    <a href="#" class="stretched-link" style="text-decoration: none;">12 students registered</a>
-                                </div>
-                
-                            </div>
-
-
-                    </div>
-                    <div class="col">
-
-                            <div class="card position-relative shadow" style="width: 18rem; height: fit-content; border-radius: 10%;">
-                                <div class="card-body">
-                                    <h6 class="card-title">Competitive Programming</h6>
-                                    <h4 class="card-subtitle mb-2 text-muted">ICPC Intro Session</h4>
-                                    <div class="col d-flex">
-                                        <i class="bi bi-person mx-2"></i>
-                                        <p class="">In-Person</p>
-                                    </div>
-                                    <div class="col d-flex">
-                                        <i class="bi bi-clock mx-1"></i>
-                                        <p class="" style="font-size: medium;">Tue 10:00 am - 11:45am</p>
-                                    </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                <h5><span class="badge rounded-pill bg-success shadow">Machine Learning</span></h5>
-                                            </div>
-                                            <div class="col">
-                                                <h5><span class="badge rounded-pill bg-success shadow">Programming</span></h5>
-                                            </div>
-                                            <div class="col">
-                                                <h5><span class="badge rounded-pill bg-success shadow">AI</span></h5>
-                                            </div>
-                                        </div>
-                                    <hr>
-                                    <a href="#" class="stretched-link" style="text-decoration: none;">12 students registered</a>
-                                </div>
-                
-                            </div>
-
-
-                    </div> -->
 
                 </div>
         </div>
