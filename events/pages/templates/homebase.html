@@ -31,7 +31,7 @@
 
 <body>
     {% if user.is_authenticated %}
-<nav class="navbar navbar-expand-lg  bg-primary bg-gradient shadow" style="--bs-bg-opacity: .3;">
+<nav class="navbar navbar-expand-lg  bg-primary bg-gradient shadow" style="--bs-bg-opacity: .17;">
     <div class="container-fluid ">
         
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -40,25 +40,25 @@
         </button>
     
         <div class="collapse navbar-collapse " id="navbarSupportedContent">
-            <ul class="navbar-nav ">
+            <ul class="navbar-nav gap-2">
                 <li class="nav-item active">
-                    <a class="nav-link " href="{% url 'all_clubs'%}">Clubs</a>
+                    <a class="nav-link text-dark" href="{% url 'all_clubs'%}">CLUBS</a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="#">Departments</a>
+                </li> -->
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="{% url 'all_events'%}" tabindex="-1" >EVENTS</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'all_events'%}" tabindex="-1" >Events</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" tabindex="-1" >Registered</a>
+                    <a class="nav-link text-dark" href="{% url 'user_events' %}" tabindex="-1" >REGISTERED</a>
                 </li>
                 <li class="nav-item">
                     <!-- Adding subnav for admin roles -->
                     <!-- <a class="nav-link" href="#" tabindex="-1" >Registered</a> -->
                     {% if is_admin == True %}
                         <div class="subnav">
-                            <a class="nav-link subnavbtn" href="#" tabindex="-1">Admin <i class="bi bi-arrow-down-short"></i> </a>
+                            <a class="nav-link subnavbtn text-dark" href="#" tabindex="-1">ADMIN <i class="bi bi-arrow-down-short"></i> </a>
   
                             <div class="subnav-content">
                                 <a href="#link1">Club Details</a>
@@ -72,9 +72,10 @@
 
                 </li>
             </ul>
-                    <div class="mx-auto" style="padding-left: 10%;">
-                        <a class="navbar-brand" href="{% url 'real_homepage'%}">SJ Events</a>
+                    <div class="mx-auto" style="padding-left: 9%;">
+                        <a class="navbar-brand text-dark" href="{% url 'real_homepage'%}" ><i class="bi bi-gem" style="font-size: 2.5rem;"></i></a>
                     </div>
+
 
             <div class="ms-auto">
                 <form class="row g-2 align-items-center" method="POST" action="{% url 'search' %}">
@@ -117,7 +118,7 @@
 
 
 <footer class="w-100 py-4 flex-shrink-0 bg-primary bg-gradient shadow"
-style="--bs-bg-opacity: .3;position: relative; margin-top: auto;">
+style="--bs-bg-opacity: .15;position: relative; margin-top: auto;">
     <div class="container py-4">
         <div class="row gy-4 gx-5">
             <div class="col-lg-4 col-md-6">
@@ -129,18 +130,17 @@ style="--bs-bg-opacity: .3;position: relative; margin-top: auto;">
             <div class="col-lg-2 col-md-6">
                 <h5 class="text-white mb-3">Quick links</h5>
                 <ul class="list-unstyled text-muted">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Clubs</a></li>
-                    <li><a href="#">Deparments</a></li>
-                    <li><a href="#">FAQ</a></li>
+                    <li><a href="{% url 'real_homepage' %}">Home</a></li>
+                    <li><a href="{% url 'all_clubs' %}">Clubs</a></li>
+                    <li><a href="{% url 'all_events' %}">Events</a></li>
                 </ul>
             </div>
             <div class="col-lg-2 col-md-6">
                 <h5 class="text-white mb-3">SJSU Quick links</h5>
                 <ul class="list-unstyled text-muted">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">List of Majors</a></li>
+                    <li><a href="https://www.sjsu.edu/" target="_blank">Home</a></li>
+                    <li><a href="https://www.sjsu.edu/about/index.php" target="_blank">About</a></li>
+                    <li><a href="https://www.sjsu.edu/academics/colleges-and-departments.php" target="_blank">List of Departments</a></li>
                     <li><a href="#">FAQ</a></li>
                 </ul>
             </div>
