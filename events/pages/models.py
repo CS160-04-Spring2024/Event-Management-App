@@ -131,6 +131,9 @@ class Location(models.Model):
     image = models.URLField(
         default='https://www.sjsu.edu/sustainability/pics/cv2building.jpg', blank=True, null=True)
 
+    def __str__(self):
+        return self.building_name
+
     class Meta:
         db_table = 'location'
 

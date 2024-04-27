@@ -2,6 +2,7 @@
 {% block content %}
 <!-- https://www.terrainhopperusa.com/wp-content/uploads/2019/01/avatar-woman.png -->
 
+
 <style>
     .label-for-check {
         color: black;
@@ -15,43 +16,108 @@
         text-decoration: line-through;
         font-weight: bold;
     }
+    
 </style>
 
 
 <script>
+    // $('#errorModal').modal('show');
+    // $(window).on('load', function () {
+    //             $('#errorModal').modal('show');
+    //         });
     $(document).ready(function () {
         // Add click event listener to checkboxes
-        $('.form-check-input').change(function () {
-            var checkboxId = $(this).attr('id');
-            var labelForCheckbox = $('label[for="' + checkboxId + '"]');
+        // $('#errorModal').modal('show');
 
-            if ($(this).is(':checked')) {
-                labelForCheckbox.addClass('checked');
+        // $('#errorModal').on('click', 'button.close', function (eventObject) {
+        //     $('#errorModal').modal('hide');
+        // });
+
+        // document.getElementById('admin_stuff').addEventListener('change', function () {
+        //     var org = document.getElementById('admin_stuff').value;
+        //         if (org == 'True') {
+        //             document.getElementById('org').removeAttribute('hidden');
+        //             document.getElementById('org_label').removeAttribute('hidden');
+        //         }
+        //         else {
+        //             document.getElementById('org').hidden = true;
+        //             document.getElementById('org_label').hidden = true;
+        //         }
+        //     })
+
+
+
+        const isAdminField = document.getElementById('admin_stuff');
+        const orgLabel = document.getElementById('org_label');
+        const orgField = document.getElementById('org');
+        const errorDiv = document.getElementById('er1');
+
+        // Add event listener to the is_admin field
+        isAdminField.addEventListener('change', function () {
+            if (isAdminField.value === 'True') {
+                // If is_admin field is set to True, show the organization field and make it required
+                orgLabel.removeAttribute('hidden');
+                orgField.removeAttribute('hidden');
+                orgField.required = true;
             } else {
-                labelForCheckbox.removeClass('checked');
+                // If is_admin field is set to False, hide the organization field and remove its required attribute
+                orgLabel.hidden = true;
+                orgField.hidden = true;
+                orgField.required = false;
+                errorDiv.style.display = "none"; // hide the error message if shown
             }
-
-            $('input[name="selected_tags"]').change(function () {
-                var selectedTags = $('input[name="selected_tags"]:checked').map(function () {
-                    return this.value;
-                }).get();
-                $('#selectedTagsInput').val(selectedTags.join(','));
-            });
         });
+
+        document.getElementById('myForm').addEventListener('submit', function (event) {
+            // Check if the is_admin field is set to True and the organization field has the default value
+            if ((isAdminField.value === 'True' || isAdminField.value === 'Is Admin') && orgField.value === '' || orgField.value === '---------') {
+                // Prevent form submission
+                event.preventDefault();
+                // Show error message
+                errorDiv.style.display = "block";
+            }
+        });
+
+
     })
+
 </script>
 
 <div class="purple-bg">
 
-<div class="row justify-content-center" style="padding-top: 1rem">
-    <div class="col-md-5">
-        <div class="card " style="border-radius: 37px;">
-            <div class="card-header text-center">Edit Profile Details</div>
-            <div class="card-body">
-                <form action="{% url 'profile' %}" method="POST" class="">
-                    <div class="row justify-content-center">
-                        {% csrf_token %}
-                        
+    <div class="row justify-content-center" style="padding-top: 1rem">
+        {% if form.errors %}
+        <!-- Bootstrap modal for displaying errors -->
+        
+        {% endif %}
+        <div class="col-md-5">
+            <div class="card " style="border-radius: 37px;">
+                <div class="card-header text-center">Edit Profile Details</div>
+                <div class="card-body">
+                    <form action="{% url 'profile' %}" id="myForm" method="POST" class="needs-validation" novalidate>
+                        <div class="row justify-content-center">
+                            {% csrf_token %}
+                            {% if form.errors %}
+                            <div class="w-75 border border-dark" id="errorModal" >
+                                <h6 style="text-decoration: underline;">Errors</h6>
+                                    {% for field, errors in form.errors.items %}
+                                    <div class="row text-danger" style="margin-top: -2; border: 2px;">
+                                    {% for error in errors %}
+                                        <p>{{ field.label }}</p>
+                                        <p>{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                    {% endfor %}
+                            </div>
+                            {% endif %}
+                            <!-- modal test -->
+                    <!-- Script to trigger the error modal -->
+
+
+
+                        <!-- end of modal test -->
+
+
                         <div class="col-md-4 my-2">
                             <label>{{ form.first_name.label }}</label>
                             {{ form.first_name }}
@@ -86,7 +152,7 @@
                             {% endfor %}
                         </div>
 
-                        <div class="col-md-5 my-2">
+                        <div class="col-md-10 my-2">
                             <label>{{ form.major.label }}</label>
                             {{ form.major }}
                             {% for error in form.major.errors %}
@@ -102,7 +168,7 @@
                             {% endfor %}
                         </div>
 
-                        <div class="form-group col-md-4 ">
+                        <div class=" col-md-4 my-2">
                             <label>{{ form.funds.label }}</label>
                             {{ form.funds }}
                             {% for error in form.funds.errors %}
@@ -111,7 +177,7 @@
                         </div>
 
 
-                        <div class="col-md-5">
+                        <!-- <div class="col-md-5">
                             <label>{{ form.is_admin.label }}</label>
                             {{ form.is_admin }}
                             {% for error in form.is_admin.errors %}
@@ -119,11 +185,21 @@
                             {% endfor %}
                         </div>
 
+                            <div class="col-md-8">
+                                <label id="org_label" hidden>Organization</label>
+                                {{ admin_form.organization }}
+                                {% for error in admin_form.organization.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                                <div id="er1" class="text-danger" style="display: none;">Please select an organization</div>
+                            </div> -->
+
+
                         <!-- Tags -->
                         <div class="col-md-8">
 
                             <hr class="my-3">
-                            <h4>Edit Tags (at least 1)</h4>
+                            <h4>Edit Tags (at least 2)</h4>
                         </div>
 
 
@@ -136,7 +212,7 @@
                                 {{ t }}
                             </div>
                             {% endfor %}
-                            {% for error in form.tag.errors %}
+                            {% for error in form.tag.errors.items %}
                             <div class="invalid-feedback">{{ error }}</div>
                             {% endfor %}
                         </div>
@@ -144,7 +220,7 @@
 
 
                     </div>
-                    <button type="submit"
+                    <button id="profile_submit" type="submit"
                         class="my-3 btn btn-outline-primary rounded-pill float-end px-4 mx-4">Save</button>
                 </form>
             </div>
