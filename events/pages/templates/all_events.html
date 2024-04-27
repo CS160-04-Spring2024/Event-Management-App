@@ -1,6 +1,15 @@
 {% extends 'homebase.html' %}
 {%block content%}
 
+<script>
+    $(document).ready(function () {
+             $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+        
+    });
+</script>
+
 
 <div class="wrapper">
     <!-- Sidebar -->
@@ -92,6 +101,13 @@
         <div class="container-fluid">
                 <a class="text-primary" id="sidebarCollapse">Filter</a>
 
+            <div class="d-flex gap-2 my-3">
+                <a href="{% url 'all_events' %}" class="btn btn-outline-primary">All</a>
+                {% for tag in tags %}
+                <a href="{% url 'all_events' %}?tag={{tag.name}}" class="btn btn-outline-primary">{{tag.name}}</a>
+                {% endfor %}
+            </div>
+
 
                 {% if search|length > 0 %}
                 <div class="row mx-auto">
@@ -160,13 +176,13 @@
                                         <i class="bi bi-clock mx-1"></i>
                                         <p class="" style="font-size: small;">{{event.time}}</p>
                                     </div>
-                                        <div class="row gap-2">
+                                        <!-- <div class="row gap-2">
                                             {% for tag2 in event.tag_list %}
-                                                <div class="col-md-3">
-                                                    <h5><span class="badge rounded-pill bg-success shadow">{{tag2.tag_id}}</span></h5>
+                                                <div class="col-md-6 ">
+                                                    <h5><span class="badge rounded-pill bg-success shadow">{{tag2}}</span></h5>
                                                 </div>
                                             {% endfor %}
-                                        </div>
+                                        </div> -->
                                     <hr>
                                     <a href="{% url 'event' event_id=event.event_id %}" class="stretched-link" style="text-decoration: none;">{{event.attendees}} people registered</a>
                                 </div>

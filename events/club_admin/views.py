@@ -1,3 +1,4 @@
+from datetime import date, timezone
 from django.shortcuts import render, redirect
 from rest_framework.decorators import api_view
 from .forms import *
@@ -6,6 +7,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 
 # Create your views here.
+
+
 def admin_dash(request):
     club1 = dummyClub()
     club1.name = 'SJSU Gaming'
@@ -16,6 +19,7 @@ def admin_dash(request):
     clubs = [club1, club2]
 
     return render(request, 'admin_dash.html', {'clubs': clubs})
+
 
 def admin_dash_club(request, club):
     gamingEvent1 = dummyEvent()
@@ -42,6 +46,7 @@ def admin_dash_club(request, club):
         print("inno club active")
 
     return render(request, 'admin_dash_club.html', {'club': club, 'events': events})
+
 
 def edit_event(request, event_id):
     if request.method == 'GET':
@@ -72,11 +77,19 @@ def create_event(request):
    # form = EventForm(request.POST or None)
     if request.method == 'POST':
         form = EventForm(request.POST)
-        print(form.errors)
+        # print(request.POST.items)
         if form.is_valid():
+            print('IN HERE!!!!!')
             inst = form.save(commit=False)
-            inst.organization = Organization.objects.get(pk=1)
+            org_id = Admin.objects.filter(user=request.user.email).values()
+            if len(org_id) > 0:
+                inst.organization = Organization.objects.get(
+                    pk=org_id[0]['organization_id'])
+            else:
+                inst.organization = Organization.objects.get(
+                    pk=2)
             inst.save()
+            form.save_m2m()
 
             return HttpResponseRedirect(reverse('real_homepage'))
         else:

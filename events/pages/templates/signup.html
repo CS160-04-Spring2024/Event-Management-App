@@ -9,9 +9,6 @@
     {% load socialaccount %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-
-    {{ form.media }}
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,8 +24,68 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="{% static 'scripts/index.js' %}"></script>
 
+    <script>
+        $(document).ready(function () {
+            // Add click event listener to checkboxes
+            // $('#errorModal').modal('show');
+
+            // $('#errorModal').on('click', 'button.close', function (eventObject) {
+            //     $('#errorModal').modal('hide');
+            // });
+
+            // document.getElementById('admin_stuff').addEventListener('change', function () {
+            //     var org = document.getElementById('admin_stuff').value;
+            //         if (org == 'True') {
+            //             document.getElementById('org').removeAttribute('hidden');
+            //             document.getElementById('org_label').removeAttribute('hidden');
+            //         }
+            //         else {
+            //             document.getElementById('org').hidden = true;
+            //             document.getElementById('org_label').hidden = true;
+            //         }
+            //     })
+
+
+
+            const isAdminField = document.getElementById('admin_stuff');
+            const orgLabel = document.getElementById('org_label');
+            const orgField = document.getElementById('org');
+            const errorDiv = document.getElementById('er1');
+
+            // Add event listener to the is_admin field
+            isAdminField.addEventListener('change', function () {
+                if (isAdminField.value === 'True') {
+                    // If is_admin field is set to True, show the organization field and make it required
+                    orgLabel.removeAttribute('hidden');
+                    orgField.removeAttribute('hidden');
+                    orgField.required = true;
+                } else {
+                    // If is_admin field is set to False, hide the organization field and remove its required attribute
+                    orgLabel.hidden = true;
+                    orgField.hidden = true;
+                    orgField.required = false;
+                    errorDiv.style.display = "none"; // hide the error message if shown
+                }
+            });
+
+            document.getElementById('myForm').addEventListener('submit', function (event) {
+                // Check if the is_admin field is set to True and the organization field has the default value
+                if ((isAdminField.value === 'True' || isAdminField.value === 'Is Admin') && orgField.value === '' || orgField.value === '---------') {
+                    // Prevent form submission
+                    event.preventDefault();
+                    // Show error message
+                    errorDiv.style.display = "block";
+                }
+            });
+
+
+        })
+    
+    </script>
     <!-- End of Javascript code -->
 </head>
+
+
 
 <body>
 
@@ -41,117 +98,138 @@
         <div class="card " style="border-radius: 37px;">
             <div class="card-header text-center">Profile Setup</div>
             <div class="card-body">
-                <form action="{% url 'profile' %}" method="POST" class="">
-                    <div class="row justify-content-center">
-                        {% csrf_token %}
-
-
-                        <div class="col-md-4 my-2">
-                            <label>{{ form.first_name.label }}</label>
-                            {{ form.first_name }}
-                            {% for error in form.first_name.errors %}
-                            <div class="invalid-feedback">{{ error }}</div>
-                            {% endfor %}
-                        </div>
-
-
-                        <div class="form-group col-md-4 my-2">
-                            <label>{{ form.last_name.label }}</label>
-                            {{ form.last_name }}
-                            {% for error in form.last_name.errors %}
-                            <div class="invalid-feedback">{{ error }}</div>
-                            {% endfor %}
-
-                        </div>
-
-                        <div class="col-md-5">
-                            <label>{{ form.user_email.label }}</label>
-                            {{ form.user_email }}
-                            {% for error in form.user_email.errors %}
-                            <div class="invalid-feedback">{{ error }}</div>
-                            {% endfor %}
-                        </div>
-
-                        <div class="col-md-5">
-                            <label>{{ form.role.label }}</label>
-                            {{ form.role }}
-                            {% for error in form.role.errors %}
-                            <div class="invalid-feedback">{{ error }}</div>
-                            {% endfor %}
-                        </div>
-
-                        <div class="col-md-5 my-2">
-                            <label>{{ form.major.label }}</label>
-                            {{ form.major }}
-                            {% for error in form.major.errors %}
-                            <div class="invalid-feedback">{{ error }}</div>
-                            {% endfor %}
-                        </div>
-
-                        <div class="form-group col-md-4 my-2">
-                            <label>{{ form.department.label }}</label>
-                            {{ form.department }}
-                            {% for error in form.department.errors %}
-                            <div class="invalid-feedback">{{ error }}</div>
-                            {% endfor %}
-                        </div>
-
-                        <div class="form-group col-md-4 ">
-                            <label>{{ form.funds.label }}</label>
-                            {{ form.funds }}
-                            {% for error in form.funds.errors %}
-                            <div class="invalid-feedback">{{ error }}</div>
-                            {% endfor %}
-                        </div>
-
-
-                        <div class="col-md-5">
-                            <label>{{ form.is_admin.label }}</label>
-                            {{ form.is_admin }}
-                            {% for error in form.is_admin.errors %}
-                            <div class="invalid-feedback">{{ error }}</div>
-                            {% endfor %}
-                        </div>
-
-                        {% if form.is_admin.value|get_digit:'1' == 0 %}
-                            <div class="col-md-6 my-3">
-                                <label>{{ club_form.organization.label }} (for Club Admins)</label>
-                                {{ club_form.organization }}
-                                {% for error in club_form.organization.errors %}
+                    <form action="{% url 'signup' %}" id="myForm" method="POST" class="needs-validation" novalidate>
+                        <div class="row justify-content-center">
+                            {% csrf_token %}
+                            {% if form.errors %}
+                            <div class="w-75 border border-dark" id="errorModal">
+                                <h6 style="text-decoration: underline;">Errors</h6>
+                                {% for field, errors in form.errors.items %}
+                                <div class="row text-danger" style="margin-top: -2; border: 2px;">
+                                    {% for error in errors %}
+                                    {% if field == '__all__' %}
+                                    <p>{{ error }}</p>
+                                    {% else %}
+                                    <p>{{ field }}: {{ error }}</p>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                            <!-- modal test -->
+                            <!-- Script to trigger the error modal -->
+                    
+                    
+                    
+                            <!-- end of modal test -->
+                    
+                    
+                            <div class="col-md-4 my-2">
+                                <label>{{ form.first_name.label }}</label>
+                                {{ form.first_name }}
+                                {% for error in form.first_name.errors %}
                                 <div class="invalid-feedback">{{ error }}</div>
                                 {% endfor %}
                             </div>
-
-                        {% endif %}
-
-                        <!-- Tags -->
-                        <div class="col-md-8">
-
-                            <hr class="my-3">
-                            <h4>Edit Tags (at least 1)</h4>
-                        </div>
-
-
-                        <div class="col-md-8">
-                            <label class="mt-2">{{ form.tags.label }}</label>
-                        </div>
-                        <div class="col-md-8">
-                            {% for t in form.tags %}
-                            <div class="mx-2 d-inline">
-                                {{ t }}
+                    
+                    
+                            <div class="form-group col-md-4 my-2">
+                                <label>{{ form.last_name.label }}</label>
+                                {{ form.last_name }}
+                                {% for error in form.last_name.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                    
                             </div>
-                            {% endfor %}
-                            {% for error in form.tags.errors %}
-                            <div class="invalid-feedback">{{ error }}</div>
-                            {% endfor %}
+                    
+                            <div class="col-md-5">
+                                <label>{{ form.user_email.label }}</label>
+                                {{ form.user_email }}
+                                {% for error in form.user_email.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                    
+                            <div class="col-md-5">
+                                <label>{{ form.role.label }}</label>
+                                {{ form.role }}
+                                {% for error in form.role.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                    
+                            <div class="col-md-5 my-2">
+                                <label>{{ form.major.label }}</label>
+                                {{ form.major }}
+                                {% for error in form.major.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                    
+                            <div class="form-group col-md-4 my-2">
+                                <label>{{ form.department.label }}</label>
+                                {{ form.department }}
+                                {% for error in form.department.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                    
+                            <div class="form-group col-md-4 ">
+                                <label>{{ form.funds.label }}</label>
+                                {{ form.funds }}
+                                {% for error in form.funds.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                    
+                    
+                            <div class="col-md-5">
+                                <label>{{ form.is_admin.label }}</label>
+                                {{ form.is_admin }}
+                                {% for error in form.is_admin.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                    
+                            <div class="col-md-8">
+                                <label id="org_label" hidden>Organization</label>
+                                {{ admin_form.organization }}
+                                {% for error in admin_form.organization.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                                <div id="er1" class="text-danger" style="display: none;">Please select an organization</div>
+                            </div>
+                    
+                    
+                            <!-- Tags -->
+                            <div class="col-md-8">
+                    
+                                <hr class="my-3">
+                                <h4>Edit Tags (at least 2)</h4>
+                            </div>
+                    
+                    
+                            <div class="col-md-8">
+                                <label class="mt-2">{{ form.tag.label }}</label>
+                            </div>
+                            <div class="col-md-8">
+                                {% for t in form.tags %}
+                                <div class="mx-2 d-inline">
+                                    {{ t }}
+                                </div>
+                                {% endfor %}
+                                {% for error in form.tag.errors.items %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                    
+                    
+                    
                         </div>
-
-
-
-                    </div>
-                    <button type="submit"
-                        class="my-3 btn btn-outline-primary rounded-pill float-end px-4 mx-4">Save</button>
-                </form>
+                        <button id="profile_submit" type="submit"
+                            class="my-3 btn btn-outline-primary rounded-pill float-end px-4 mx-4">Create!</button>
+                    </form>
             </div>
         </div>
     </div>

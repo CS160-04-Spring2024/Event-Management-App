@@ -54,8 +54,10 @@
         <!-- Other Events -->
         <hr class="col-md-12 my-3">
         <h2>Our Incoming Events</h2>
-        <div class="d-flex gap-3">
+        <div class="row gap-3">
             {% for event in events %}
+            <div class="col-md-5">
+
                 <div class="card position-relative" style="width: 18rem; height: fit-content; border-radius: 10%;">
                     <div class="card-body">
                         <h6 class="card-title">{{event.club_name}}</h6>
@@ -73,7 +75,7 @@
                     </div>
             
                 </div>
-
+                </div>
             {% endfor %}
 
             <!-- Second Card -->

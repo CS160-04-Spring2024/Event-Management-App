@@ -5,7 +5,7 @@
 <div class="container-fluid my-5 mx-5">
     <div class="row justify-content-start align-items-center">
         <div class="col-md-2">
-            <img class="" width="190px" height="200px"
+            <img class="card-img-top card-img-sm" width="190px" height="200px"
                 src="{{ event.event_image }}" style="border-radius: 20%; background-repeat: no-repeat; background-size: contain;">
         </div>
         <div class="col-md-4">
@@ -28,7 +28,7 @@
     <!-- Tags -->
     <div class="d-flex gap-2 mt-2">
         {% for tag in event_tags %}
-        <h5><span class="badge rounded-pill bg-success shadow">{{tag.name}}</span></h5>
+        <h5><span class="badge rounded-pill bg-success shadow">{{tag}}</span></h5>
         {% endfor %}
     </div>
 
@@ -50,8 +50,10 @@
             <!-- Other Events -->
             <hr class="col-md-8 my-3">
             <h2>Similar Events</h2>
-            <div class="d-flex gap-3">
+            <div class="row gap-3">
                 {% for similar_event in similar_events %}
+                <div class="col-md-5">
+
                     <div class="card position-relative" style="width: 18rem; height: fit-content; border-radius: 10%;">
                         <div class="card-body">
                             <h6 class="card-title">{{similar_event.club_name}}</h6>
@@ -69,7 +71,7 @@
                         </div>
                             
                         </div>
-                
+                </div>
                 {% endfor %}
             </div>
         </div>
@@ -89,11 +91,16 @@
                             <!-- <a href="#" class="btn btn-outline-primary rounded-pill my-3" style="width: 10rem; margin: auto;">Register</a> -->
                         </form>
                     {% else %}
-                        <form method='post' action="{% url 'event' event_id=event.event_id %}">
-                            {% csrf_token %}
-                            <input type="submit" value="Register" name="register" class="btn btn-outline-primary rounded-pill my-1 " />
-                            <!-- <a href="#" class="btn btn-outline-primary rounded-pill my-3" style="width: 10rem; margin: auto;">Register</a> -->
-                        </form>
+                    {% if funds < event.fees %}
+                    <input type="submit" value="Register" name="register" class="btn btn-outline-danger rounded-pill my-1 " disabled/>
+                    {% else %}
+                    <form method='post' action="{% url 'event' event_id=event.event_id %}">
+                        {% csrf_token %}
+                        <input type="submit" value="Register" name="register" class="btn btn-outline-primary rounded-pill my-1 " />
+                        <!-- <a href="#" class="btn btn-outline-primary rounded-pill my-3" style="width: 10rem; margin: auto;">Register</a> -->
+                    </form>
+
+                    {% endif %}
                     {% endif %}
                 </div>
                 <hr>

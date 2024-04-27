@@ -1,7 +1,7 @@
 from pages.models import *
 from typing import Any
 from django import forms
-import datetime
+from django.utils import timezone
 
 modes = (
     ('In-Person', "In-Person"),
@@ -57,17 +57,16 @@ class EventForm(forms.ModelForm):
         start_time = self.cleaned_data.get('start_time')
         end_time = self.cleaned_data.get('end_time')
 
-        tag = self.cleaned_data.get('tags')
-        print(tag)
+        tags = self.cleaned_data.get('tags')
         # print(datetime.datetime.now(datetime.timezone.utc).astimezone().tzinfo)
-        if end_time < datetime.datetime.now(datetime.timezone.utc):
-            raise forms.ValidationError('selected start time is invalid')
+        if end_time < timezone.now():
+            raise forms.ValidationError('selected end time is invalid')
 
         if start_time >= end_time:
             raise forms.ValidationError(
                 'Start and end times are infeasible')
 
-        if len(tag) < 1:
-            raise forms.ValidationError('Please select at least one tag')
+        if tags is None or len(tags) < 2:
+            raise forms.ValidationError('Please select at least two tags')
 
         return cleaned_data
