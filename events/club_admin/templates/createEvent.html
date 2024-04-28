@@ -61,7 +61,22 @@
                             {% endfor %}
                         {% endif %} -->
 
-                        {{ form.errors }}
+                    {% if form.errors %}
+                    <div class="w-75 border border-dark" id="errorModal">
+                        <h6 style="text-decoration: underline;">Errors</h6>
+                        {% for field, errors in form.errors.items %}
+                        <div class="row text-danger" style="margin-top: -2; border: 2px;">
+                            {% for error in errors %}
+                            {% if field == '__all__' %}
+                            <p>{{ error }}</p>
+                            {% else %}
+                            <p>{{ field }}: {{ error }}</p>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
                         
                         <div class="col-md-5 my-2">
                             <label>{{ form.event_name.label }}</label>
