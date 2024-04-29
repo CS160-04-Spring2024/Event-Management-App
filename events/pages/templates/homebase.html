@@ -46,16 +46,16 @@
 
 <body>
     {% if user.is_authenticated %}
-<nav class="navbar navbar-expand-lg  bg-primary bg-gradient shadow" style="--bs-bg-opacity: .17;">
-    <div class="container-fluid ">
+<nav class="navbar navbar-expand bg-primary bg-gradient shadow" style="--bs-bg-opacity: .17;"> <!-- navbar-expand-lg created sidebar-->
+    <div class="container-fluid">
         
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
     
-        <div class="collapse navbar-collapse " id="navbarSupportedContent">
-            <ul class="navbar-nav gap-2">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav gap-md-2">
                 <li class="nav-item active">
                     <a class="nav-link text-dark" href="{% url 'all_clubs'%}">CLUBS</a>
                 </li>
@@ -88,7 +88,7 @@
                 </li>
             </ul>
                     <div class="mx-auto text-center">
-                        <a class="navbar-brand text-dark " href="{% url 'real_homepage'%}" ><i class="bi bi-gem" style="font-size: 2.5rem;"></i></a>
+                        <a class="navbar-brand text-dark" href="{% url 'real_homepage'%}"><i class="bi bi-gem"></i></a>
                     </div>
 
 
@@ -96,15 +96,15 @@
                 <form class="row g-2 align-items-center" method="POST" action="{% url 'search' %}">
                         {% csrf_token %}
 
-                        <div class="col-auto">
+                        <div class="col">
                             <input class="form-control form-control-sm mr-2 rounded-pill" type="search" placeholder="Search" aria-label="Search" id="search-input" name="search">
                         </div>
-                        <div class="col-auto mr-2">
-                            <button class="btn " type="submit">
-                                <i class="bi bi-search h5" ></i>
+                        <div class="col mr-md-2">
+                            <button class="btn btn-sm" type="submit">
+                                <i class="bi bi-search h5"></i>
                             </button>
                         </div>
-                        <div class="col-auto">
+                        <div class="col">
                             <select class="form-select form-select-sm rounded-pill" aria-label="Default select example"
                             style="width: auto;" name="option">
                                 <option selected value='0'>Events</option>
@@ -137,7 +137,7 @@ style="--bs-bg-opacity: .15; bottom: 0; flex: 0 0 auto;">
     <div class="container py-4">
         <div class="row gy-4 gx-5">
             <div class="col-lg-4 col-md-6">
-                <h5 class="h1 text-white">SJ Events</h5>
+                <h5 class="h1 text-white">SJSU Events</h5>
                 <p class="small text-muted">Brought to you by a couple of kids from San Jose State University. While the site bears no direct affiliation as of yet, we hope to establish that in the coming months</p>
                 <p class="small text-muted mb-0">&copy; Copyrights. All rights reserved. <a class="text-primary"
                         href="#">San Jose State University</a></p>

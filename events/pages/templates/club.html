@@ -7,12 +7,12 @@
 
 <div class="" style="width: 100%; height: fit-content;">
 <img src="{{club.banner}}" height="300px" width="100%" alt="" style="background-size:contain;"></div>
-<div class="container-fluid mb-5 mx-5">
+<div class="container-fluid mb-md-5 mx-md-5">
     <div class="row mt-2">
         <div class="col-md-2">
             <img src="{{club.club_logo}}" alt="" height="150px">
         </div>
-        <div class="col-md-4 mt-5">
+        <div class="col-md-4 mt-md-5">
             <h3>{{club.name}}</h3>
             <div class="d-flex">
                 <i class="bi bi-people h4"></i>
@@ -58,7 +58,7 @@
             {% for event in events %}
             <div class="col-md-5">
 
-                <div class="card position-relative" style="width: 18rem; height: fit-content; border-radius: 10%;">
+                <div class="card position-relative" style="height: fit-content; border-radius: 10%;">
                     <div class="card-body">
                         <h6 class="card-title">{{event.club_name}}</h6>
                         <h4 class="card-subtitle mb-2 text-muted">{{event.event_name}}</h4>

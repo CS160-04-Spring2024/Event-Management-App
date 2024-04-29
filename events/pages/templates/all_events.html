@@ -20,7 +20,7 @@
         
             <h4 class="text-center mt-3">Sort By</h4>
             <div class="d-flex justify-content-center">
-                <select name="sort" class="form-select-sm mb-3 w-75 rounded-pill" aria-label="">
+                <select name="sort" class="form-select-sm mb-3 rounded-pill" aria-label="">
                     <option value="1" selected>Most Recent</option>
                     <option value="2">Least Recent</option>
                     <!-- <option value="3">Most Relevant by Tag</option> -->
@@ -33,36 +33,61 @@
 
 
         <div class="my-3 px-2">
-            <div class="d-flex align-items-center"><label class="pe-3" id="DepartmentsList">Dept: </label>
-                <input class="form-control-sm rounded-pill" list="dept_list" id="DepartmentsList" placeholder="Type to search..." name="dept">
-                <datalist id="dept_list">
-                            {% for dept in departments %}
-                            <option value="{{ dept.name }}">
-                                {% endfor %}
-                </datalist>
+            <div class="row d-flex mb-2">
+                <div class="col-md-4">
+                    <label class="pe-3" id="DepartmentsList">Dept:</label>
+                </div>
+                <div class="col-auto d-flex justify-content-end">
+                    <input class="form-control-sm rounded-pill" list="dept_list" id="DepartmentsList" placeholder="Type to search..." name="dept">
+                    <datalist id="dept_list">
+                                {% for dept in departments %}
+                                <option value="{{ dept.name }}">
+                                    {% endfor %}
+                    </datalist>
+                </div>
             </div>
         </div>
 
         <hr>
         <div class="my-3">
-            <div class="d-flex mb-2">
-                <label for="minPrice" class="pe-2">Min Price:</label>
-                <input class="form-control-sm" type="number" min="0" max="100" step="any" name="min_price" id="minPrice">
+            <div class="row d-flex mb-2">
+                <div class="col-md-4">
+                    <label for="minPrice" class="pe-2">Min Price:</label>
+                </div>
+                <div class="col-auto d-flex justify-content-end">
+                    <input class="form-control-sm" type="number" min="0" max="100" step="any" name="min_price" id="minPrice">
+                </div>
             </div>
-            <div class="d-flex">
-                <label for="maxPrice" class="pe-2">Max Price:</label>
-                <input class="form-control-sm" min="0" max="200" step="any"  type="number" name="max_price" id="maxPrice">
+            <div class="row d-flex mb-2">
+                <div class="col-md-4">
+                    <label for="maxPrice" class="pe-2">Max Price:</label>
+                </div>
+                <div class="col-auto d-flex justify-content-end">
+                    <input class="form-control-sm" min="0" max="200" step="any" type="number" name="max_price" id="maxPrice">
+                </div>
             </div>
         </div>
 
         <hr>
         <div class="my-3 mx-auto">
-            <label for="earliest">Start Date:</label>
-            <input class="d-md-inline form-control-sm" type="datetime-local" name="start_date" id="earliest">
+            <div class="row d-flex mb-2">
+                <div class="col-md-4">
+                    <label for="earliest">Start Date:</label>
+                </div>
+                <div class="col-auto d-flex justify-content-end">
+                    <input class="d-md-inline form-control-sm" type="datetime-local" name="start_date" id="earliest">
+                </div>
+            </div>
         </div>
         <div class="my-3">
-            <label for="latest">End Date:</label>
-            <input class="d-md-inline form-control-sm" type="datetime-local" name="end_date" id="latest">
+            <div class="row d-flex mb-2">
+                <div class="col-md-4">
+                    <label for="latest">End Date:</label>
+                </div>
+                <div class="col-auto d-flex justify-content-end">
+                    <input class="d-md-inline form-control-sm" type="datetime-local" name="end_date" id="latest">
+                </div>
+            </div>
         </div>
 
         <!-- Adding tags to filter -->
@@ -101,7 +126,7 @@
         <div class="container-fluid">
                 <a class="text-primary" id="sidebarCollapse">Filter</a>
 
-            <div class="d-flex gap-2 my-3">
+            <div class="d-flex flex-wrap gap-2 my-3">
                 <a href="{% url 'all_events' %}" class="btn btn-outline-primary">All</a>
                 {% for tag in tags %}
                 <a href="{% url 'all_events' %}?tag={{tag.name}}" class="btn btn-outline-primary">{{tag.name}}</a>
@@ -117,7 +142,7 @@
                 
                 <div class="col-md-auto col-sm-auto my-auto mt-4">
                 
-                    <div class="card position-relative align-items-stretch shadow" style="width: 15rem; border-radius: 10%;">
+                    <div class="card position-relative align-items-stretch shadow" style="border-radius: 10%;">
                         <div class="card-body">
                             <h6 class="card-title"><a href="{% url 'club' cid=event.organization_id %}"
                                     style="text-decoration: none;">{{event.club_name}}</a></h6>

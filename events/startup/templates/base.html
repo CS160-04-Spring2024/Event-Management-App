@@ -10,9 +10,23 @@
 
 
     <style>
-        h1,h2,h3,h4,h5 {
-            font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+        @media (max-width: 719px) {
+            h1 {
+                font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+                font-size: 1.86rem;
+                text-align: center;
+            }
+            h2,h3,h4,h5 {
+                font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+            }
+        } 
+
+        @media (min-width: 729px){    
+            h1,h2,h3,h4,h5 {
+                font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+            }
         }
+
         body{
             background-image: url('https://www.sjsu.edu/_images/buildings/ADV_about-sjsu_2.jpg');
             background-size: cover;
@@ -31,8 +45,8 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-            <div class="mx-auto" >
-                <a class="navbar-brand" href="#" style="font-size: 1.8rem; font-weight: 550;">SJ Events</a>
+            <div class="mx-auto">
+                <a class="navbar-brand" href="#" style="font-size: 1.8rem; font-weight: 550;">SJSU Events</a>
             </div>
     </div>
 </nav>

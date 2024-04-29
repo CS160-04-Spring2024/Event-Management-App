@@ -4,7 +4,7 @@
 <div class="container-fluid">
     <h3 class="my-4 text-center">Your Events</h3>
 
-    <div class="d-flex gap-2 justify-content-center">
+    <div class="d-flex flex-wrap gap-2 justify-content-center">
         <a href="{% url 'user_events' %}" class="btn btn-outline-primary">All</a>
         {% for tag in tags %}
             <a href="{% url 'user_events' %}?tag={{tag.name}}" class="btn btn-outline-primary">{{tag.name}}</a>

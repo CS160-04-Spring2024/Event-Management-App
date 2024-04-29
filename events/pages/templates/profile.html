@@ -17,6 +17,10 @@
         font-weight: bold;
     }
     
+    .card {
+        max-width: 100%;
+        margin: 2 auto;
+    }
 </style>
 
 
@@ -91,7 +95,7 @@
         
         {% endif %}
         <div class="col-md-5">
-            <div class="card " style="border-radius: 37px;">
+            <div class="card" style="border-radius: 37px;">
                 <div class="card-header text-center">Edit Profile Details</div>
                 <div class="card-body">
                     <form action="{% url 'profile' %}" id="myForm" method="POST" class="needs-validation" novalidate>

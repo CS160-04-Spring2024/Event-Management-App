@@ -1,4 +1,4 @@
-        h1,
+        /* h1,
         h2,
         h3,
         h4,
@@ -32,18 +32,18 @@
 
         .purple-bg {
             background-color: rgb(60, 102, 217);
-            /* Purple background color */
+            /* Purple background color
             opacity: 0.7;
             min-height: 100vh;
             padding-top: 80px;
-            /* Space for navbar */
+            /* Space for navbar
             padding-bottom: 180px;
             position: relative;
         }
 
         .user-content {
             background-color: #efebeb;
-            /* White content area */
+            /* White content area
             border-radius: 10px;
             padding-top: 30px;
             min-height: 80vh;
@@ -51,7 +51,7 @@
             top: 20px;
             right: 0;
             left: 0;
-        }
+        } */
 
 
 
@@ -60,7 +60,7 @@
             align-items: stretch;
         }
 
-        #sidebar {
+        /* #sidebar {
             background: #7386D5;
             color: #fff;
             transition: all 0.3s;
@@ -68,38 +68,32 @@
             max-width: 350px;
             min-height: 100vh;
             box-shadow: 15px 15px 20px 30px;
-        }
+        } */
 
         #sidebarCollapse:hover {
             cursor: pointer;
         }
 
 
-        #sidebar.active {
+        /* #sidebar.active {
             margin-left: -350px;
-        }
+        } */
 
         a[data-toggle="collapse"] {
             position: relative;
         }
 
-        .dropdown-toggle::after {
+        /* .dropdown-toggle::after {
             display: block;
             position: absolute;
             top: 50%;
             right: 20px;
             transform: translateY(-50%);
-        }
+        } */
 
-        @media (max-width: 768px) {
-            #sidebar {
-                margin-left: -350px;
-            }
+        
 
-            #sidebar.active {
-                margin-left: 0;
-            }
-        }
+        
 
 
         /* Subnavbar */
@@ -111,16 +105,16 @@
         }
 
         /* Subnav button */
-        .subnav .subnavbtn {
+        /* .subnav .subnavbtn {
             font-size: 16px;
             border: none;
             outline: none;
             font-family: inherit;
             margin: 0;
-        }
+        } */
 
         /* Style the subnav content - positioned absolute */
-        .subnav-content {
+        /* .subnav-content {
             display: none;
             position: absolute;
             left: 0;
@@ -129,15 +123,15 @@
             width: 100%;
             height: 40px;
             z-index: 1;
-        }
+        } */
 
         /* Style the subnav links */
-        .subnav-content a {
+        /* .subnav-content a {
             margin-left: 1rem;
             color: white;
             text-decoration: none;
 
-        }
+        } */
 
         /* Add a grey background color on hover */
         .subnav-content a:hover {
@@ -180,28 +174,166 @@
 
     /* V's Css */
 
+    /* CSS styles for medium screens*/
+    @media (min-width: 720px) {
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+        }
 
-    .carousel-inner {
-        padding: 1em;
-    }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            overflow-x: hidden;
+            
+        }
 
-    .card {
-        margin: 0 0.5em;
-        box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);
-        border: none;
-    }
+        .nav-link {
+            color: rgb(60, 102, 217);
+            font-weight: 500;
+            font-size: 1.05rem;
+            opacity: 90%;
+        }
 
-    .carousel-control-prev,
-    .carousel-control-next {
-        background-color: #e1e1e1;
-        width: 6vh;
-        height: 6vh;
-        border-radius: 50%;
-        top: 50%;
-        transform: translateY(-50%);
-    }
+        .nav-link:hover {
+            text-decoration: underline;
+        }
 
-    @media (min-width: 768px) {
+        .navbar-brand {
+            color: rgb(60, 102, 217);
+            font-weight: 600;
+            font-size: 1.86rem;
+            opacity: 95%;
+        }
+
+        #gem-icon {
+            font-size: 2.5rem;
+        }
+
+        .purple-bg {
+            background-color: rgb(60, 102, 217);
+            /* Purple background color */
+            opacity: 0.7;
+            min-height: 100vh;
+            padding-top: 80px;
+            /* Space for navbar */
+            padding-bottom: 180px;
+            position: relative;
+        }
+
+        .user-content {
+            background-color: #efebeb;
+            /* White content area */
+            border-radius: 10px;
+            padding-top: 30px;
+            min-height: 80vh;
+            position: relative;
+            top: 20px;
+            right: 0;
+            left: 0;
+        }
+
+        #sidebar {
+            background: #7386D5;
+            color: #fff;
+            transition: all 0.3s;
+            min-width: 350px;
+            max-width: 350px;
+            min-height: 100vh;
+            box-shadow: 15px 15px 20px 30px;
+        }
+
+        #sidebar.active {
+            margin-left: -350px;
+        }
+
+        .form-control-sm {
+            max-width: 200px;
+            max-height: 20px;
+        }
+
+        .dropdown-toggle::after {
+            display: block;
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+        }
+
+
+        /* Subnavbar */
+        /* Subnav button */
+        .subnav .subnavbtn {
+            font-size: 16px;
+            border: none;
+            outline: none;
+            font-family: inherit;
+            margin: 0;
+        }
+
+        /* Style the subnav content - positioned absolute */
+        .subnav-content {
+            display: none;
+            position: absolute;
+            left: 0;
+            padding-top: 0.3%;
+            background-color: rgb(60, 102, 217);
+            width: 100%;
+            height: 40px;
+            z-index: 1;
+        }
+
+        /* Style the subnav links */
+        .subnav-content a {
+            margin-left: 1rem;
+            color: white;
+            text-decoration: none;
+
+        }
+
+
+        /* Cards */
+        .card {
+            max-width: 18rem;
+            margin: 5 auto;
+        }
+        
+        .card img {
+            max-height: 100%;
+        }
+
+        .card .img-wrapper {
+            max-width: 100%;
+            height: 13em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+        /* Carousels */
+        .carousel-inner {
+            padding: 1em;
+        }
+    
+        /* .card {
+            margin: 0 0.5em;
+            box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);
+            border: none;
+        } */
+
+        .carousel-control-prev,
+        .carousel-control-next {
+            background-color: #e1e1e1;
+            width: 6vh;
+            height: 6vh;
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
         .carousel-item {
             margin-right: 0;
             flex: 0 0 25%;
@@ -213,20 +345,172 @@
         }
     }
 
-    .card .img-wrapper {
-        max-width: 100%;
-        height: 13em;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+    /* CSS styles for small screens */
+    @media (max-width: 719px) {
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+        }
 
-    .card img {
-        max-height: 100%;
-    }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            overflow-x: hidden;
+            
+        }
 
-    @media (max-width: 767px) {
+        .nav-link {
+            color: rgb(60, 102, 217);
+            font-weight: 500;
+            font-size: 1rem;
+            opacity: 90%;
+        }
+
+        .nav-link:hover {
+            text-decoration: underline;
+        }
+
+        .navbar-brand {
+            color: rgb(60, 102, 217);
+            font-weight: 600;
+            font-size: 0.80rem;
+            opacity: 95%;
+        }
+
+        .nav-link {
+            font-size: 0.85rem;
+        }
+
+        #gem-icon {
+            font-size: 1rem;
+        }
+
+        .purple-bg {
+            background-color: rgb(60, 102, 217);
+            /* Purple background color */
+            opacity: 0.7;
+            min-height: 100vh;
+            padding-top: 80px;
+            /* Space for navbar */
+            padding-bottom: 180px;
+            position: relative;
+        }
+
+        .user-content {
+            background-color: #efebeb;
+            /* White content area */
+            border-radius: 10px;
+            padding-top: 30px;
+            min-height: 80vh;
+            position: relative;
+            top: 20px;
+            right: 0;
+            left: 0;
+        }
+
+        #sidebar {
+            background: #7386D5;
+            color: #fff;
+            transition: all 0.3s;
+            min-width: 150px;
+            max-width: 150px;
+            min-height: 100vh;
+            box-shadow: 15px 15px 20px 30px;
+        }
+
+        #sidebar.active {
+            margin-left: 0;
+        }
+
+        .form-control-sm {
+            max-width: 100%;
+            max-height: 20px;
+        }
+
+        .dropdown-toggle::after {
+            display: block;
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+        }
+
+
+        /* Subnavbar */
+        /* Subnav button */
+        .subnav .subnavbtn {
+            font-size: 12px;
+            border: none;
+            outline: none;
+            font-family: inherit;
+            margin: 0;
+        }
+
+        /* Style the subnav content - positioned absolute */
+        .subnav-content {
+            display: none;
+            position: absolute;
+            left: 0;
+            padding-top: 0.2%;
+            background-color: rgb(60, 102, 217);
+            width: 100%;
+            height: 20px;
+            z-index: 1;
+        }
+
+        /* Style the subnav links */
+        .subnav-content a {
+            margin-left: 1rem;
+            color: white;
+            text-decoration: none;
+
+        }
+
+        
+        /* Cards */
+        /* .card {
+            max-width: 10rem;
+            margin: 2 auto;
+        } */
+
         .card .img-wrapper {
-            height: 17em;
+            height: 5em;
+        }
+
+
+        /* Carousels */
+        .carousel-inner {
+            padding: 1em;
+        }
+    
+        .card {
+            width: 90%;
+            max-width: 100%; 
+            margin: 0 auto;
+            box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);
+            border: none;
+        }
+
+        .carousel-control-prev,
+        .carousel-control-next {
+            background-color: #e1e1e1;
+            width: 3vh;
+            height: 3vh;
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .carousel-item {
+            margin-right: 0;
+            flex: 0 0 100%;
+            display: block;
+        }
+
+        .carousel-inner {
+            display: flex;
         }
     }
+

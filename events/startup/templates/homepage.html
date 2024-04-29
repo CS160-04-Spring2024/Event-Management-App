@@ -8,13 +8,13 @@
             
                         <div class="row gap-4 my-5 mx-5">
                             <div class="col-md-8">
-                                <h1 class="text-white" style="font-size: 10rem; font-weight: 800;">Welcome to SJSU Events</h1>
+                                <h1 class="text-white" style="font-weight: 800;">Welcome to SJSU Events</h1>
                             </div>
-                            <div class="col-md-2" style="margin-top: 20%;">
-                                <h3 class="text-white shadow">Sign On Here</h3>
-                                        <a class="d-flex btn rounded-pill mx-auto justify-content-center align-items-center shadow-lg text-white shadow" role="button"
-                                            href="{% provider_login_url 'google' process='login'%}?next=/" style="width: 15rem; height:4rem; background-color: rgb(86, 123, 255);">Login with
-                                            Google</a>
+                            <div class="col-md-2 d-flex flex-column align-items-center justify-content-center" style="margin-top: 20%;">
+                                <h3 class="align-items-center justify-content-center text-white shadow">Sign On Here</h3>
+                                <a class="d-flex btn rounded-pill mx-auto justify-content-center align-items-center shadow-lg text-white shadow" role="button"
+                                href="{% provider_login_url 'google' process='login'%}?next=/" style="width: 15rem; height:4rem; background-color: rgb(86, 123, 255);">Login with
+                                Google</a>
                             </div>
                         </div>
                 </div>
