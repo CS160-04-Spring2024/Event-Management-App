@@ -23,8 +23,7 @@ class User(models.Model):
     role = models.BooleanField(default=0)
     major = models.ForeignKey('Major', null=True, on_delete=models.DO_NOTHING)
     department = models.ForeignKey('Department', on_delete=models.DO_NOTHING)
-    funds = models.FloatField(default=0.00, validators=[
-                              MinValueValidator(0), MaxValueValidator(1000)])
+    funds = models.DecimalField(default=0.00, max_digits=6, decimal_places=2)
     is_admin = models.BooleanField(default=False)
     tags = models.ManyToManyField('Tag', related_name='users')
 
@@ -67,6 +66,8 @@ class Event(models.Model):
     end_time = models.DateTimeField()
     fees = models.DecimalField(max_digits=6, decimal_places=2)
     organization = models.ForeignKey('Organization', on_delete=models.CASCADE)
+    attendance_limit = models.IntegerField(blank=True, null=True, validators=[
+        MinValueValidator(1), MaxValueValidator(300)])
     event_image = models.URLField(
         default='https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', blank=True, null=True)
     tags = models.ManyToManyField('Tag', related_name='events')
@@ -80,18 +81,6 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
-
-    # class Meta:
-    #     db_table = 'tag'
-
-
-# class UserInterest(models.Model):
-#     user = models.ForeignKey('User', on_delete=models.CASCADE)
-#     tag = models.ManyToManyField('Tag')
-
-#     class Meta:
-#         db_table = 'user_interest'
-        # unique_together = (('user', 'tag'),)
 
 
 class Admin(models.Model):
@@ -110,15 +99,6 @@ class Registration(models.Model):
     class Meta:
         db_table = 'registration'
         unique_together = (('user_email', 'event'))
-
-
-# class EventTag(models.Model):
-#     event = models.ForeignKey('Event', on_delete=models.CASCADE)
-#     tag = models.ManyToManyField('Tag')
-
-#     class Meta:
-#         db_table = 'event_tag'
-#         # unique_together = (('event', 'tag'))
 
 
 class Location(models.Model):
@@ -147,10 +127,32 @@ class Major(models.Model):
 
     class Meta:
         db_table = 'major'
+
+
+# class EventTag(models.Model):
+#     event = models.ForeignKey('Event', on_delete=models.CASCADE)
+#     tag = models.ManyToManyField('Tag')
+
+#     class Meta:
+#         db_table = 'event_tag'
+#         # unique_together = (('event', 'tag'))
+
+
 # class Event(models.Model):
 #     content = RichTextField()
 # Create your models here.
 
+    # class Meta:
+    #     db_table = 'tag'
+
+
+# class UserInterest(models.Model):
+#     user = models.ForeignKey('User', on_delete=models.CASCADE)
+#     tag = models.ManyToManyField('Tag')
+
+#     class Meta:
+#         db_table = 'user_interest'
+        # unique_together = (('user', 'tag'),)
 # <<<<<<< Jae2
 # class eventPanel:
 #     title: str

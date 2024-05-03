@@ -1,8 +1,36 @@
 {% extends 'homebase.html' %}
 {% block content %}
 
+<style>
+    .new_bg{
+        background-image: url('https://sjsu.edu/me/pics/club_photos/club_photos-Spartan%20Racing-082522.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: 30%;
+        width: 100vw;
+        height: 90vh;
+        
+    }
+
+    .textClubs{
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(253, 253, 253, 0.727); /* Grey background with 50% opacity */
+    padding: 20px;
+    border-radius: 10px;
+}
+
+</style>
+
+<div class="new_bg shadow">
+    <h1 class="text-center textClubs mr-5" style="font-size: 5rem; font-weight: 700;">Club List</h1>
+</div>
+
+<!-- <img src="https://sjsu.edu/me/pics/club_photos/club_photos-Spartan%20Racing-082522.jpg" alt="" style="width:100vw; height: 700px;"> -->
 <div class="container-fluid">
-    <div class="my-4 " style="margin-right: 0px; margin-left: 80%;">
+    <div class="my-4" style="margin:auto; width: 50%; padding-left: 10%; padding-right: 10%;">
         <form action="{% url 'all_clubs' %}" method="post">
             {% csrf_token %}
             <input class="form-control rounded-pill" list="dept_selector" id="DepartmentsList" placeholder="Filter by Dept..."
@@ -55,14 +83,18 @@
 
         <div class="row my-5" id="all_orgs">
             {% for card in clubs %}
-            <div class="col-md-4 p-4">
+            <div class="col-md-6 p-4" style="padding: 2%;">
                 <div class="card shadow mb-3" style="border-radius: 4%;" id="{{ card.id }}_{{ card.department }}">
-                    <div class="d-flex gap-4">
-                        <div class="card-body">
-                            <h5 style="font-weight: 550;">{{ card.name }}</h5>
-                            <p class="text-muted" style="font-size: 15px;">{{ card.description }}</p>
+                    <div class="row gap-3">
+                        <div class="col-md-5">
+                            <img src="{{ card.club_logo }}" class="card-img-sm" alt="" style="color: transparent;">
                         </div>
-                        <img src="{{ card.club_logo }}" class="card-img-sm" alt="" style="color: transparent;">
+                        <div class="col-md-6">
+                            <div class="card-body">
+                                <h4 style="font-weight: 550;">{{ card.name }}</h4>
+                                <p class="text-muted" style="font-size: 1rem;">{{ card.description }}</p>
+                            </div>
+                        </div>
                     </div>
 
                     <a href="{% url 'club' cid=card.id %}" class="btn btn-outline-success rounded-pill mb-2" style="margin-left: 2%; width: 40%;">Learn More <i
