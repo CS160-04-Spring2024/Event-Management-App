@@ -1,6 +1,17 @@
 {% extends 'homebase.html' %}
 {%block content%}
 
+<style>
+
+    .pill-bubbler {
+      background-color: white; /* Blue color */
+      color: black; /* White text color */
+      padding: 20px 30px; /* Padding inside the bubble */
+      border-radius: 30px; /* Border radius to make it pill-shaped */
+      /* display: inline-block; Display as inline block */
+    }
+</style>
+
 <script>
     $(document).ready(function () {
              $('#sidebarCollapse').on('click', function () {
@@ -10,14 +21,13 @@
     });
 </script>
 
-
-<div class="wrapper">
+<div class="container-fluid">
+<div class="row gap-3 justify-content-center">
     <!-- Sidebar -->
-<nav id="sidebar">
+<div class="col-md-3 my-4 pill-bubbler shadow" style="height: 30%;">
     <form action="{% url 'all_events' %}" method="post" class="mx-3">
         {% csrf_token %}
     <div class="sidebar-header">
-        
             <h4 class="text-center mt-3">Sort By</h4>
             <div class="d-flex justify-content-center">
                 <select name="sort" class="form-select-sm mb-3 w-75 rounded-pill" aria-label="">
@@ -56,11 +66,11 @@
         </div>
 
         <hr>
-        <div class="my-3 mx-auto">
+        <div class="my-3 mx-4">
             <label for="earliest">Start Date:</label>
             <input class="d-md-inline form-control-sm" type="datetime-local" name="start_date" id="earliest">
         </div>
-        <div class="my-3">
+        <div class="my-3 mx-4">
             <label for="latest">End Date:</label>
             <input class="d-md-inline form-control-sm" type="datetime-local" name="end_date" id="latest">
         </div>
@@ -68,43 +78,43 @@
         <!-- Adding tags to filter -->
 
         <hr>
-        <div class="row justify-content-center">
-            <!-- {% for tag in tags %}
-            <div class="col mt-2">
-                <label class="label-for-check-events-all" for="tag_{{ tag.name }}">
-                    <input type="checkbox" class="form-check-input-events-all" name="selected_tags" id="tag_{{ tag.name }}"
-                        style="display: none;" value="{{ tag.name }}">
-                    {{ tag.name }}</label>
-            </div>
-            {% endfor %}     -->
+        <!-- <div class="row justify-content-center">
             <select style="height: 150px; width: 70%;" name="selectedTags" id="" multiple>
                 {% for tag in tags %}
                 <option value="{{tag.name}}"> {{ tag.name }} </option>
                 {% endfor %}
             </select>
+        </div> -->
+
+        <h6>Tags</h6>
+        <div class="row gap-3">
+        {% for tag in tags %}
+            <div class="col-md-4">
+                <div class="d-flex gap-2">
+                    <input type="checkbox" name="tagList" id="{{ tag.name }}" value="{{ tag.name }}">
+                    <label for="{{ tag.name }}">{{ tag.name }}</label>
+                </div>
+            </div>
+            {% endfor %}
         </div>
+
+
             <!-- <input type="hidden" id="selectedTagsInput" name="selectedTags" value=""> -->
 
 
         <button type="submit" class="btn btn-outline-warning rounded-pill my-3">Apply</button>
     </form>
-    <ul class="list-unstyled">
-        <li class="active">
-
-        </li>
-    </ul>
-</nav>
+</div>
 
 
 
-<div id="content">
+<div  class="col-md-7" id="content">
         <div class="container-fluid">
-                <a class="text-primary" id="sidebarCollapse">Filter</a>
 
-            <div class="d-flex gap-2 my-3">
-                <a href="{% url 'all_events' %}" class="btn btn-outline-primary">All</a>
+            <div class="row gap-2 my-3">
+                <a href="{% url 'all_events' %}" class="col-auto btn btn-outline-primary">All</a>
                 {% for tag in tags %}
-                <a href="{% url 'all_events' %}?tag={{tag.name}}" class="btn btn-outline-primary">{{tag.name}}</a>
+                <a href="{% url 'all_events' %}?tag={{tag.name}}" class="col-auto btn btn-outline-primary">{{tag.name}}</a>
                 {% endfor %}
             </div>
 
@@ -198,6 +208,7 @@
         </div>
 
 
+</div>
 </div>
 </div>
 

@@ -95,10 +95,18 @@
                         </div>
 
 
-                        <div class="form-group col-md-8 my-2">
+                        <div class="form-group col-md-5 my-2">
                             <label>{{ form.location.label }}</label>
                             {{ form.location}}
                             {% for error in form.location.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+
+                        </div>
+                        <div class="form-group col-md-5 my-2">
+                            <label>{{ form.attendance_limit.label }}</label>
+                            {{ form.attendance_limit}}
+                            {% for error in form.attendance_limit.errors %}
                             <div class="invalid-feedback">{{ error }}</div>
                             {% endfor %}
 

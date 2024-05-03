@@ -33,11 +33,13 @@ class EventForm(forms.ModelForm):
         attrs={'class': 'form-control shadow-sm '}))
     tags = forms.ModelMultipleChoiceField(
         queryset=Tag.objects.all(), widget=forms.CheckboxSelectMultiple(attrs={'class': ''}))
+    attendance_limit = forms.IntegerField(min_value=0, widget=forms.NumberInput(
+        attrs={'class': 'form-control shadow-sm', 'type': 'number', 'required': False}))
 
     class Meta:
         model = Event
         fields = ['event_name', 'description', 'mode_of_operation',
-                  'start_time', 'end_time', 'fees', 'event_image', 'location', 'tags']
+                  'start_time', 'end_time', 'fees', 'event_image', 'location', 'attendance_limit', 'tags']
         widgets = {
             'event_name': forms.TextInput(attrs={'class': 'form-control shadow-sm rounded-pill', 'required': True}),
             'start_time': forms.DateTimeInput(attrs={'class': 'form-control shadow-sm rounded-pill', 'type': 'datetime-local', 'required': True}),

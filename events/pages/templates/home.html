@@ -3,602 +3,498 @@
 
 <!-- CAROUSELS FOR HOMEPAGE -->
 <!-- need to test on different screen sizes -->
-<div class="container-fluid" style="background-color:beige">
-    <div id="carousels">
-        <br>
+<!-- <img src="https://bpb-us-w2.wpmucdn.com/blogs.sjsu.edu/dist/f/94/files/2022/08/strategic-plan-jduarte-031319-21_IMG_WEB.jpg" alt="" height="550px" width="100%" style="opacity: 0.5;"> -->
+<style>
 
-        <!-- EVENT RECOMMENDATIONS -->
-        <h3 class="h3" style="color: darkgoldenrod;">
-            Upcoming Events You May Be Interested In
-        </h3>
-        <div id="eventRecs" class="carousel">
-            <div class="carousel-inner">
+.bg-img {
+    background-image: url('https://bpb-us-w2.wpmucdn.com/blogs.sjsu.edu/dist/f/94/files/2022/08/strategic-plan-jduarte-031319-21_IMG_WEB.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 700px;
+    width: 100%;
+    opacity: 0.9;
+    border-radius: 2%;
+}
 
-                <!-- event rec 1 -->
-                <div class="carousel-item active">
-                    <div class="card position-relative shadow"
-                        style="width: 18rem; height: fit-content; border-radius: 10%;">
-                        <div class="card-body">
-                            <h6 class="card-title">Competitive Programming</h6>
-                            <h4 class="card-subtitle mb-2 text-muted">ICPC Intro Session</h4>
-                            <div class="col d-flex">
-                                <i class="bi bi-person mx-2"></i>
-                                <p class="">In-Person</p>
-                            </div>
-                            <div class="col d-flex">
-                                <i class="bi bi-clock mx-1"></i>
-                                <p class="" style="font-size: medium;">Tue 10:00 am - 11:45am</p>
-                            </div>
-                            <!-- tags -->
-                            <div class="row">
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">Machine Learning</span></h5>
-                                </div>
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">Programming</span></h5>
-                                </div>
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">AI</span></h5>
-                                </div>
-                            </div>
-                            <!-- end tags -->
-                            <hr>
-                            <a href="#" class="stretched-link" style="text-decoration: none;">12 students registered</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- event rec 1 -->
 
-                <!-- event rec 2 -->
-                <div class="carousel-item">
-                    <div class="card position-relative shadow"
-                        style="width: 18rem; height: fit-content; border-radius: 10%;">
-                        <div class="card-body">
-                            <h6 class="card-title">Competitive Programming</h6>
-                            <h4 class="card-subtitle mb-2 text-muted">ICPC Intro Session</h4>
-                            <div class="col d-flex">
-                                <i class="bi bi-person mx-2"></i>
-                                <p class="">In-Person</p>
-                            </div>
-                            <div class="col d-flex">
-                                <i class="bi bi-clock mx-1"></i>
-                                <p class="" style="font-size: medium;">Tue 10:00 am - 11:45am</p>
-                            </div>
-                            <!-- tags -->
-                            <div class="row">
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">Machine Learning</span></h5>
-                                </div>
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">Programming</span></h5>
-                                </div>
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">AI</span></h5>
-                                </div>
-                            </div>
-                            <!-- end tags -->
-                            <hr>
-                            <a href="#" class="stretched-link" style="text-decoration: none;">12 students registered</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- event rec 2 -->
 
-                <!-- event rec 3 -->
-                <div class="carousel-item">
-                    <div class="card position-relative shadow"
-                        style="width: 18rem; height: fit-content; border-radius: 10%;">
-                        <div class="card-body">
-                            <h6 class="card-title">Competitive Programming</h6>
-                            <h4 class="card-subtitle mb-2 text-muted">ICPC Intro Session</h4>
-                            <div class="col d-flex">
-                                <i class="bi bi-person mx-2"></i>
-                                <p class="">In-Person</p>
-                            </div>
-                            <div class="col d-flex">
-                                <i class="bi bi-clock mx-1"></i>
-                                <p class="" style="font-size: medium;">Tue 10:00 am - 11:45am</p>
-                            </div>
-                            <!-- tags -->
-                            <div class="row">
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">Machine Learning</span></h5>
-                                </div>
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">Programming</span></h5>
-                                </div>
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">AI</span></h5>
-                                </div>
-                            </div>
-                            <!-- end tags -->
-                            <hr>
-                            <a href="#" class="stretched-link" style="text-decoration: none;">12 students registered</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- event rec 3 -->
+.slide-right {
+    width: 100%;
+    overflow: hidden;
+    margin-left: 50px;
+    padding-top: 15%;
+    max-width: 900px
+}
 
-                <!-- event rec 4 -->
-                <div class="carousel-item">
-                    <div class="card position-relative shadow"
-                        style="width: 18rem; height: fit-content; border-radius: 10%;">
-                        <div class="card-body">
-                            <h6 class="card-title">Competitive Programming</h6>
-                            <h4 class="card-subtitle mb-2 text-muted">ICPC Intro Session</h4>
-                            <div class="col d-flex">
-                                <i class="bi bi-person mx-2"></i>
-                                <p class="">In-Person</p>
-                            </div>
-                            <div class="col d-flex">
-                                <i class="bi bi-clock mx-1"></i>
-                                <p class="" style="font-size: medium;">Tue 10:00 am - 11:45am</p>
-                            </div>
-                            <!-- tags -->
-                            <div class="row">
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">Machine Learning</span></h5>
-                                </div>
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">Programming</span></h5>
-                                </div>
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">AI</span></h5>
-                                </div>
-                            </div>
-                            <!-- end tags -->
-                            <hr>
-                            <a href="#" class="stretched-link" style="text-decoration: none;">12 students registered</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- event rec 4 -->
+.slide-right h1 {
+    animation: 1s slide-right 2s forwards;
+    transform: translateX(-100%);
+}
 
-                <!-- event rec 5 -->
-                <div class="carousel-item">
-                    <div class="card position-relative shadow"
-                        style="width: 18rem; height: fit-content; border-radius: 10%;">
-                        <div class="card-body">
-                            <h6 class="card-title">Competitive Programming</h6>
-                            <h4 class="card-subtitle mb-2 text-muted">ICPC Intro Session</h4>
-                            <div class="col d-flex">
-                                <i class="bi bi-person mx-2"></i>
-                                <p class="">In-Person</p>
-                            </div>
-                            <div class="col d-flex">
-                                <i class="bi bi-clock mx-1"></i>
-                                <p class="" style="font-size: medium;">Tue 10:00 am - 11:45am</p>
-                            </div>
-                            <!-- tags -->
-                            <div class="row">
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">Machine Learning</span></h5>
-                                </div>
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">Programming</span></h5>
-                                </div>
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">AI</span></h5>
-                                </div>
-                            </div>
-                            <!-- end tags -->
-                            <hr>
-                            <a href="#" class="stretched-link" style="text-decoration: none;">12 students registered</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- event rec 5 -->
+@keyframes slide-right {
+    to {
+        transform: translateX(0);
+    }
+}
 
-                <!-- dynamically add event recommendations -->
 
-            </div>
 
-            <button class="carousel-control-prev" type="button" data-bs-target="#eventRecs" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#eventRecs" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
+.textCenter{
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(253, 253, 253, 0.727); /* Grey background with 50% opacity */
+    /* padding: 60px; */
+    border-radius: 10px;
+    /* margin-left: 20%; */
+    /* p-right: 30%; */
+}
 
-        <br><br>
-        <!-- CLUB RECOMMENDATIONS -->
-        <h3 class="h3" style="color: darkgoldenrod;">
-            Clubs We Found Just For You
-        </h3>
-        <div id="clubRecs" class="carousel">
-            <div class="carousel-inner">
 
-                <!-- club rec 1 -->
-                <div class="carousel-item active">
-                    <div class="card position-relative shadow"
-                        style="width: 18rem; height: fit-content; border-radius: 10%;">
-                        <div class="card-body">
-                            <h4 class="card-title mb-2">Barbie Stans</h4>
-                            <div class="col d-flex">
-                                <i class="bi bi-person mx-2"></i> <!-- replace w/ location symbol -->
-                                <p class="">SCI 101</p>
-                            </div>
-                            <div class="col d-flex">
-                                <p class="" style="font-size: small;">
-                                    We are the true Barbie fans. Learn, live, and love Barbie with us.
-                                </p>
-                            </div>
-                            <!-- tags -->
-                            <div class="row">
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">Philosophy</span></h5>
-                                </div>
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">Literature</span></h5>
-                                </div>
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">Film</span></h5>
-                                </div>
-                            </div>
-                            <!-- end tags -->
-                            <hr>
-                            <a href="#" class="stretched-link" style="text-decoration: none;">95 members</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- club rec 1 -->
+.wrapper { 
+    /* max-width: 1700px;  */
+    width: 100%; 
+    position: relative; 
+  
+} 
+  
+.wrapper i { 
+    height: 50px; 
+    width: 50px; 
+    background: rgb(172, 225, 236); 
+    text-align: center; 
+    line-height: 50px; 
+    border-radius: 50%; 
+    cursor: pointer; 
+    position: absolute; 
+    top: 50%; 
+    font-size: 1.25 rem; 
+    transform: translateY(-50%); 
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.23); 
+    z-index: 100;
+  
+} 
+  
+.wrapper i:first-child { 
+    left: 2px; 
+  
+} 
+  
+.wrapper i:last-child { 
+    right: 2px; 
+  
+} 
+  
+.wrapper .carousela { 
+    display: grid; 
+    grid-auto-flow: column; 
+    width: 100%;
+    grid-auto-columns: calc((100% / 4.3) - 2px); 
+    gap: 2px; 
+    overflow-x: auto; 
+    scroll-snap-type: x mandatory; 
+    scroll-behavior: smooth; 
+    scrollbar-width: 0; 
+} 
+  
+.carousela::-webkit-scrollbar { 
+    display: none; 
+} 
+  
+.carousela :where(.card, .img) { 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+} 
+  
+.carousela.dragging { 
+    scroll-snap-type: none; 
+    scroll-behavior: auto; 
+} 
+  
+.carousela.no-transition { 
+    scroll-behavior: auto; 
+} 
+  
+.carousela.dragging .card { 
+    cursor: grab; 
+    user-select: none; 
+} 
+  
+/* .carousela .card { 
+    scroll-snap-align: start; 
+ 
+    list-style: none; 
+    background: #fff; 
+    border-radius: 8px; 
+    display: flex; 
+    cursor: pointer; 
+    width: 98%; 
+    padding-bottom: 15px; 
+    align-items: center; 
+    justify-content: center; 
+    flex-direction: column; 
+}  */
+  
+.card .img { 
+    background: green; 
+    width: 145px; 
+    height: 145px; 
+    border-radius: 50%; 
+  
+} 
+  
+.card .img img { 
+    width: 140px; 
+    height: 140px; 
+    object-fit: cover; 
+    border-radius: 50%; 
+    border: 4px solid #fff; 
+} 
+  
+.card h2 { 
+    font-weight: 500; 
+    font-size: 1.56rem; 
+    margin: 30px 0 5px; 
+} 
+  
+.card span { 
+    color: #6a6d78; 
+    font-size: 1.31rem; 
+  
+} 
+  
+@media screen and (max-width: 900px) { 
+    .wrapper .carousela { 
+        grid-auto-columns: calc((100% / 2) - 9px); 
+  
+    } 
+} 
+  
+@media screen and (max-width: 600px) { 
+    .wrapper .carousela { 
+        grid-auto-columns: 100%; 
+  
+    } 
+}
 
-                <!-- club rec 2 -->
-                <div class="carousel-item active">
-                    <div class="card position-relative shadow"
-                        style="width: 18rem; height: fit-content; border-radius: 10%;">
-                        <div class="card-body">
-                            <h4 class="card-title mb-2">Barbie Stans</h4>
-                            <div class="col d-flex">
-                                <i class="bi bi-person mx-2"></i> <!-- replace w/ location symbol -->
-                                <p class="">SCI 101</p>
-                            </div>
-                            <div class="col d-flex">
-                                <p class="" style="font-size: small;">
-                                    We are the true Barbie fans. Learn, live, and love Barbie with us.
-                                </p>
-                            </div>
-                            <!-- tags -->
-                            <div class="row">
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">Philosophy</span></h5>
-                                </div>
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">Literature</span></h5>
-                                </div>
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">Film</span></h5>
-                                </div>
-                            </div>
-                            <!-- end tags -->
-                            <hr>
-                            <a href="#" class="stretched-link" style="text-decoration: none;">95 members</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- club rec 2 -->
+/* .carousel-item img {
+    width: 33.33%; /* Set each image to occupy one-third of the carousel width */
+    /* float: left; Float the images to make them appear in a row */
+/* } */
 
-                <!-- club rec 3 -->
-                <div class="carousel-item active">
-                    <div class="card position-relative shadow"
-                        style="width: 18rem; height: fit-content; border-radius: 10%;">
-                        <div class="card-body">
-                            <h4 class="card-title mb-2">Barbie Stans</h4>
-                            <div class="col d-flex">
-                                <i class="bi bi-person mx-2"></i> <!-- replace w/ location symbol -->
-                                <p class="">SCI 101</p>
-                            </div>
-                            <div class="col d-flex">
-                                <p class="" style="font-size: small;">
-                                    We are the true Barbie fans. Learn, live, and love Barbie with us.
-                                </p>
-                            </div>
-                            <!-- tags -->
-                            <div class="row">
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">Philosophy</span></h5>
-                                </div>
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">Literature</span></h5>
-                                </div>
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">Film</span></h5>
-                                </div>
-                            </div>
-                            <!-- end tags -->
-                            <hr>
-                            <a href="#" class="stretched-link" style="text-decoration: none;">95 members</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- club rec 3 -->
+/* .carousel-inner {
+    width: 300%; 
+}
 
-                <!-- club rec 4 -->
-                <div class="carousel-item active">
-                    <div class="card position-relative shadow"
-                        style="width: 18rem; height: fit-content; border-radius: 10%;">
-                        <div class="card-body">
-                            <h4 class="card-title mb-2">Barbie Stans</h4>
-                            <div class="col d-flex">
-                                <i class="bi bi-person mx-2"></i> <!-- replace w/ location symbol -->
-                                <p class="">SCI 101</p>
-                            </div>
-                            <div class="col d-flex">
-                                <p class="" style="font-size: small;">
-                                    We are the true Barbie fans. Learn, live, and love Barbie with us.
-                                </p>
-                            </div>
-                            <!-- tags -->
-                            <div class="row">
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">Philosophy</span></h5>
-                                </div>
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">Literature</span></h5>
-                                </div>
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">Film</span></h5>
-                                </div>
-                            </div>
-                            <!-- end tags -->
-                            <hr>
-                            <a href="#" class="stretched-link" style="text-decoration: none;">95 members</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- club rec 4 -->
+.carousel-item {
+    display: flex; 
+}  */
 
-                <!-- club rec 5 -->
-                <div class="carousel-item active">
-                    <div class="card position-relative shadow"
-                        style="width: 18rem; height: fit-content; border-radius: 10%;">
-                        <div class="card-body">
-                            <h4 class="card-title mb-2">Barbie Stans</h4>
-                            <div class="col d-flex">
-                                <i class="bi bi-person mx-2"></i> <!-- replace w/ location symbol -->
-                                <p class="">SCI 101</p>
-                            </div>
-                            <div class="col d-flex">
-                                <p class="" style="font-size: small;">
-                                    We are the true Barbie fans. Learn, live, and love Barbie with us.
-                                </p>
-                            </div>
-                            <!-- tags -->
-                            <div class="row">
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">Philosophy</span></h5>
-                                </div>
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">Literature</span></h5>
-                                </div>
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">Film</span></h5>
-                                </div>
-                            </div>
-                            <!-- end tags -->
-                            <hr>
-                            <a href="#" class="stretched-link" style="text-decoration: none;">95 members</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- club rec 5 -->
 
-                <!-- dynamically add club recommendations -->
 
-            </div>
+</style>
 
-            <button class="carousel-control-prev" type="button" data-bs-target="#clubRecs" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#clubRecs" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
 
-        <br><br>
-        <!-- DEPARTMENT/MAJOR EVENTS -->
-        <h3 class="h3" style="color: darkgoldenrod;">
-            Department/Major Events Related to You
-        </h3>
-        <div id="deptRecs" class="carousel">
-            <div class="carousel-inner">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-                <!-- event rec 1 -->
-                <div class="carousel-item active">
-                    <div class="card position-relative shadow"
-                        style="width: 18rem; height: fit-content; border-radius: 10%;">
-                        <div class="card-body">
-                            <h6 class="card-title">Competitive Programming</h6>
-                            <h4 class="card-subtitle mb-2 text-muted">ICPC Intro Session</h4>
-                            <div class="col d-flex">
-                                <i class="bi bi-person mx-2"></i>
-                                <p class="">In-Person</p>
-                            </div>
-                            <div class="col d-flex">
-                                <i class="bi bi-clock mx-1"></i>
-                                <p class="" style="font-size: medium;">Tue 10:00 am - 11:45am</p>
-                            </div>
-                            <!-- tags -->
-                            <div class="row">
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">Machine Learning</span></h5>
-                                </div>
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">Programming</span></h5>
-                                </div>
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">AI</span></h5>
-                                </div>
-                            </div>
-                            <!-- end tags -->
-                            <hr>
-                            <a href="#" class="stretched-link" style="text-decoration: none;">12 students registered</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- event rec 1 -->
 
-                <!-- event rec 2 -->
-                <div class="carousel-item">
-                    <div class="card position-relative shadow"
-                        style="width: 18rem; height: fit-content; border-radius: 10%;">
-                        <div class="card-body">
-                            <h6 class="card-title">Competitive Programming</h6>
-                            <h4 class="card-subtitle mb-2 text-muted">ICPC Intro Session</h4>
-                            <div class="col d-flex">
-                                <i class="bi bi-person mx-2"></i>
-                                <p class="">In-Person</p>
-                            </div>
-                            <div class="col d-flex">
-                                <i class="bi bi-clock mx-1"></i>
-                                <p class="" style="font-size: medium;">Tue 10:00 am - 11:45am</p>
-                            </div>
-                            <!-- tags -->
-                            <div class="row">
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">Machine Learning</span></h5>
-                                </div>
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">Programming</span></h5>
-                                </div>
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">AI</span></h5>
-                                </div>
-                            </div>
-                            <!-- end tags -->
-                            <hr>
-                            <a href="#" class="stretched-link" style="text-decoration: none;">12 students registered</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- event rec 2 -->
+<script language="JavaScript" type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+        const carousel = document.querySelector(".carousela");
+        const arrowBtns = document.querySelectorAll(".wrapper i");
+        const wrapper = document.querySelector(".wrapper");
 
-                <!-- event rec 3 -->
-                <div class="carousel-item">
-                    <div class="card position-relative shadow"
-                        style="width: 18rem; height: fit-content; border-radius: 10%;">
-                        <div class="card-body">
-                            <h6 class="card-title">Competitive Programming</h6>
-                            <h4 class="card-subtitle mb-2 text-muted">ICPC Intro Session</h4>
-                            <div class="col d-flex">
-                                <i class="bi bi-person mx-2"></i>
-                                <p class="">In-Person</p>
-                            </div>
-                            <div class="col d-flex">
-                                <i class="bi bi-clock mx-1"></i>
-                                <p class="" style="font-size: medium;">Tue 10:00 am - 11:45am</p>
-                            </div>
-                            <!-- tags -->
-                            <div class="row">
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">Machine Learning</span></h5>
-                                </div>
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">Programming</span></h5>
-                                </div>
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">AI</span></h5>
-                                </div>
-                            </div>
-                            <!-- end tags -->
-                            <hr>
-                            <a href="#" class="stretched-link" style="text-decoration: none;">12 students registered</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- event rec 3 -->
+        const firstCard = carousel.querySelector(".card");
+        const firstCardWidth = firstCard.offsetWidth;
 
-                <!-- event rec 4 -->
-                <div class="carousel-item">
-                    <div class="card position-relative shadow"
-                        style="width: 18rem; height: fit-content; border-radius: 10%;">
-                        <div class="card-body">
-                            <h6 class="card-title">Competitive Programming</h6>
-                            <h4 class="card-subtitle mb-2 text-muted">ICPC Intro Session</h4>
-                            <div class="col d-flex">
-                                <i class="bi bi-person mx-2"></i>
-                                <p class="">In-Person</p>
-                            </div>
-                            <div class="col d-flex">
-                                <i class="bi bi-clock mx-1"></i>
-                                <p class="" style="font-size: medium;">Tue 10:00 am - 11:45am</p>
-                            </div>
-                            <!-- tags -->
-                            <div class="row">
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">Machine Learning</span></h5>
-                                </div>
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">Programming</span></h5>
-                                </div>
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">AI</span></h5>
-                                </div>
-                            </div>
-                            <!-- end tags -->
-                            <hr>
-                            <a href="#" class="stretched-link" style="text-decoration: none;">12 students registered</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- event rec 4 -->
+        let isDragging = false,
+            startX,
+            startScrollLeft,
+            timeoutId;
 
-                <!-- event rec 5 -->
-                <div class="carousel-item">
-                    <div class="card position-relative shadow"
-                        style="width: 18rem; height: fit-content; border-radius: 10%;">
-                        <div class="card-body">
-                            <h6 class="card-title">Competitive Programming</h6>
-                            <h4 class="card-subtitle mb-2 text-muted">ICPC Intro Session</h4>
-                            <div class="col d-flex">
-                                <i class="bi bi-person mx-2"></i>
-                                <p class="">In-Person</p>
-                            </div>
-                            <div class="col d-flex">
-                                <i class="bi bi-clock mx-1"></i>
-                                <p class="" style="font-size: medium;">Tue 10:00 am - 11:45am</p>
-                            </div>
-                            <!-- tags -->
-                            <div class="row">
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">Machine Learning</span></h5>
-                                </div>
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">Programming</span></h5>
-                                </div>
-                                <div class="col">
-                                    <h5><span class="badge rounded-pill bg-success shadow">AI</span></h5>
-                                </div>
-                            </div>
-                            <!-- end tags -->
-                            <hr>
-                            <a href="#" class="stretched-link" style="text-decoration: none;">12 students registered</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- event rec 5 -->
+        const dragStart = (e) => {
+            isDragging = true;
+            carousel.classList.add("dragging");
+            startX = e.pageX;
+            startScrollLeft = carousel.scrollLeft;
+        };
 
-                <!-- dynamically add event recommendations -->
+        const dragging = (e) => {
+            if (!isDragging) return;
 
-            </div>
+            // Calculate the new scroll position 
+            const newScrollLeft = startScrollLeft - (e.pageX - startX);
 
-            <button class="carousel-control-prev" type="button" data-bs-target="#deptRecs" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#deptRecs" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
+            // Check if the new scroll position exceeds  
+            // the carousel boundaries 
+            if (newScrollLeft <= 0 || newScrollLeft >=
+                carousel.scrollWidth - carousel.offsetWidth) {
 
+                // If so, prevent further dragging 
+                isDragging = false;
+                return;
+            }
+
+            // Otherwise, update the scroll position of the carousel 
+            carousel.scrollLeft = newScrollLeft;
+        };
+
+        const dragStop = () => {
+            isDragging = false;
+            carousel.classList.remove("dragging");
+        };
+
+        const autoPlay = () => {
+
+            // Return if window is smaller than 800 
+            if (window.innerWidth < 800) return;
+
+            // Calculate the total width of all cards 
+            const totalCardWidth = carousel.scrollWidth;
+
+            // Calculate the maximum scroll position 
+            const maxScrollLeft = totalCardWidth - carousel.offsetWidth;
+
+            // If the carousel is at the end, stop autoplay 
+            if (carousel.scrollLeft >= maxScrollLeft) return;
+
+            // Autoplay the carousel after every 2500ms 
+            timeoutId = setTimeout(() =>
+                carousel.scrollLeft += firstCardWidth, 2500);
+        };
+
+        carousel.addEventListener("mousedown", dragStart);
+        carousel.addEventListener("mousemove", dragging);
+        document.addEventListener("mouseup", dragStop);
+        wrapper.addEventListener("mouseenter", () =>
+            clearTimeout(timeoutId));
+        wrapper.addEventListener("mouseleave", autoPlay);
+
+        // Add event listeners for the arrow buttons to  
+        // scroll the carousel left and right 
+        arrowBtns.forEach(btn => {
+            btn.addEventListener("click", () => {
+                carousel.scrollLeft += btn.id === "left" ?
+                    -firstCardWidth : firstCardWidth;
+            });
+        });
+    }); 
+
+</script>
+<!-- <script language="JavaScript" type="text/javascript" src="scripts/jquery.js"></script>
+<script language="JavaScript" type="text/javascript" src="scripts/bootstrap.min.js"></script> -->
+<!-- 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script> -->
+    
+
+<div class="bg-img shadow">
+    <div class="textCenter text-center">
+        <h1 class="" style="font-size: 7rem; color: black; opacity: 2; font-weight: 700;">Never Miss a Beat!</h1>
     </div>
-    <br>
+</div>
+
+
+
+
+<div class="container-fluid" style="background-color:rgb(243, 243, 243)">
+
+<!-- <div class="w-75 justify-content-center"> -->
+
+    
+    <h3 class="text-md-15 mt-4" style="font-weight: 700;">Recommended based on your tags</h3>
+    <div class="wrapper">
+    <i class="bi bi-caret-left-fill"></i>
+    <ul class="carousela">
+        <!-- <li class="card">
+            <div class="img"><img src="https://media.geeksforgeeks.org/wp-content/uploads/20240213150115/ppp.png" alt=""
+                    draggable="false"> </div>
+            <h2 style="color: green; font-weight:bold;">
+                GeeksforGeeks
+            </h2>
+            <span>Coding Platform</span>
+        </li>
+        <li class="card">
+            <div class="img"><img src="https://media.geeksforgeeks.org/wp-content/uploads/20240213150115/ppp.png" alt=""
+                    draggable="false"> </div>
+            <h2 style="color: green; font-weight:bold;">GeeksforGeeks</h2>
+            <span>Coding Platform</span>
+        </li>
+        <li class="card">
+            <div class="img"><img src="https://media.geeksforgeeks.org/wp-content/uploads/20240213150115/ppp.png" alt=""
+                    draggable="false"> </div>
+            <h2 style="color: green; font-weight:bold;">GeeksforGeeks</h2>
+            <span>Coding Platform</span>
+        </li>
+        <li class="card">
+            <div class="img"><img src="https://media.geeksforgeeks.org/wp-content/uploads/20240213150115/ppp.png" alt=""
+                    draggable="false"> </div>
+            <h2 style="color: green; font-weight:bold;">GeeksforGeeks</h2>
+            <span>Coding Platform</span>
+        </li>
+        <li class="card">
+            <div class="img"><img src="https://media.geeksforgeeks.org/wp-content/uploads/20240213150115/ppp.png" alt=""
+                    draggable="false"> </div>
+            <h2 style="color: green; font-weight:bold;">GeeksforGeeks</h2>
+            <span>Coding Platform</span>
+        </li>
+        <li class="card">
+            <div class="img"><img src="https://media.geeksforgeeks.org/wp-content/uploads/20240213150115/ppp.png" alt=""
+                    draggable="false"> </div>
+            <h2 style="color: green; font-weight:bold;">GeeksforGeeks</h2>
+            <span>Coding Platform</span>
+        </li> -->
+
+
+        {% for event in tag_events %}
+        <div class="col-md-auto col-sm-auto my-auto mt-4">
+        
+            <div class="card align-items-stretch shadow" style="width: 18rem; border-radius: 3%;">
+                <img src="{{ event.event_image }}" class="card-img-top card-img-sm" alt="">
+                <div class="card-body">
+                    <h6 class="card-title"><a href="{% url 'club' cid=event.organization_id %}"
+                            style="text-decoration: none;">{{event.club_name}}</a></h6>
+                    <a href="{% url 'event' event_id=event.event_id %}" style="text-decoration: none;">
+                        <h4 class="card-subtitle mb-2 text-muted" style="font-size: large;">{{event.event_name}}</h4>
+                    </a>
+                    <!-- <div class="col d-flex">
+                        <i class="bi bi-person mx-2"></i>
+                        <p class="">{{event.mode_of_operation}}</p>
+                    </div>
+                    <div class="col d-flex">
+                        <i class="bi bi-clock mx-1"></i>
+                        <p class="" style="font-size: small;">{{event.time}}</p>
+                    </div> -->
+                    <!-- <div class="row gap-2">
+                        {% for tag2 in event.tag_list %}
+                        <div class="col-md-3">
+                            <h5><span class="badge rounded-pill bg-success shadow">{{tag2.tag_id}}</span></h5>
+                        </div>
+                        {% endfor %}
+                    </div> -->
+                    <!-- <hr>
+                    {% if event.attendees == 1 %}
+                    <p style="margin-bottom: -1%;"> {{event.attendees}} person registered</p>
+                    {% else %}
+                    <p style="margin-bottom: -1%;"> {{event.attendees}} people registered</p>
+                    {% endif %}
+                    <a href="{% url 'event' event_id=event.event_id %}" class="stretched-link"
+                                    style="text-decoration: none;">{{event.attendees}} people registered</a> --> 
+                </div>
+        
+            </div>
+        
+        
+        </div>
+        {% endfor %}
+
+
+    </ul>
+    <i class="bi bi-caret-right-fill"></i>
+</div>
+
+
+    <h3 class="text-md-15 mt-4" style="font-weight: 700;">Recommended based on your department</h3>
+    <div class="wrapper">
+    <i class="bi bi-caret-left-fill"></i>
+    <ul class="carousela">
+        <!-- <li class="card">
+            <div class="img"><img src="https://media.geeksforgeeks.org/wp-content/uploads/20240213150115/ppp.png" alt=""
+                    draggable="false"> </div>
+            <h2 style="color: green; font-weight:bold;">
+                GeeksforGeeks
+            </h2>
+            <span>Coding Platform</span>
+        </li>
+        <li class="card">
+            <div class="img"><img src="https://media.geeksforgeeks.org/wp-content/uploads/20240213150115/ppp.png" alt=""
+                    draggable="false"> </div>
+            <h2 style="color: green; font-weight:bold;">GeeksforGeeks</h2>
+            <span>Coding Platform</span>
+        </li>
+        <li class="card">
+            <div class="img"><img src="https://media.geeksforgeeks.org/wp-content/uploads/20240213150115/ppp.png" alt=""
+                    draggable="false"> </div>
+            <h2 style="color: green; font-weight:bold;">GeeksforGeeks</h2>
+            <span>Coding Platform</span>
+        </li>
+        <li class="card">
+            <div class="img"><img src="https://media.geeksforgeeks.org/wp-content/uploads/20240213150115/ppp.png" alt=""
+                    draggable="false"> </div>
+            <h2 style="color: green; font-weight:bold;">GeeksforGeeks</h2>
+            <span>Coding Platform</span>
+        </li>
+        <li class="card">
+            <div class="img"><img src="https://media.geeksforgeeks.org/wp-content/uploads/20240213150115/ppp.png" alt=""
+                    draggable="false"> </div>
+            <h2 style="color: green; font-weight:bold;">GeeksforGeeks</h2>
+            <span>Coding Platform</span>
+        </li>
+        <li class="card">
+            <div class="img"><img src="https://media.geeksforgeeks.org/wp-content/uploads/20240213150115/ppp.png" alt=""
+                    draggable="false"> </div>
+            <h2 style="color: green; font-weight:bold;">GeeksforGeeks</h2>
+            <span>Coding Platform</span>
+        </li> -->
+
+
+        {% for event in department_events %}
+        <div class="col-md-auto col-sm-auto my-auto mt-4">
+        
+            <div class="card align-items-stretch shadow" style="width: 18rem; border-radius: 3%;">
+                <img src="{{ event.event_image }}" class="card-img-top card-img-sm" alt="">
+                <div class="card-body">
+                    <h6 class="card-title"><a href="{% url 'club' cid=event.organization_id %}"
+                            style="text-decoration: none;">{{event.club_name}}</a></h6>
+                    <a href="{% url 'event' event_id=event.event_id %}" style="text-decoration: none;">
+                        <h4 class="card-subtitle mb-2 text-muted" style="font-size: large;">{{event.event_name}}</h4>
+                    </a>
+                    <!-- <div class="col d-flex">
+                        <i class="bi bi-person mx-2"></i>
+                        <p class="">{{event.mode_of_operation}}</p>
+                    </div>
+                    <div class="col d-flex">
+                        <i class="bi bi-clock mx-1"></i>
+                        <p class="" style="font-size: small;">{{event.time}}</p>
+                    </div> -->
+                    <!-- <div class="row gap-2">
+                        {% for tag2 in event.tag_list %}
+                        <div class="col-md-3">
+                            <h5><span class="badge rounded-pill bg-success shadow">{{tag2.tag_id}}</span></h5>
+                        </div>
+                        {% endfor %}
+                    </div> -->
+                    <!-- <hr>
+                    {% if event.attendees == 1 %}
+                    <p style="margin-bottom: -1%;"> {{event.attendees}} person registered</p>
+                    {% else %}
+                    <p style="margin-bottom: -1%;"> {{event.attendees}} people registered</p>
+                    {% endif %}
+                    <a href="{% url 'event' event_id=event.event_id %}" class="stretched-link"
+                                    style="text-decoration: none;">{{event.attendees}} people registered</a> --> 
+                </div>
+        
+            </div>
+        
+        
+        </div>
+        {% endfor %}
+
+
+    </ul>
+    <i class="bi bi-caret-right-fill"></i>
+</div>
+
+
+<!-- </div> -->
+
 </div>
 
 
