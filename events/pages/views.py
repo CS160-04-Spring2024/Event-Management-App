@@ -52,6 +52,31 @@ def datetime_to_string(start_date, end_date):
     return dotw + " " + totw + " - " + totw_end
 
 
+def get_similar_events(past_events):
+
+    similar_values = []
+    event_tags = set()
+    event_ids = []
+    for eve in past_events:
+        current_tags = eve.tags.all().values_list(flat=True)
+        event_ids.append(eve.event_id)
+        event_tags.update(current_tags)
+
+    all_events = Event.objects.filter(end_time__gt=datetime.date.today())
+
+    for eve in all_events:
+        new_event = Event.objects.filter(pk=eve.event_id)
+        eve_tags = eve.tags.all().values_list(flat=True)
+        new_event = new_event.values()[0]
+
+        if len(eve_tags) > 0:
+            if len(set(list(current_tags) + (list(eve_tags)))) < len(eve_tags) + len(current_tags) and eve.event_id not in event_ids:
+                similar_values.append(new_event)
+
+    print(similar_values)
+    similar_values = extra_event_params(similar_values)
+
+
 def test(request):
     # person = User.objects.filter(pk=request.user.email).values()
     return render(request, 'home.html', {'is_admin': User.objects.filter(pk=request.user.email).values()[0]['is_admin'], 'funds': User.objects.filter(pk=request.user.email).values()[0]['funds']})
@@ -69,29 +94,36 @@ def main_page(request):
             club_of_week = clubs[0]
 
             user_tags = User.objects.get(pk=user_email).tags.all()
-            all_events = Event.objects.all().values()
+            all_events = Event.objects.filter(
+                end_time__gt=datetime.date.today()).values()
 
             # events by user tag
-            personalized_tag_events = Event.objects.filter(
-                tags__in=user_tags).values()
-            # tags_dict = {}
-            # for event in all_events:
-            #     event_tags = list(Event.objects.get(pk=event.event_id).tags.all())
+            # personalized_tag_events = Event.objects.filter(
+            #     tags__in=user_tags).values()
 
-            #     intersect_size = len(set(event_tags) & set(user_tags))
+            # attempting to compare all tag events and sort them by
+            # order of decreasing similarity to user tags
+            personalized_tag_events = []
+            tags_dict = {}
+            for event in all_events:
+                event_tags = list(Event.objects.get(
+                    pk=event['event_id']).tags.all())
 
-            #     if intersect_size not in tags_dict:
-            #         tags_dict[intersect_size] = [event]
+                intersect_size = len(set(event_tags) & set(user_tags))
 
-            #     else:
-            #         tags_dict[intersect_size].append(event)
+                if intersect_size not in tags_dict:
+                    tags_dict[intersect_size] = [event]
 
-            # dict_keys = list(tags_dict.keys()).sort()
+                else:
+                    tags_dict[intersect_size].append(event)
 
-            # for k in dict_keys:
-            #     personalized_tag_events.extend(tags_dict[k])
+            dict_keys = sorted(list(tags_dict.keys()), reverse=True)
+            # print(dict_keys)
 
-            # personalized_tag_events = personalized_tag_events[:10]
+            for k in dict_keys:
+                personalized_tag_events.extend(tags_dict[k])
+
+            personalized_tag_events = personalized_tag_events[:10]
 
             # filtering by department
             if user_info['department_id']:
@@ -110,12 +142,23 @@ def main_page(request):
                 user_email=user_email).values()
 
             all_registered_events = [Event.objects.filter(
-                pk=reg['event_id']).values()[0] for reg in all_registered]
+                pk=reg['event_id'], end_time__gt=datetime.date.today()).values()[0] for reg in all_registered]
+
+            # recommended based on past events
+            past_events = Event.objects.filter(
+                end_time__lt=datetime.date.today())
+            # print(past_events)
+            if len(past_events) > 0:
+                similar_current_events = get_similar_events(
+                    past_events=past_events)
+                if similar_current_events is not None:
+                    similar_current_events = similar_current_events[:10]
 
             # upcoming events
             upcoming_events = all_events.order_by('-start_time').values()[:10]
 
-        return render(request, 'home.html', {'tag_events': personalized_tag_events, 'department_events': personalized_departments, 'registered_events': all_registered_events, 'is_admin': User.objects.filter(pk=request.user.email).values()[0]['is_admin'],  'funds': User.objects.filter(pk=request.user.email).values()[0]['funds']})
+        return render(request, 'home.html', {'tag_events': personalized_tag_events, 'department_events': personalized_departments, 'registered_events': all_registered_events, 'upcoming_events': upcoming_events,
+                                             'similar_current': similar_current_events, 'club_week': club_of_week, 'is_admin': User.objects.filter(pk=request.user.email).values()[0]['is_admin'],  'funds': User.objects.filter(pk=request.user.email).values()[0]['funds']})
 
     return HttpResponseRedirect(reverse('homepage'))
 
@@ -142,9 +185,7 @@ def profile(request):
             person = User.objects.get(pk=request.user.email)
             profile_form = ProfileForm(request.POST, instance=person)
             admin_form = AdminForm(request.POST)
-            # print(request.POST)
             if profile_form.is_valid():
-                # profile = profile_form.save(commit=False)
                 if admin_form.is_valid() and profile_form.cleaned_data['is_admin'] == True:
                     admin = admin_form.save(commit=False)
                     admin.user = User.objects.get(pk=request.user.email)
@@ -153,9 +194,7 @@ def profile(request):
                 profile_form.save()
 
                 return HttpResponseRedirect(reverse('real_homepage'))
-            # else:
-            #     profile_form = ProfileForm(instance=person, initial={
-            #         'tags': person.tags.all(), 'user_email': email, 'first_name': request.user.first_name, 'last_name': request.user.last_name})
+
         return render(request, 'profile.html', {'form': profile_form, 'is_admin': User.objects.filter(pk=request.user.email).values()[0]['is_admin'], 'admin_form': admin_form,  'funds': User.objects.filter(pk=request.user.email).values()[0]['funds']})
 
     return HttpResponseRedirect(reverse('homepage'))
@@ -214,7 +253,8 @@ def event(request, event_id):
 
         event['slots'] = -1 if event['attendance_limit'] is None else event['attendance_limit'] - event['attendees']
 
-        all_events = Event.objects.all().values()
+        all_events = Event.objects.filter(
+            end_time__gt=datetime.date.today()).values()
         # print(event)
 
         similar_values = []
@@ -236,9 +276,8 @@ def event(request, event_id):
             user_email=request.user.email, event=event_id).exists()
         # print(registered)
         person = User.objects.filter(pk=request.user.email).values()[0]
-        '''
-        , 'club': club[0], 'location': location, 'similar_events': similar_events, 'registered': registered, 'event_tags': tags, 'time': event_time
-        '''
+        ended = Event.objects.filter(
+            pk=event_id, end_time__gt=datetime.date.today())
 
         if request.method == 'POST':
             if request.POST.get('register'):
@@ -258,7 +297,7 @@ def event(request, event_id):
 
             return HttpResponseRedirect(reverse('event', args=[event_id]))
 
-        return render(request, 'event.html', {'event': event, 'event_tags': current_tags, 'similar_events': similar_values[:3], 'club': club[0], 'location': location[0], 'registered': registered, 'is_admin': person['is_admin'], 'user_funds': person['funds'], 'funds': User.objects.filter(pk=request.user.email).values()[0]['funds']})
+        return render(request, 'event.html', {'event': event, 'ended': bool(len(ended) == 0), 'event_tags': current_tags, 'similar_events': similar_values[:3], 'club': club[0], 'location': location[0], 'registered': registered, 'is_admin': person['is_admin'], 'user_funds': person['funds'], 'funds': User.objects.filter(pk=request.user.email).values()[0]['funds']})
 
     return HttpResponseRedirect(reverse('homepage'))
 
@@ -275,7 +314,7 @@ def club(request, cid):
                 return HttpResponse('Some Error has occured')
 
             all_club_events = Event.objects.filter(
-                organization=cid).order_by('-start_time').values()
+                organization=cid, end_time__gt=datetime.date.today()).order_by('-start_time').values()
 
             for event in all_club_events:
                 event['club_name'] = Organization.objects.values(
@@ -307,7 +346,13 @@ def user_events(request):
             user_tag = request.GET.get('tag')
 
             all_events = [Event.objects.filter(
-                pk=reg['event_id']).values()[0] for reg in all_registered]
+                pk=reg['event_id'], end_time__gt=datetime.date.today()).values()[0] for reg in all_registered]
+
+            try:
+                past_events = [Event.objects.filter(
+                    pk=reg['event_id'], end_time__lte=datetime.date.today()).values()[0] for reg in all_registered]
+            except:
+                past_events = None
 
             if user_tag:
                 new_events = []
@@ -320,7 +365,7 @@ def user_events(request):
 
             all_events = extra_event_params(all_events)
 
-        return render(request, 'registered.html', {'events': all_events, 'departments': departments, 'tags': tags, 'is_admin': User.objects.filter(pk=request.user.email).values()[0]['is_admin'],  'funds': User.objects.filter(pk=request.user.email).values()[0]['funds']})
+        return render(request, 'registered.html', {'events': all_events, 'past_events': past_events, 'departments': departments, 'tags': tags, 'is_admin': User.objects.filter(pk=request.user.email).values()[0]['is_admin'],  'funds': User.objects.filter(pk=request.user.email).values()[0]['funds']})
 
     return HttpResponseRedirect(reverse('homepage'))
 
@@ -367,9 +412,10 @@ def all_events(request):
         search_word = request.GET.get('search')
         if search_word:
             results = Event.objects.filter(Q(event_name__contains=search_word) | Q(
-                description__contains=search_word)).values()
+                description__contains=search_word), end_time__gt=datetime.date.today()).values()
         user_tag = request.GET.get('tag')
-        all_events = Event.objects.all().order_by('-start_time').values()
+        all_events = Event.objects.filter(
+            end_time__gt=datetime.date.today()).order_by('-start_time').values()
 
         if user_tag:
             new_events = []
@@ -392,7 +438,8 @@ def all_events(request):
 
             sorter = '-start_time' if sort == 1 else 'start_time'
             # print('selected: ', selected_tags)
-            all_events = Event.objects.all().order_by(sorter).values()
+            all_events = Event.objects.filter(
+                end_time__gt=datetime.date.today()).order_by(sorter).values()
 
             if minPrice:
                 all_events = all_events.filter(fees__gte=minPrice)
@@ -417,7 +464,7 @@ def all_events(request):
                 # print(tags)
 
                 all_events = Event.objects.filter(
-                    tags__in=selected_tags).distinct().values()
+                    tags__in=selected_tags, end_time__gt=datetime.date.today()).distinct().values()
 
         if search_word:
             results = extra_event_params(results)
