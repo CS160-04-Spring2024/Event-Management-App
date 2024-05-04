@@ -6,9 +6,15 @@
             font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
         }
 
-        body {
+        html, body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-            overflow-x: hidden;
+            overflow-x:hidden !important;
+            min-width: 100vw;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+
         }
 
         .nav-link {
@@ -180,7 +186,7 @@
     /* V's Css */
 
 
-    .carousel-inner {
+    /* .carousel-inner {
         padding: 1em;
     }
 
@@ -210,7 +216,7 @@
         .carousel-inner {
             display: flex;
         }
-    }
+    } */
 
     .card .img-wrapper {
         max-width: 100%;
@@ -229,3 +235,53 @@
             height: 17em;
         }
     }
+
+
+.bg-img {
+    background-image: url('https://bpb-us-w2.wpmucdn.com/blogs.sjsu.edu/dist/f/94/files/2022/08/strategic-plan-jduarte-031319-21_IMG_WEB.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 550px;
+    width: 100%;
+    opacity: 0.7;
+    border-radius: 2%;
+}
+
+
+
+.slide-right {
+    width: 100%;
+    overflow: hidden;
+    margin-left: 50px;
+    padding-top: 15%;
+    max-width: 900px
+}
+
+.slide-right h1 {
+    animation: 2s slide-right 2s forwards;
+    transform: translateX(-100%);
+}
+
+@keyframes slide-right {
+    to {
+        transform: translateX(0);
+    }
+}
+
+
+.carousel-item img {
+    width: 33.33%;
+    /* Set each image to occupy one-third of the carousel width */
+    /* float: left; Float the images to make them appear in a row */
+}
+
+.carousel-inner {
+    width: 300%;
+    /* Set the width of the carousel container to accommodate three images */
+}
+
+.carousel-item {
+    display: flex;
+    /* Use flexbox to align the images */
+}
