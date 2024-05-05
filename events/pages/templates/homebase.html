@@ -73,14 +73,7 @@
                     <!-- <a class="nav-link" href="#" tabindex="-1" >Registered</a> -->
                     {% if is_admin == True %}
                         <div class="subnav">
-                            <a class="nav-link subnavbtn text-dark" href="#" tabindex="-1">ADMIN <i class="bi bi-arrow-down-short"></i> </a>
-  
-                            <div class="subnav-content">
-                                <a href="#link1">Club Details</a>
-                                <a href="#link2">Edit Club Events</a>
-                                <a href="{% url 'createEvent' %}">Create Event</a>
-
-                            </div>
+                            <a class="nav-link subnavbtn text-dark" href="{% url 'adminDash' %}" tabindex="-1">ADMIN </a>
                         </div>
                         {% endif %}
 

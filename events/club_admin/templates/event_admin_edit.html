@@ -1,0 +1,184 @@
+{% extends 'homebase.html' %}
+{% block content %}
+
+<style>
+    .label-for-check {
+        color: black;
+        cursor: pointer;
+        /* Add pointer cursor for better UX */
+    }
+
+    /* Checked label color */
+    .label-for-check.checked {
+        color: rgb(60, 102, 217);
+        text-decoration: line-through;
+        font-weight: bold;
+    }
+</style>
+
+
+<script>
+    $(document).ready(function () {
+        // Add click event listener to checkboxes
+        $('.form-check-input').change(function () {
+            var checkboxId = $(this).attr('id');
+            var labelForCheckbox = $('label[for="' + checkboxId + '"]');
+
+            if ($(this).is(':checked')) {
+                labelForCheckbox.addClass('checked');
+            } else {
+                labelForCheckbox.removeClass('checked');
+            }
+
+            $('input[name="selected_tags"]').change(function () {
+                var selectedTags = $('input[name="selected_tags"]:checked').map(function () {
+                    return this.value;
+                }).get();
+                $('#selectedTagsInput').val(selectedTags.join(','));
+            });
+        });
+    })
+</script>
+
+<div class="purple-bg">
+    <!-- white overlay for content -->
+
+
+<div class="row justify-content-center" style="padding-top: 1rem">
+    <div class="col-md-7">
+        <div class="card " style="border-radius: 37px;">
+            <div class="card-header text-center">Edit Event Details</div>
+            <div class="card-body">
+                <form method="POST" action="{% url 'editEvent' club=club event_id=event.event_id %}" class="">
+                    <div class="row justify-content-center">
+
+                    {% csrf_token %}
+                    <!--     {% if form.errors %}
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                <p> {{ error }} </p>
+                                {% endfor %}
+                            {% endfor %}
+                        {% endif %} -->
+
+                    {% if form.errors %}
+                    <div class="w-75 border border-dark" id="errorModal">
+                        <h6 style="text-decoration: underline;">Errors</h6>
+                        {% for field, errors in form.errors.items %}
+                        <div class="row text-danger" style="margin-top: -2; border: 2px;">
+                            {% for error in errors %}
+                            {% if field == '__all__' %}
+                            <p>{{ error }}</p>
+                            {% else %}
+                            <p>{{ field }}: {{ error }}</p>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                        
+                        <div class="col-md-5 my-2">
+                            <label>{{ form.event_name.label }}</label>
+                            {{ form.event_name }}
+                            {% for error in form.event_name.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-md-5 my-2">
+                            <label>{{ form.mode_of_operation.label }}</label>
+                            {{ form.mode_of_operation }}
+                            {% for error in form.mode_of_operation.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+
+                        <div class="form-group col-md-8 my-2">
+                            <label>{{ form.location.label }}</label>
+                            {{ form.location}}
+                            {% for error in form.location.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+
+                        </div>
+
+                        <div class="col-md-5 my-3">
+                            <label>{{ form.start_time.label }}</label>
+                            {{ form.start_time }}
+                            {% for error in form.start_time.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-md-5 my-3">
+                            <label>{{ form.end_time.label }}</label>
+                            {{ form.end_time }}
+                            {% for error in form.end_time.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="form-group col-md-4 my-2">
+                            <label>{{ form.fees.label }}</label>
+                            {{ form.fees }}
+                            {% for error in form.fees.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                    <div class="form-group col-md-4 my-2">
+                        <label>{{ form.event_image.label }}</label>
+                        {{ form.event_image }}
+                        {% for error in form.event_image.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+
+                        <div class="col-md-10">
+                            <label>{{ form.description.label }}</label>
+                            {{ form.description }}
+                            {% for error in form.description.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+
+                        <div class="col-md-8">
+                            <label class="mt-2">{{ form.tags.label }}</label>
+                        </div>
+
+                        <div class="col-md-8">
+                            <hr class="my-3">
+                                <h4>Select Tags (at least 2)</h4>
+                            {% for tag in form.tags %}
+                            <div class="mx-2 d-inline">
+                                {{ tag }}
+                            </div>
+                            {% endfor %}
+                            {% for error in form.tags.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        <!-- Tags -->
+                                
+
+                    </div>
+                    <button type="submit" class="my-3 btn btn-outline-primary rounded-pill float-end px-4 mx-4">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</div>
+
+</div>
+
+
+
+
+{% endblock %}
