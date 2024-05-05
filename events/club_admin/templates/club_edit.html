@@ -1,0 +1,121 @@
+{% extends 'homebase.html' %}
+{% block content %}
+
+<div class="purple-bg">
+<div class="row justify-content-center" style="padding-top: 1rem">
+    <div class="col-md-8 py-4" style="background-color: aliceblue;">
+
+            <div class="card-header text-center text-4"> Edit Club </div>
+            <div class="card-body">
+
+                <form method="POST" action="{% url 'editClub' club_id=organization.id %}" class="">
+                    <div class="row justify-content-center">
+                        {% csrf_token %}
+
+
+                        {% if form.errors %}
+                        <div class="w-75 border border-dark" id="errorModal">
+                            <h6 style="text-decoration: underline;">Errors</h6>
+                            {% for field, errors in form.errors.items %}
+                            <div class="row text-danger" style="margin-top: -2; border: 2px;">
+                                {% for error in errors %}
+                                {% if field == '__all__' %}
+                                <p>{{ error }}</p>
+                                {% else %}
+                                <p>{{ field }}: {{ error }}</p>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+
+                        <div class="col-md-5 my-2">
+                            <label>{{ form.name.label }}</label>
+                            {{ form.name }}
+                            {% for error in form.name.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+
+                        <div class="col-md-5 my-2">
+                            <label>{{ form.location.label }}</label>
+                            {{ form.location }}
+                            {% for error in form.location.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+
+                        <div class="col-md-10 my-2">
+                            <label>{{ form.description.label }}</label>
+                            {{ form.description }}
+                            {% for error in form.description.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-md-5 my-2">
+                            <label>{{ form.banner.label }}</label>
+                            {{ form.banner }}
+                            {% for error in form.banner.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-md-5 my-2">
+                            <label>{{ form.club_logo.label }}</label>
+                            {{ form.club_logo }}
+                            {% for error in form.club_logo.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-md-8 my-2 mx-3">
+                            <label>{{ form.department.label }}</label>
+                            {{ form.department }}
+                            {% for error in form.department.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-md-5 my-2">
+                            <label>{{ form.website_link.label }}</label>
+                            {{ form.website_link }}
+                            {% for error in form.website_link.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-md-5 my-2">
+                            <label>{{ form.email.label }}</label>
+                            {{ form.email }}
+                            {% for error in form.email.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+
+                    <!-- row justify-content-center -->
+                    </div>
+
+                    <button type="submit" class="my-3 btn btn-outline-primary rounded-pill float-end px-4 mx-4">Save Changes</button>
+
+                    </form>
+
+
+            <!-- card-body -->
+            </div>
+            <!-- card-header text-center -->
+            </div>
+
+    <!-- col-md-8 -->
+    </div>
+
+<!-- row justify-content-center -->
+</div>
+</div>
+
+
+{% endblock %}

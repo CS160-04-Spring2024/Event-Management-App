@@ -279,6 +279,25 @@ def event(request, event_id):
         ended = Event.objects.filter(
             pk=event_id, end_time__gt=datetime.date.today())
 
+        try:
+            person_admin = Admin.objects.filter(user=User.objects.get(
+                pk=person['user_email']), organization=Organization.objects.get(pk=event['organization_id']))
+
+            if person_admin.exists() == False:
+                person_admin = None
+        except:
+            person_admin = None
+
+        registered_users = Registration.objects.filter(
+            event=Event.objects.get(pk=event_id)).values()
+
+        registered_persons = []
+        for peeps in registered_users:
+            registered_persons.append(User.objects.filter(
+                pk=peeps['user_email_id']).values()[0])
+
+        # print(registered_persons)
+
         if request.method == 'POST':
             if request.POST.get('register'):
                 if Registration.objects.filter(
@@ -297,7 +316,7 @@ def event(request, event_id):
 
             return HttpResponseRedirect(reverse('event', args=[event_id]))
 
-        return render(request, 'event.html', {'event': event, 'ended': bool(len(ended) == 0), 'event_tags': current_tags, 'similar_events': similar_values[:3], 'club': club[0], 'location': location[0], 'registered': registered, 'is_admin': person['is_admin'], 'user_funds': person['funds'], 'funds': User.objects.filter(pk=request.user.email).values()[0]['funds']})
+        return render(request, 'event.html', {'event': event, 'ended': bool(len(ended) == 0), 'event_tags': current_tags, 'similar_events': similar_values[:3], 'club': club[0], 'location': location[0], 'person_admin': person_admin, 'registered_users': registered_persons, 'registered': registered, 'is_admin': person['is_admin'], 'user_funds': person['funds'], 'funds': User.objects.filter(pk=request.user.email).values()[0]['funds']})
 
     return HttpResponseRedirect(reverse('homepage'))
 
@@ -313,6 +332,15 @@ def club(request, cid):
             if club.exists() == False:
                 return HttpResponse('Some Error has occured')
 
+            try:
+                person_admin = Admin.objects.filter(user=User.objects.get(
+                    pk=request.user.email), organization=Organization.objects.get(pk=cid))
+
+                if person_admin.exists() == False:
+                    person_admin = None
+            except:
+                person_admin = None
+
             all_club_events = Event.objects.filter(
                 organization=cid, end_time__gt=datetime.date.today()).order_by('-start_time').values()
 
@@ -327,7 +355,7 @@ def club(request, cid):
             location = Location.objects.filter(
                 location_id=club[0]['location_id']).values()
 
-            return render(request, 'club.html', {'club': club[0], 'events': all_club_events[:3], 'location': location[0], 'is_admin': User.objects.filter(pk=request.user.email).values()[0]['is_admin'],  'funds': User.objects.filter(pk=request.user.email).values()[0]['funds']})
+            return render(request, 'club.html', {'club': club[0], 'events': all_club_events[:3], 'location': location[0], 'person_admin': person_admin, 'is_admin': User.objects.filter(pk=request.user.email).values()[0]['is_admin'],  'funds': User.objects.filter(pk=request.user.email).values()[0]['funds']})
 
     return HttpResponseRedirect(reverse('clubs'))
 
