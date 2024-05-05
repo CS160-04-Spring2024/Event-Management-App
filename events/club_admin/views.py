@@ -10,69 +10,43 @@ from django.urls import reverse
 
 
 def admin_dash(request):
-    club1 = dummyClub()
-    club1.name = 'SJSU Gaming'
-
-    club2 = dummyClub()
-    club2.name = 'Innovators Club'
-
-    clubs = [club1, club2]
+    # Fetch organization IDs where the current user is an admin
+    admin_orgs_ids = Admin.objects.filter(user_id=request.user.email).values_list('organization_id', flat=True)
+    print(request.user.id)
+    # Use the fetched IDs to filter organizations
+    user_clubs = Organization.objects.filter(id__in=admin_orgs_ids)
+    clubs = list(user_clubs)
+    print(user_clubs)
 
     return render(request, 'admin_dash.html', {'clubs': clubs})
 
-
 def admin_dash_club(request, club):
-    gamingEvent1 = dummyEvent()
-    gamingEvent1.name = 'Val Tournament'
 
-    gamingEvent2 = dummyEvent()
-    gamingEvent2.name = 'LoL Tournament'
-
-    gamingEvent3 = dummyEvent()
-    gamingEvent3.name = 'Movie Night'
-
-    innovatorsEvent1 = dummyEvent()
-    innovatorsEvent1.name = 'AI Meeting'
-
-    innovatorsEvent2 = dummyEvent()
-    innovatorsEvent2.name = 'Fullstack Meeting'
-    events = []
-
-    if club == 'SJSU Gaming':
-        events = [gamingEvent1, gamingEvent2, gamingEvent3]
-        print("gaming club active")
-    elif club == 'Innovators Club':
-        events = [innovatorsEvent1, innovatorsEvent2]
-        print("inno club active")
+    # Assuming 'club' parameter is the name of the club. Adjust the filter accordingly if it's an ID or another field.
+    organization = Organization.objects.get(name=club)
+    # Fetch events for the organization
+    events = Event.objects.filter(organization=organization)
 
     return render(request, 'admin_dash_club.html', {'club': club, 'events': events})
 
 
-def edit_event(request, event_id):
-    if request.method == 'GET':
-        event = Event.objects.get(pk=event_id)
-
-        return render(request, 'editEvent.html', {'event': event})
+def edit_event(request, club, event_id):
+    event = Event.objects.get(pk=event_id)
 
     if request.method == 'POST':
-        name = request.POST.get('name')
-        description = request.POST.get('description')
-        location = request.POST.get('location')
-        start = request.POST.get('start_time')
-        end = request.POST.get('end_time')
-        fees = request.POST.get('fees')
-        club = request.POST.get('club')
-
-        Event.objects.filter(pk=event_id).update(event_name=name, description=description,
-                                                 location=location, start_time=start, end_time=end, fees=fees, organization=club)
-
-    return HttpResponse('Some Error has occured')
+        form = EventEditForm(request.POST, instance=event)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('adminDashClub', args=[club]))  # Pass club as argument
+    else:
+        form = EventEditForm(instance=event)
+        
+    return render(request, 'event_admin_edit.html', {'form': form, 'event': event, 'club': club})
 
 
 @api_view(['GET', 'POST'])
 def create_event(request):
     if request.method == 'GET':
-
         return render(request, 'createEvent.html', {'form': EventForm()})
    # form = EventForm(request.POST or None)
     if request.method == 'POST':
@@ -96,6 +70,19 @@ def create_event(request):
             return render(request, 'createEvent.html', {'form': form})
     return render(request, 'createEvent.html', {'form': EventForm()})
 
+@api_view([ 'POST'])
+def delete_event(request, club, event_id):
+    # Retrieve the event object to be deleted
+        if request.method == 'POST':
+
+            event = Event.objects.get(pk=event_id)
+
+            # Perform the deletion operation
+            event.delete()
+
+            # Redirect to a success URL or render a template
+            return HttpResponseRedirect(reverse('adminDashClub', args=[club]))  # Redirect to admin dashboard or wherever you want
+# Pass club as argument
 
 def create_org(request):
     if request.method == 'GET':
@@ -122,3 +109,5 @@ def edit_org(request, id):
 
         Organization.objects.filter(pk=id).update(name=club_name, description=description, location=location_id,
                                                   banner=banner, club_logo=club_logo, club_email=club_email, website=website)
+        
+
