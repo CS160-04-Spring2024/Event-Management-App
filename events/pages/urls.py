@@ -6,7 +6,7 @@ from django.views.generic.base import TemplateView
 
 urlpatterns = [
     path('sjevents/signup', views.signup, name='signup'),
-    path('sjevents/', views.test, name='real_homepage'),
+    path('sjevents/', views.main_page, name='real_homepage'),
     path('sjevents/profile/', views.profile, name='profile'),
     path('sjevents/clubs/', views.all_clubs, name='all_clubs'),
     path('sjevents/events/', views.all_events, name='all_events'),
