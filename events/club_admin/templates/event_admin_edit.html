@@ -1,44 +1,6 @@
 {% extends 'homebase.html' %}
 {% block content %}
 
-<style>
-    .label-for-check {
-        color: black;
-        cursor: pointer;
-        /* Add pointer cursor for better UX */
-    }
-
-    /* Checked label color */
-    .label-for-check.checked {
-        color: rgb(60, 102, 217);
-        text-decoration: line-through;
-        font-weight: bold;
-    }
-</style>
-
-
-<script>
-    $(document).ready(function () {
-        // Add click event listener to checkboxes
-        $('.form-check-input').change(function () {
-            var checkboxId = $(this).attr('id');
-            var labelForCheckbox = $('label[for="' + checkboxId + '"]');
-
-            if ($(this).is(':checked')) {
-                labelForCheckbox.addClass('checked');
-            } else {
-                labelForCheckbox.removeClass('checked');
-            }
-
-            $('input[name="selected_tags"]').change(function () {
-                var selectedTags = $('input[name="selected_tags"]:checked').map(function () {
-                    return this.value;
-                }).get();
-                $('#selectedTagsInput').val(selectedTags.join(','));
-            });
-        });
-    })
-</script>
 
 <div class="purple-bg">
     <!-- white overlay for content -->

@@ -10,20 +10,34 @@
                 <hr>
                 <!-- col/card begins -->
                     <div class="container">
-                        <div class="row">
-                            {% for club in clubs %} <!--display clubs user is admin of-->
-                            <div class="col">
-                                <div class="card position-relative shadow" style="width: 18rem; height: fit-content; border-radius: 10%; color: yellow; margin: auto;">
-                                    <div class="card-body">
-                                        <h4 class="card-subtitle mb-2 text-muted" style="text-align: center;">{{club.name}}</h4>
-                                        <hr>
-                                        <a href="{% url 'adminDashClub' club.name %}" class="stretched-link" style="text-decoration: none;"></a>
-                                        <button type="submit" class="btn btn-outline-warning rounded-pill" style="width: 25vh; margin: auto;">Edit Club</button>
-                                        <!--select club, render page with the events of that club-->
+                        <div class="row justify-content-center">
+                            
+                            <div class="col-md-5">
+                                <a href="{% url 'editClub' club_id=admin_id %}" style="text-decoration: none;">
+                                    <div class="pill-bubble shadow" style="border-radius: 25px;">
+                                        <h5 class="text-center my-3">Edit Club</h5>
+                                    <div>
+                                        <img src="https://media.istockphoto.com/id/1260329688/vector/tiny-characters-with-magnifying-glass-and-red-pencil-editing-mistakes-in-paper-test-teacher.jpg?s=612x612&w=0&k=20&c=hD627fBQS69q7boTDDA7mivHitizPUZhhZFxUUuJhiA=" alt="" style="max-width: 80%; height: 20rem;">
                                     </div>
+                                    
                                 </div>
+                                </a>
                             </div>
-                            {% endfor %}
+<!-- https://img.freepik.com/free-vector/colleagues-preparing-corporate-party-time-management-deadline-brand-event_335657-3083.jpg?t=st=1714946011~exp=1714946611~hmac=b4b7acb21c146039a8381cc9ac5e2f6dc61254dd84c3225538a8d0b1abf5eb63 -->
+                            <div class="col-md-5">
+                                <div class="pill-bubble shadow" style="border-radius: 25px;">
+                                    {% for club in clubs %}
+                                    <a href="{% url 'adminDashClub' club.name %}" style="text-decoration: none;">
+                                        <h5 class="text-center my-3">Edit {{club.name}} Events</h5>
+                                        <div class="text-center">
+                                            <img src="https://img.freepik.com/free-vector/colleagues-preparing-corporate-party-time-management-deadline-brand-event_335657-3083.jpg?t=st=1714946011~exp=1714946611~hmac=b4b7acb21c146039a8381cc9ac5e2f6dc61254dd84c3225538a8d0b1abf5eb63"
+                                                alt="" style="max-width: 80%; height: 20rem;">
+                                        </div>
+                                    </a>
+                                        {% endfor %}
+                                    </div>
+
+                            </div>
                         </div>
                     </div>
                 <div class="card-body"></div>

@@ -27,6 +27,26 @@ for maj in major_object:
     major += (Major(major), maj['major_name']),
 
 
+class ClubForm(forms.ModelForm):
+    location = forms.ModelChoiceField(queryset=Location.objects.all(), widget=forms.Select(
+        attrs={'class': 'form-control shadow-sm '}))
+
+    class Meta:
+        model = Organization
+        fields = ['name', 'description', 'location', 'banner',
+                  'club_logo', 'department', 'email', 'website_link']
+
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control shadow-sm rounded-pill', 'required': True}),
+            'description': forms.Textarea(attrs={'rows': 10, 'class': 'form-control shadow-sm', 'required': True, 'minlength': 3}),
+            'banner': forms.URLInput(attrs={'class': 'form-control shadow-sm'}),
+            'club_logo': forms.URLInput(attrs={'class': 'form-control shadow-sm'}),
+            'department': forms.Select(choices=department, attrs={'class': 'form-control shadow-sm rounded-pill'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control shadow-sm rounded-pill', 'required': False}),
+            'website_link': forms.URLInput(attrs={'class': 'form-control shadow-sm'}),
+        }
+
+
 class EventForm(forms.ModelForm):
 
     location = forms.ModelChoiceField(queryset=Location.objects.all(), widget=forms.Select(

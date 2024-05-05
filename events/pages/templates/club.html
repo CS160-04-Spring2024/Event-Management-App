@@ -20,6 +20,10 @@
             </div>
         </div>
     </div>
+        {% if person_admin %}
+        <h4 class="" style="font-weight: 700;"><a href="{% url 'editClub' club_id=club.id %}"
+                style="text-decoration: none;">Edit Club Details</a></h4>
+        {% endif %}
 
     <!-- divider -->
 
