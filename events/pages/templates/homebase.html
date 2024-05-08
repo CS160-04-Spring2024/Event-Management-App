@@ -157,7 +157,6 @@
                 <li class="nav-item">
                     <a class="nav-link text-light" href="{% url 'all_events'%}" tabindex="-1" >EVENTS</a>
                 </li>
-<<<<<<< HEAD
                 {% if is_admin == True %}
                 <li class="nav-item">
                     <!-- Adding subnav for admin roles -->
@@ -168,25 +167,6 @@
                 <li class="nav-item">
                     <a class="nav-link text-light" href="{% url 'user_events' %}" tabindex="-1" >REGISTERED</a>
                 </li>
-=======
-
-                <li class="nav-item">
-                    <a class="nav-link text-light" href="{% url 'user_events' %}" tabindex="-1" >REGISTERED</a>
-                </li>
-                
-                {% if is_admin == True %}
-
-                    <li class="nav-item">
-                        <!-- Adding subnav for admin roles -->
-                        <!-- <a class="nav-link" href="#" tabindex="-1" >Registered</a> -->
-                            <div class="subnav">
-                                <a class="nav-link subnavbtn text-light" href="{% url 'adminDash' %}" tabindex="-1">ADMIN </a>
-                            </div>
-
-                    </li>
-                {% endif %}
-
->>>>>>> d3222872137dfb1209a29a89434a9c5b25e3f6b3
             </ul>
 
 
