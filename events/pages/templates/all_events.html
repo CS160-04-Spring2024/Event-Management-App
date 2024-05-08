@@ -1,23 +1,44 @@
 {% extends 'homebase.html' %}
-{%block content%}
+{% block content %}
 
 <style>
-
     .pill-bubbler {
-      background-color: white; /* Blue color */
-      color: black; /* White text color */
-      padding: 20px 30px; /* Padding inside the bubble */
-      border-radius: 30px; /* Border radius to make it pill-shaped */
-      /* display: inline-block; Display as inline block */
+        background-color: white;
+        color: black;
+        padding: 20px 30px;
+        border-radius: 30px;
+    }
+
+    .event-card {
+        width: 200px; /* Adjust as needed */
+        height: auto; /* Auto height */
+    }
+
+    .event-card .card-img-top {
+        object-fit: cover;
+        height: 100px; /* Adjust as needed */
+    }
+
+    .event-card .card-body {
+        padding: 10px;
+    }
+
+    .event-card .card-title,
+    .event-card .card-subtitle,
+    .event-card .card-text {
+        font-size: 12px; /* Adjust as needed */
+    }
+
+    .event-card .card-link {
+        font-size: 10px; /* Adjust as needed */
     }
 </style>
 
 <script>
     $(document).ready(function () {
-             $('#sidebarCollapse').on('click', function () {
-                $('#sidebar').toggleClass('active');
-            });
-        
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active');
+        });
     });
 </script>
 
@@ -48,174 +69,106 @@
                 <datalist id="dept_list">
                             {% for dept in departments %}
                             <option value="{{ dept.name }}">
-                                {% endfor %}
-                </datalist>
-            </div>
-        </div>
-
-        <hr>
-        <div class="my-3">
-            <div class="d-flex mb-2">
-                <label for="minPrice" class="pe-2">Min Price:</label>
-                <input class="form-control-sm" type="number" min="0" max="100" step="any" name="min_price" id="minPrice" value="{{minPrice}}">
-            </div>
-            <div class="d-flex">
-                <label for="maxPrice" class="pe-2">Max Price:</label>
-                <input class="form-control-sm" min="0" max="200" step="any"  type="number" name="max_price" id="maxPrice" value="{{maxPrice}}">
-            </div>
-        </div>
-
-        <hr>
-        <div class="my-3 mx-4">
-            <label for="earliest">Start Date:</label>
-            <input class="d-md-inline form-control-sm" type="datetime-local" name="start_date" id="earliest" value="{{start_date}}">
-        </div>
-        <div class="my-3 mx-4">
-            <label for="latest">End Date:</label>
-            <input class="d-md-inline form-control-sm" type="datetime-local" name="end_date" id="latest" value="{{end_date}}">
-        </div>
-
-        <!-- Adding tags to filter -->
-
-        <hr>
-        <!-- <div class="row justify-content-center">
-            <select style="height: 150px; width: 70%;" name="selectedTags" id="" multiple>
-                {% for tag in tags %}
-                <option value="{{tag.name}}"> {{ tag.name }} </option>
-                {% endfor %}
-            </select>
-        </div> -->
-
-        <h6>Tags</h6>
-        <div class="row gap-3">
-        {% for tag in tags %}
-            <div class="col-md-4">
-                <div class="d-flex gap-2">
-                    <input type="checkbox" name="tagList" id="{{ tag.name }}" value="{{ tag.name }}"  {% if tag.name in selected_tags %} checked {% endif %}>
-                    <label for="{{ tag.name }}">{{ tag.name }}</label>
+                            {% endfor %}
+                        </datalist>
+                    </div>
                 </div>
-            </div>
-            {% endfor %}
+                <hr>
+                <div class="my-3">
+                    <div class="d-flex mb-2">
+                        <label for="minPrice" class="pe-2">Min Price:</label>
+                        <input class="form-control-sm" type="number" min="0" max="100" step="any" name="min_price" id="minPrice" value="{{minPrice}}">
+                    </div>
+                    <div class="d-flex">
+                        <label for="maxPrice" class="pe-2">Max Price:</label>
+                        <input class="form-control-sm" min="0" max="200" step="any" type="number" name="max_price" id="maxPrice" value="{{maxPrice}}">
+                    </div>
+                </div>
+                <hr>
+                <div class="my-3 mx-4">
+                    <label for="earliest">Start Date:</label>
+                    <input class="d-md-inline form-control-sm" type="datetime-local" name="start_date" id="earliest" value="{{start_date}}">
+                </div>
+                <div class="my-3 mx-4">
+                    <label for="latest">End Date:</label>
+                    <input class="d-md-inline form-control-sm" type="datetime-local" name="end_date" id="latest" value="{{end_date}}">
+                </div>
+                <hr>
+                <h6>Tags</h6>
+                <div class="row gap-3">
+                    {% for tag in tags %}
+                    <div class="col-md-4">
+                        <div class="d-flex gap-2">
+                            <input type="checkbox" name="tagList" id="{{ tag.name }}" value="{{ tag.name }}" {% if tag.name in selected_tags %} checked {% endif %}>
+                            <label for="{{ tag.name }}">{{ tag.name }}</label>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="d-flex">
+                    <button type="submit" class="btn btn-outline-warning rounded-pill my-3">Apply</button>
+                    <a href="{% url 'all_events' %}?reset=True" class="btn btn-outline-primary rounded-pill h-50 mx-3 mt-3"> Reset </a>
+                </div>
+            </form>
         </div>
-
-
-            <!-- <input type="hidden" id="selectedTagsInput" name="selectedTags" value=""> -->
-
-        <div class="d-flex">
-            <button type="submit" class="btn btn-outline-warning rounded-pill my-3">Apply</button>
-            <a href="{% url 'all_events' %}?reset=True" class="btn btn-outline-primary rounded-pill h-50 mx-3 mt-3"> Reset </a>
-
-        </div>
-
-    </form>
-</div>
-
-
-
-<div  class="col-md-7" id="content">
-        <div class="container-fluid">
-
-            <!-- <div class="row gap-2 my-3">
-                <a href="{% url 'all_events' %}" class="col-auto btn btn-outline-primary">All</a>
-                {% for tag in tags %}
-                <a href="{% url 'all_events' %}?tag={{tag.name}}" class="col-auto btn btn-outline-primary">{{tag.name}}</a>
-                {% endfor %}
-            </div> -->
-
-
+        <div class="col-md-7" id="content">
+            <div class="container-fluid">
                 {% if search|length > 0 %}
                 <div class="row mx-auto">
                     <h4 class="text-center" style="text-decoration: underline;">Search Results</h4>
-
-                {% for event in search %}
-                
-                <div class="col-md-auto col-sm-auto my-auto mt-4">
-                
-                    <div class="card position-relative align-items-stretch shadow" style="width: 15rem; border-radius: 10%;">
-                        <div class="card-body">
-                            <h6 class="card-title"><a href="{% url 'club' cid=event.organization_id %}"
-                                    style="text-decoration: none;">{{event.club_name}}</a></h6>
-                            <h4 class="card-subtitle mb-2 text-muted" style="font-size: large;">{{event.event_name}}</h4>
-                            <div class="col d-flex">
-                                <i class="bi bi-person mx-2"></i>
-                                <p class="">{{event.mode_of_operation}}</p>
-                            </div>
-                            <div class="col d-flex">
-                                <i class="bi bi-clock mx-1"></i>
-                                <p class="" style="font-size: small;">{{event.start_time}} - {{ event.end_time }}</p>
-                            </div>
-                            <div class="row gap-2">
-                                {% for tag2 in event.tag_list %}
-                                <div class="col-md-3">
-                                    <h5><span class="badge rounded-pill bg-success shadow">{{tag2.tag_id}}</span></h5>
+                    {% for event in search %}
+                    <div class="col-md-auto col-sm-auto my-auto mt-4">
+                        <div class="card position-relative align-items-stretch shadow event-card" style="border-radius: 10%;">
+                            <img src="{{ event.event_image }}" class="card-img-top" alt="{{ event.event_name }}">
+                            <div class="card-body">
+                                <h6 class="card-title"><a href="{% url 'club' cid=event.organization_id %}" style="text-decoration: none;">{{ event.club_name }}</a></h6>
+                                <h4 class="card-subtitle mb-2 text-muted" style="font-size: large;">{{ event.event_name }}</h4>
+                                <div class="col d-flex">
+                                    <i class="bi bi-person mx-2"></i>
+                                    <p class="">{{ event.mode_of_operation }}</p>
                                 </div>
-                                {% endfor %}
+                                <div class="col d-flex">
+                                    <i class="bi bi-clock mx-1"></i>
+                                    <p class="" style="font-size: small;">{{ event.start_time }} - {{ event.end_time }}</p>
+                                </div>
+                                <hr>
+                                <a href="{% url 'event' event_id=event.event_id %}" class="stretched-link" style="text-decoration: none;">{{ event.attendees }} people registered</a>
                             </div>
-                            <hr>
-                            <a href="{% url 'event' event_id=event.event_id %}" class="stretched-link"
-                                style="text-decoration: none;">{{event.attendees}} people registered</a>
                         </div>
-                
                     </div>
-                
-                
-                </div>
-                
-                {% endfor %}
-
-
+                    {% endfor %}
                 </div>
                 <hr>
                 {% endif %}
-                
                 <div class="row mx-auto mb-5">
-
-
-                    
-                    <!-- col/card begins -->
-                <div class="row mx-auto my-4">
-                    <h4 class="text-center" style="text-decoration: underline;">All Results</h4>
-                    
-                    {% for event in events %}
-                        <div class="col-md-4 col-sm-auto my-auto mt-4">
-
-                            <div class="card position-relative align-items-stretch shadow" style="width: 15rem; border-radius: 10%;">
+                    <div class="row mx-auto my-4">
+                        <h4 class="text-center" style="text-decoration: underline;">All Results</h4>
+                        {% for event in events %}
+                        <div class="col-md-auto col-sm-auto my-auto mt-4">
+                            <div class="card position-relative align-items-stretch shadow event-card" style="border-radius: 10%;">
+                                <img src="{{ event.event_image }}" class="card-img-top" alt="{{ event.event_name }}">
                                 <div class="card-body">
-                                    <h6 class="card-title"><a href="{% url 'club' cid=event.organization_id %}" style="text-decoration: none;">{{event.club_name}}</a></h6>
-                                    <h4 class="card-subtitle mb-2 text-muted" style="font-size: large;">{{event.event_name}}</h4>
+                                    <h6 class="card-title"><a href="{% url 'club' cid=event.organization_id %}" style="text-decoration: none;">{{ event.club_name }}</a></h6>
+                                    <h4 class="card-subtitle mb-2 text-muted" style="font-size: large;">{{ event.event_name }}</h4>
                                     <div class="col d-flex">
                                         <i class="bi bi-person mx-2"></i>
-                                        <p class="">{{event.mode_of_operation}}</p>
+                                        <p class="">{{ event.mode_of_operation }}</p>
                                     </div>
                                     <div class="col d-flex">
                                         <i class="bi bi-clock mx-1"></i>
-                                        <p class="" style="font-size: small;">{{event.start_time}} - {{event.end_time}}</p>
+                                        <p class="" style="font-size: small;">{{ event.start_time }} - {{ event.end_time }}</p>
                                     </div>
-                                        <!-- <div class="row gap-2">
-                                            {% for tag2 in event.tag_list %}
-                                                <div class="col-md-6 ">
-                                                    <h5><span class="badge rounded-pill bg-success shadow">{{tag2}}</span></h5>
-                                                </div>
-                                            {% endfor %}
-                                        </div> -->
                                     <hr>
-                                    <a href="{% url 'event' event_id=event.event_id %}" class="stretched-link" style="text-decoration: none;">{{event.attendees}} people registered</a>
+                                    <a href="{% url 'event' event_id=event.event_id %}" class="stretched-link" style="text-decoration: none;">{{ event.attendees }} people registered</a>
                                 </div>
-                
                             </div>
-
-
                         </div>
                         {% endfor %}
-
-
+                    </div>
                 </div>
+            </div>
         </div>
-
-
-</div>
-</div>
-</div>
+    </div>
 </div>
 
-{%endblock%}
+{% endblock %}

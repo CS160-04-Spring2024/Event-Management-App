@@ -84,7 +84,7 @@ def create_event(request):
             inst.save()
             form.save_m2m()
 
-            return HttpResponseRedirect(reverse('real_homepage'))
+            return HttpResponseRedirect(reverse('adminDash'))
         else:
             return render(request, 'createEvent.html', {'form': form, 'funds': User.objects.filter(pk=request.user.email).values()[0]['funds']})
     return render(request, 'createEvent.html', {'form': EventForm(),  'funds': User.objects.filter(pk=request.user.email).values()[0]['funds']})
