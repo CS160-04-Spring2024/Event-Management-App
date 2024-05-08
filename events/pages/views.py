@@ -443,14 +443,14 @@ def all_clubs(request):
         if not search_word:
             results = None
 
-        if search_word and len(results) == 0:
-            results = -1
-
         if results is not None:
             results = results.values()
             for club in results:
                 club['description'] = ' '.join(
                     club['description'].split(' ')[:10])
+
+        if search_word and len(results) == 0:
+            results = -1
 
         all_clubs = all_clubs.values()
         for club in all_clubs:
