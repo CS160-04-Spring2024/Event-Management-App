@@ -169,7 +169,7 @@
                                     </div>
                                     <div class="col d-flex">
                                         <i class="bi bi-clock mx-1" style="font-size: small;"></i>
-                                        <p style="font-size: small;">{{ similar_event.start_time }} + {{ similar_event.end_time }}</p>
+                                        <p style="font-size: small;">{{ similar_event.start_time }} - {{ similar_event.end_time }}</p>
                                     </div>
                                     <hr>
                                     <a href="{% url 'event' event_id=similar_event.event_id %}" class="stretched-link" style="text-decoration: none;">{{ similar_event.attendees }} people registered</a>

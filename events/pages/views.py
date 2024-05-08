@@ -486,7 +486,7 @@ def all_events(request):
             all_events = new_events
 
         if request.method == 'POST':
-            sort = request.POST.get('sort', 1)
+            # sort = request.POST.get('sort', 1)
             dept = request.POST.get('dept', None)
             minPrice = request.POST.get('min_price', None)
             maxPrice = request.POST.get('max_price', None)
@@ -496,7 +496,7 @@ def all_events(request):
             selected_tags = request.POST.getlist('tagList', None)
 
             # session attempt
-            request.session['sort'] = sort
+            # request.session['sort'] = sort
             request.session['dept'] = dept
             request.session['minPrice'] = minPrice
             request.session['maxPrice'] = maxPrice
@@ -505,20 +505,22 @@ def all_events(request):
             # selected_tags = request.POST.get('selectedTags', None)
             request.session['selected_tags'] = selected_tags
 
-            sorter = '-start_time' if sort == 1 else 'start_time'
-            # print('selected: ', selected_tags)
+            # sorter = '-start_time' if sort == 1 else 'start_time'
+            # # print('selected: ', selected_tags)
             all_events = Event.objects.filter(
-                end_time__gt=timezone.now()).order_by(sorter).values()
+                end_time__gt=timezone.now()).order_by('-start_time').values()
 
             if minPrice:
                 all_events = all_events.filter(fees__gte=minPrice)
             if maxPrice:
+                # print(maxPrice)
                 all_events = all_events.filter(fees__lte=maxPrice)
+                # print(len(all_events))
 
             if start_date:
                 all_events = all_events.filter(start_time__gte=start_date)
             if end_date:
-                all_events = all_events.filter(end_time__gte=end_date)
+                all_events = all_events.filter(end_time__lte=end_date)
 
             if dept:
                 new_all_events = []
@@ -532,11 +534,13 @@ def all_events(request):
                 # tags = selected_tags.split(',')
                 # print(tags)
 
-                all_events = Event.objects.filter(
+                all_events = all_events.filter(
                     tags__in=selected_tags, end_time__gt=timezone.now()).distinct().values()
 
+            # for event in all_events:
+            #     print(event['event_name'] + " " + str(event['fees']))
         else:
-            sort = request.session.get('sort', '')
+            # sort = request.session.get('sort', '')
             dept = request.session.get('dept', '')
             minPrice = request.session.get('minPrice', '')
             maxPrice = request.session.get('maxPrice', '')
@@ -549,7 +553,7 @@ def all_events(request):
         all_events = extra_event_params(all_events)
 
         if request.GET.get('reset') or request.method == 'GET':
-            sort = ''
+            # sort = ''
             dept = ''
             minPrice = ''
             maxPrice = ''
@@ -564,7 +568,7 @@ def all_events(request):
         # return redirect(reverse('all_events') )
         departments = Department.objects.all()
         all_tags = Tag.objects.all()
-        return render(request, 'all_events.html', {'events': all_events, 'departments': departments, 'tags': all_tags, 'sort': sort, 'dept': dept, 'minPrice': minPrice, 'maxPrice': maxPrice, 'start_date': start_date, 'end_date': end_date, 'selected_tags': selected_tags, 'is_admin': User.objects.filter(pk=request.user.email).values()[0]['is_admin'], 'search': results,  'funds': User.objects.filter(pk=request.user.email).values()[0]['funds']})
+        return render(request, 'all_events.html', {'events': all_events, 'departments': departments, 'tags': all_tags, 'dept': dept, 'minPrice': minPrice, 'maxPrice': maxPrice, 'start_date': start_date, 'end_date': end_date, 'selected_tags': selected_tags, 'is_admin': User.objects.filter(pk=request.user.email).values()[0]['is_admin'], 'search': results,  'funds': User.objects.filter(pk=request.user.email).values()[0]['funds']})
 
     return HttpResponseRedirect(reverse('homepage'))
 
