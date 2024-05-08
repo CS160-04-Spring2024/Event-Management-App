@@ -45,7 +45,7 @@ def admin_dash_club(request, club):
         event["registered_user"] = Registration.objects.filter(
             event=event["event_id"]).values_list('user_email', flat=True)
 
-    return render(request, 'admin_dash_club.html', {'club': club, 'current_events': current_events, 'past_events': past_events})
+    return render(request, 'admin_dash_club.html', {'club': club, 'current_events': current_events, 'past_events': past_events, 'funds': User.objects.filter(pk=request.user.email).values()[0]['funds']})
 
 
 def edit_event(request, club, event_id):

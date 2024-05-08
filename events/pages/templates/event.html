@@ -169,7 +169,7 @@
                                     </div>
                                     <div class="col d-flex">
                                         <i class="bi bi-clock mx-1" style="font-size: small;"></i>
-                                        <p style="font-size: small;">{{ similar_event.time }}</p>
+                                        <p style="font-size: small;">{{ similar_event.start_time }} + {{ similar_event.end_time }}</p>
                                     </div>
                                     <hr>
                                     <a href="{% url 'event' event_id=similar_event.event_id %}" class="stretched-link" style="text-decoration: none;">{{ similar_event.attendees }} people registered</a>
@@ -237,7 +237,7 @@
                         <p></p>
                         <p> Are you sure you would like to cancel your registration? </p>
                         <p class="text-center"> Your current balance is {{ user_funds }} </p>
-                        <p class="text-center"> {{ event.fees }} will be refunded to your account  </p>
+                        <p class="text-center"> PLEASE NOTE THAT WE DO NOT OFFER REFUNDS!  </p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -318,6 +318,7 @@
                 <!-- </div> -->
             <!-- </div> -->
         </div>
+            </div>
 
     </div>
 

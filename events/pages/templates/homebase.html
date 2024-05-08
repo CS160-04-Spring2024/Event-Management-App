@@ -221,14 +221,7 @@ style="bottom: 0; flex: 0 0 auto;">
             <div class="col-lg-4 col-md-6">
                 <h5 class="text-white mb-3">Join the Team!</h5>
                 <p class="small text-muted">Leave us your email and we'll get in contact with you in the coming days.</p>
-                <form action="#">
-                    <div class="input-group mb-3">
-                        <input class="form-control" type="text" placeholder="email@sjsu.edu"
-                            aria-label="Recipient's username" aria-describedby="button-addon2">
-                        <button class="btn btn-primary" id="button-addon2" type="button"><i
-                                class="bi bi-patch-plus-fill"></i></button>
-                    </div>
-                </form>
+                <p>sjsuevents@sjsu.edu</p>
             </div>
         </div>
     </div>
@@ -246,10 +239,11 @@ style="bottom: 0; flex: 0 0 auto;">
 
     $(document).ready(function () {
         $(".owl-carousel").owlCarousel({
-            // margin: 10,
+            margin: -40,
             items: 4,
             center: true,
-            smartSpeed: 900,
+            loop:true,
+            // smartSpeed: 900,
             nav: true,
             navText: ['<i class="bi bi-caret-left-fill" style="font-size: 2.5rem; color:white;"></i>', '<i class="bi bi-caret-right-fill" style="font-size: 2.5rem; color:white;"></i>'],
             responsive: {

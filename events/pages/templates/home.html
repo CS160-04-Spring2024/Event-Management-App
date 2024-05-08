@@ -286,42 +286,50 @@
     <h3 class=" text-md-15 mt-4" style="font-weight: 700;">Recommended based on your tags</h3>
         <div class="owl-carousel">
         {% for event in tag_events %}
-        <div class="col-md-auto col-sm-auto my-auto mt-4">
-        
-            <div class="card align-items-stretch shadow" style="width: 18rem; border-radius: 5%;">
-                <img src="{{ event.event_image }}" class="card-img-top card-img-sm" alt="">
-                <div class="card-body">
-                    <a href="{% url 'event' event_id=event.event_id %}" style="text-decoration: none;">
-                        <h4 class="card-subtitle mb-2 text-muted" style="font-size: large;">{{event.event_name}}</h4>
-                    </a>
-                    <a href="{% url 'club' cid=event.organization_id %}" style="text-decoration: none;">
-                        <h6 class="card-title">{{event.club_name}}</h6>
-                    </a>
-                </div>
-        
-            </div>
-        
-        
+<div class="col-md-auto col-sm-auto my-auto mt-4">
+    <div class="card align-items-stretch shadow" style="width: 18rem; border-radius: 5%;">
+        <!-- Set fixed height for the card -->
+        <div style="height: 250px;">
+            <!-- Ensure the image fills the entire card -->
+            <img src="{{ event.event_image }}" class="card-img-top" style="object-fit: cover; height: 100%;" alt="">
         </div>
+        <div class="card-body">
+            <a href="{% url 'event' event_id=event.event_id %}" style="text-decoration: none;">
+                <!-- Limit the number of lines for the title to maintain consistent card height -->
+                <h4 class="card-subtitle mb-2 text-muted"
+                    style="font-size: large; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                    {{event.event_name}}</h4>
+            </a>
+            <a href="{% url 'club' cid=event.organization_id %}" style="text-decoration: none;">
+                <!-- Limit the number of lines for the club name to maintain consistent card height -->
+                <h6 class="card-title" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                    {{event.club_name}}</h6>
+            </a>
+        </div>
+    </div>
+</div>
         {% endfor %}
         </div>
 
 
     {% if department_events %}
     <h3 class="text-md-15 my-4" style="font-weight: 700;">Recommended based on your department</h3>
-        <div class="owl-carousel my-4">
+    <br>
+        <div class="owl-carousel ">
         {% for event in department_events %}
         <div class="col-md-auto col-sm-auto my-auto mt-4">
         
             <div class="card align-items-stretch shadow" style="width: 18rem; border-radius: 5%;">
-                <img src="{{ event.event_image }}" class="card-img-top card-img-sm" alt="">
+                        <div style="height: 250px;">
+                <img src="{{ event.event_image }}" class="card-img-top" style="object-fit: cover; height: 100%;" alt="">
+                </div>
                 <div class="card-body">
                     <a href="{% url 'event' event_id=event.event_id %}" style="text-decoration: none;">
-                        <h4 class="card-subtitle mb-2 text-muted" style="font-size: large;">{{event.event_name}}</h4>
+                        <h4 class="card-subtitle mb-2 text-muted" style="font-size: large; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{event.event_name}}</h4>
                     </a>
                     <a href="{% url 'club' cid=event.organization_id %}"
-                            style="text-decoration: none;"><h6 class="card-title">{{event.club_name}}</h6></a>
-                </div>
+                            style="text-decoration: none;"><h6 class="card-title" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{event.club_name}}</h6></a>
+            </div>
             </div>
         </div>
         {% endfor %}
