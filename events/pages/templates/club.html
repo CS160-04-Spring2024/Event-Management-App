@@ -6,7 +6,7 @@
 <!-- https://as2.ftcdn.net/v2/jpg/02/09/19/15/1000_F_209191528_GYzxi0vEm0fV8oyqIWbmkgEM2BH4X47e.jpg -->
 
 <div class="" style="width: 100%; height: fit-content;">
-    {% if club.banner == null %}
+    {% if club.banner != null and club.banner != 'null' %}
 <img src="{{club.banner}}" height="300px" width="100%" alt="" style="background-size:contain;"></div>
     {% else %}
 <img src="https://bpb-us-w2.wpmucdn.com/blogs.sjsu.edu/dist/f/94/files/2022/01/president-banner.jpg" height="300px" width="100%" alt="" style="background-size:contain;"></div>
@@ -14,7 +14,7 @@
 <div class="container-fluid mb-5 mx-5">
     <div class="row mt-2">
         <div class="col-md-2">
-        {% if club.club_logo != "null" %}
+        {% if club.club_logo != "null" and club.club_logo != "None" %}
         <!-- <p>{{card.club_logo}}</p> -->
             <img src="{{club.club_logo}}" alt="" height="150px">
         {% else %}

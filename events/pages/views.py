@@ -147,6 +147,8 @@ def main_page(request):
             personalized_tag_events = extra_event_params(
                 personalized_tag_events)
 
+            personalized_departments = extra_event_params(
+                personalized_departments)
             # registered events
             all_registered = Registration.objects.filter(
                 user_email=user_email).values()
