@@ -16,6 +16,7 @@ import json
 import datetime
 import pytz
 from django.db import connection
+from django.utils import timezone
 
 # Create your views here.
 
@@ -66,7 +67,7 @@ def get_similar_events(past_events):
         event_ids.append(eve.event_id)
         event_tags.update(current_tags)
 
-    all_events = Event.objects.filter(end_time__gt=datetime.datetime.now())
+    all_events = Event.objects.filter(end_time__gt=timezone.now())
 
     for eve in all_events:
         new_event = Event.objects.filter(pk=eve.event_id)
@@ -288,7 +289,7 @@ def event(request, event_id):
         # print(registered)
         person = User.objects.filter(pk=request.user.email).values()[0]
         ended = Event.objects.filter(
-            pk=event_id, end_time__gt=datetime.datetime.now())
+            pk=event_id, end_time__gt=timezone.now())
 
         try:
             person_admin = Admin.objects.filter(user=User.objects.get(
@@ -321,9 +322,9 @@ def event(request, event_id):
                 else:
                     Registration.objects.filter(
                         user_email=request.user.email, event=event_id).delete()
-                    person = User.objects.get(pk=request.user.email)
-                    person.funds = person.funds + event['fees']
-                    person.save()
+                    # person = User.objects.get(pk=request.user.email)
+                    # person.funds = person.funds + event['fees']
+                    # person.save()
 
             return HttpResponseRedirect(reverse('event', args=[event_id]))
 
@@ -386,17 +387,22 @@ def user_events(request):
             tags = Tag.objects.all()
             user_tag = request.GET.get('tag')
 
-            try:
-                all_events = [Event.objects.filter(
-                    pk=reg['event_id'], end_time__gt=datetime.datetime.now()).values()[0] for reg in all_registered]
-            except:
-                all_events = None
+            all_events = []
+            past_events = []
+            # try:
+            for reg in all_registered:
+                tmp = Event.objects.filter(
+                    pk=reg['event_id'], end_time__gt=timezone.now()).values()
 
-            try:
-                past_events = [Event.objects.filter(
-                    pk=reg['event_id'], end_time__lte=datetime.datetime.now()).values()[0] for reg in all_registered]
-            except:
-                past_events = None
+                if len(tmp) > 0:
+                    all_events.append(tmp[0])
+
+            for reg in all_registered:
+                tmp = Event.objects.filter(
+                    pk=reg['event_id'], end_time__lte=timezone.now()).values()
+
+                if len(tmp) > 0:
+                    past_events.append(tmp[0])
 
             if user_tag and all_events is not None:
                 new_events = []
@@ -410,6 +416,7 @@ def user_events(request):
             if all_events is not None:
                 all_events = extra_event_params(all_events)
 
+        # print(all_registered)
         return render(request, 'registered.html', {'events': all_events, 'past_events': past_events, 'departments': departments, 'tags': tags, 'is_admin': User.objects.filter(pk=request.user.email).values()[0]['is_admin'],  'funds': User.objects.filter(pk=request.user.email).values()[0]['funds']})
 
     return HttpResponseRedirect(reverse('homepage'))
@@ -464,10 +471,10 @@ def all_events(request):
         search_word = request.GET.get('search')
         if search_word:
             results = Event.objects.filter(Q(event_name__contains=search_word) | Q(
-                description__contains=search_word), end_time__gt=datetime.datetime.now()).values()
+                description__contains=search_word), end_time__gt=timezone.now()).values()
         user_tag = request.GET.get('tag')
         all_events = Event.objects.filter(
-            end_time__gt=datetime.datetime.now()).order_by('-start_time').values()
+            end_time__gt=timezone.now()).order_by('-start_time').values()
 
         if user_tag:
             new_events = []
@@ -479,7 +486,7 @@ def all_events(request):
             all_events = new_events
 
         if request.method == 'POST':
-            sort = request.POST.get('sort', 1)
+            # sort = request.POST.get('sort', 1)
             dept = request.POST.get('dept', None)
             minPrice = request.POST.get('min_price', None)
             maxPrice = request.POST.get('max_price', None)
@@ -489,7 +496,7 @@ def all_events(request):
             selected_tags = request.POST.getlist('tagList', None)
 
             # session attempt
-            request.session['sort'] = sort
+            # request.session['sort'] = sort
             request.session['dept'] = dept
             request.session['minPrice'] = minPrice
             request.session['maxPrice'] = maxPrice
@@ -498,20 +505,22 @@ def all_events(request):
             # selected_tags = request.POST.get('selectedTags', None)
             request.session['selected_tags'] = selected_tags
 
-            sorter = '-start_time' if sort == 1 else 'start_time'
-            # print('selected: ', selected_tags)
+            # sorter = '-start_time' if sort == 1 else 'start_time'
+            # # print('selected: ', selected_tags)
             all_events = Event.objects.filter(
-                end_time__gt=datetime.datetime.now()).order_by(sorter).values()
+                end_time__gt=timezone.now()).order_by('-start_time').values()
 
             if minPrice:
                 all_events = all_events.filter(fees__gte=minPrice)
             if maxPrice:
+                # print(maxPrice)
                 all_events = all_events.filter(fees__lte=maxPrice)
+                # print(len(all_events))
 
             if start_date:
                 all_events = all_events.filter(start_time__gte=start_date)
             if end_date:
-                all_events = all_events.filter(end_time__gte=end_date)
+                all_events = all_events.filter(end_time__lte=end_date)
 
             if dept:
                 new_all_events = []
@@ -525,11 +534,13 @@ def all_events(request):
                 # tags = selected_tags.split(',')
                 # print(tags)
 
-                all_events = Event.objects.filter(
-                    tags__in=selected_tags, end_time__gt=datetime.datetime.now()).distinct().values()
+                all_events = all_events.filter(
+                    tags__in=selected_tags, end_time__gt=timezone.now()).distinct().values()
 
+            # for event in all_events:
+            #     print(event['event_name'] + " " + str(event['fees']))
         else:
-            sort = request.session.get('sort', '')
+            # sort = request.session.get('sort', '')
             dept = request.session.get('dept', '')
             minPrice = request.session.get('minPrice', '')
             maxPrice = request.session.get('maxPrice', '')
@@ -542,7 +553,7 @@ def all_events(request):
         all_events = extra_event_params(all_events)
 
         if request.GET.get('reset') or request.method == 'GET':
-            sort = ''
+            # sort = ''
             dept = ''
             minPrice = ''
             maxPrice = ''
@@ -557,7 +568,7 @@ def all_events(request):
         # return redirect(reverse('all_events') )
         departments = Department.objects.all()
         all_tags = Tag.objects.all()
-        return render(request, 'all_events.html', {'events': all_events, 'departments': departments, 'tags': all_tags, 'sort': sort, 'dept': dept, 'minPrice': minPrice, 'maxPrice': maxPrice, 'start_date': start_date, 'end_date': end_date, 'selected_tags': selected_tags, 'is_admin': User.objects.filter(pk=request.user.email).values()[0]['is_admin'], 'search': results,  'funds': User.objects.filter(pk=request.user.email).values()[0]['funds']})
+        return render(request, 'all_events.html', {'events': all_events, 'departments': departments, 'tags': all_tags, 'dept': dept, 'minPrice': minPrice, 'maxPrice': maxPrice, 'start_date': start_date, 'end_date': end_date, 'selected_tags': selected_tags, 'is_admin': User.objects.filter(pk=request.user.email).values()[0]['is_admin'], 'search': results,  'funds': User.objects.filter(pk=request.user.email).values()[0]['funds']})
 
     return HttpResponseRedirect(reverse('homepage'))
 
