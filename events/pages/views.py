@@ -1,3 +1,5 @@
+from django.utils import timezone
+from django.conf import settings
 from urllib.parse import urlencode
 from django.shortcuts import render, redirect
 from django.template import RequestContext, loader
@@ -14,7 +16,7 @@ import json
 import datetime
 import pytz
 from django.db import connection
-from django.conf import settings
+
 # Create your views here.
 
 
