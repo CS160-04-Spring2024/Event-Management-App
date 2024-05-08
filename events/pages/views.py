@@ -1,3 +1,5 @@
+from django.utils import timezone
+from django.conf import settings
 from urllib.parse import urlencode
 from django.shortcuts import render, redirect
 from django.template import RequestContext, loader
@@ -5,6 +7,7 @@ from rest_framework.decorators import api_view
 from .forms import *
 from .models import *
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
+from django.utils.timezone import make_aware
 from django.db.models.functions import Random
 from django.urls import reverse
 from django.db.models import Q
@@ -13,7 +16,6 @@ import json
 import datetime
 import pytz
 from django.db import connection
-from django.utils import timezone
 
 # Create your views here.
 
@@ -64,7 +66,7 @@ def get_similar_events(past_events):
         event_ids.append(eve.event_id)
         event_tags.update(current_tags)
 
-    all_events = Event.objects.filter(end_time__gt=datetime.date.today())
+    all_events = Event.objects.filter(end_time__gt=datetime.datetime.now())
 
     for eve in all_events:
         new_event = Event.objects.filter(pk=eve.event_id)
@@ -75,7 +77,7 @@ def get_similar_events(past_events):
             if len(set(list(current_tags) + (list(eve_tags)))) < len(eve_tags) + len(current_tags) and eve.event_id not in event_ids:
                 similar_values.append(new_event)
 
-    print(similar_values)
+    # print(similar_values)
     similar_values = extra_event_params(similar_values)
 
 
@@ -93,11 +95,16 @@ def main_page(request):
             clubs = Organization.objects.all().order_by(Random()).values()
             user_info = User.objects.filter(pk=user_email).values()[0]
 
-            club_of_week = clubs[0]
-
             user_tags = User.objects.get(pk=user_email).tags.all()
+            recommended_orgs = []
+            for club in clubs:
+                if club['department_id'] == user_info['department_id']:
+                    recommended_orgs.append(club)
+
+            recommended_orgs = recommended_orgs[:4]
+
             all_events = Event.objects.filter(
-                end_time__gt=datetime.date.today()).values()
+                end_time__gt=timezone.now()).values()
 
             # events by user tag
             # personalized_tag_events = Event.objects.filter(
@@ -143,12 +150,15 @@ def main_page(request):
             all_registered = Registration.objects.filter(
                 user_email=user_email).values()
 
-            all_registered_events = [Event.objects.filter(
-                pk=reg['event_id'], end_time__gt=datetime.date.today()).values()[0] for reg in all_registered]
+            try:
+                all_registered_events = [Event.objects.filter(
+                    pk=reg['event_id'], end_time__gt=timezone.now()).values()[0] for reg in all_registered]
+            except:
+                all_registered_events = None
 
             # recommended based on past events
             past_events = Event.objects.filter(
-                end_time__lt=datetime.date.today())
+                end_time__lt=timezone.now())
             # print(past_events)
             if len(past_events) > 0:
                 similar_current_events = get_similar_events(
@@ -160,7 +170,7 @@ def main_page(request):
             upcoming_events = all_events.order_by('-start_time').values()[:10]
 
         return render(request, 'home.html', {'tag_events': personalized_tag_events, 'department_events': personalized_departments, 'registered_events': all_registered_events, 'upcoming_events': upcoming_events,
-                                             'similar_current': similar_current_events, 'club_week': club_of_week, 'is_admin': User.objects.filter(pk=request.user.email).values()[0]['is_admin'],  'funds': User.objects.filter(pk=request.user.email).values()[0]['funds']})
+                                             'similar_current': similar_current_events, 'recommended_orgs': recommended_orgs, 'is_admin': User.objects.filter(pk=request.user.email).values()[0]['is_admin'],  'funds': User.objects.filter(pk=request.user.email).values()[0]['funds']})
 
     return HttpResponseRedirect(reverse('homepage'))
 
@@ -186,6 +196,7 @@ def profile(request):
         if request.method == 'POST':
             person = User.objects.get(pk=request.user.email)
             profile_form = ProfileForm(request.POST, instance=person)
+            # admin_form = AdminForm(request.POST)
             if profile_form.is_valid():
 
                 pf = profile_form.save(commit=False)
@@ -239,12 +250,10 @@ def event(request, event_id):
             event = Event.objects.filter(pk=event_id).values()[0]
         except:
             return HttpResponseRedirect(reverse('all_events'))
-        # departments = Department.objects.all()
-        # tags = Tag.objects.all()
+
         event['club_name'] = Organization.objects.filter(
             pk=event['organization_id']).values_list('name', flat=True)
-        event['time'] = datetime_to_string(
-            event['start_time'], event['end_time'])
+
         event['attendees'] = Registration.objects.filter(
             event=event['event_id']).count()
 
@@ -279,7 +288,7 @@ def event(request, event_id):
         # print(registered)
         person = User.objects.filter(pk=request.user.email).values()[0]
         ended = Event.objects.filter(
-            pk=event_id, end_time__gt=datetime.date.today())
+            pk=event_id, end_time__gt=datetime.datetime.now())
 
         try:
             person_admin = Admin.objects.filter(user=User.objects.get(
@@ -349,8 +358,10 @@ def club(request, cid):
             for event in all_club_events:
                 event['club_name'] = Organization.objects.values(
                     'name').filter(id=event['organization_id'])[0]['name']
-                event['time'] = datetime_to_string(
-                    event['start_time'], event['end_time'])
+                # event['time'] = datetime_to_string(
+                #     event['start_time'], event['end_time'])
+                # event['time'] = event['start_time'] + \
+                #     "  - " + event['end_time']
                 event['attendance'] = Registration.objects.filter(
                     event=event['event_id']).count()
 
@@ -375,16 +386,19 @@ def user_events(request):
             tags = Tag.objects.all()
             user_tag = request.GET.get('tag')
 
-            all_events = [Event.objects.filter(
-                pk=reg['event_id'], end_time__gt=datetime.date.today()).values()[0] for reg in all_registered]
+            try:
+                all_events = [Event.objects.filter(
+                    pk=reg['event_id'], end_time__gt=datetime.datetime.now()).values()[0] for reg in all_registered]
+            except:
+                all_events = None
 
             try:
                 past_events = [Event.objects.filter(
-                    pk=reg['event_id'], end_time__lte=datetime.date.today()).values()[0] for reg in all_registered]
+                    pk=reg['event_id'], end_time__lte=datetime.datetime.now()).values()[0] for reg in all_registered]
             except:
                 past_events = None
 
-            if user_tag:
+            if user_tag and all_events is not None:
                 new_events = []
 
                 for event in all_events:
@@ -393,7 +407,8 @@ def user_events(request):
                         new_events.append(event)
                 all_events = new_events
 
-            all_events = extra_event_params(all_events)
+            if all_events is not None:
+                all_events = extra_event_params(all_events)
 
         return render(request, 'registered.html', {'events': all_events, 'past_events': past_events, 'departments': departments, 'tags': tags, 'is_admin': User.objects.filter(pk=request.user.email).values()[0]['is_admin'],  'funds': User.objects.filter(pk=request.user.email).values()[0]['funds']})
 
@@ -411,10 +426,6 @@ def all_clubs(request):
                 results = Organization.objects.filter(Q(name__contains=search_word) | Q(
                     description__contains=search_word)).values()
 
-            for club in all_clubs.values():
-                club['description'] = ' '.join(
-                    club['description'].split(' ')[:10])
-
         if request.method == 'POST':
             dept = request.POST.get('dept')
 
@@ -427,6 +438,17 @@ def all_clubs(request):
 
         if search_word and len(results) == 0:
             results = -1
+
+        if results is not None:
+            results = results.values()
+            for club in results:
+                club['description'] = ' '.join(
+                    club['description'].split(' ')[:10])
+
+        all_clubs = all_clubs.values()
+        for club in all_clubs:
+            club['description'] = ' '.join(
+                club['description'].split(' ')[:10])
 
         departments = Department.objects.all().values()
         return render(request, 'all_clubs.html', {'search': results, 'clubs': all_clubs, 'departments': departments, 'is_admin': User.objects.filter(pk=request.user.email).values()[0]['is_admin'],  'funds': User.objects.filter(pk=request.user.email).values()[0]['funds']})
@@ -442,10 +464,10 @@ def all_events(request):
         search_word = request.GET.get('search')
         if search_word:
             results = Event.objects.filter(Q(event_name__contains=search_word) | Q(
-                description__contains=search_word), end_time__gt=datetime.date.today()).values()
+                description__contains=search_word), end_time__gt=datetime.datetime.now()).values()
         user_tag = request.GET.get('tag')
         all_events = Event.objects.filter(
-            end_time__gt=datetime.date.today()).order_by('-start_time').values()
+            end_time__gt=datetime.datetime.now()).order_by('-start_time').values()
 
         if user_tag:
             new_events = []
@@ -466,10 +488,20 @@ def all_events(request):
             # selected_tags = request.POST.get('selectedTags', None)
             selected_tags = request.POST.getlist('tagList', None)
 
+            # session attempt
+            request.session['sort'] = sort
+            request.session['dept'] = dept
+            request.session['minPrice'] = minPrice
+            request.session['maxPrice'] = maxPrice
+            request.session['start_date'] = start_date
+            request.session['end_date'] = end_date
+            # selected_tags = request.POST.get('selectedTags', None)
+            request.session['selected_tags'] = selected_tags
+
             sorter = '-start_time' if sort == 1 else 'start_time'
             # print('selected: ', selected_tags)
             all_events = Event.objects.filter(
-                end_time__gt=datetime.date.today()).order_by(sorter).values()
+                end_time__gt=datetime.datetime.now()).order_by(sorter).values()
 
             if minPrice:
                 all_events = all_events.filter(fees__gte=minPrice)
@@ -494,11 +526,30 @@ def all_events(request):
                 # print(tags)
 
                 all_events = Event.objects.filter(
-                    tags__in=selected_tags, end_time__gt=datetime.date.today()).distinct().values()
+                    tags__in=selected_tags, end_time__gt=datetime.datetime.now()).distinct().values()
 
+        else:
+            sort = request.session.get('sort', '')
+            dept = request.session.get('dept', '')
+            minPrice = request.session.get('minPrice', '')
+            maxPrice = request.session.get('maxPrice', '')
+            start_date = request.session.get('start_date', '')
+            end_date = request.session.get('end_date', '')
+            # selected_tags = request.POST.get('selectedTags', None)
+            selected_tags = request.session.get('selected_tags', '')
         if search_word:
             results = extra_event_params(results)
         all_events = extra_event_params(all_events)
+
+        if request.GET.get('reset') or request.method == 'GET':
+            sort = ''
+            dept = ''
+            minPrice = ''
+            maxPrice = ''
+            start_date = ''
+            end_date = ''
+            # selected_tags = request.POST.get('selectedTags', None)
+            selected_tags = []
 
         if not search_word:
             results = None
@@ -506,7 +557,7 @@ def all_events(request):
         # return redirect(reverse('all_events') )
         departments = Department.objects.all()
         all_tags = Tag.objects.all()
-        return render(request, 'all_events.html', {'events': all_events, 'departments': departments, 'tags': all_tags, 'is_admin': User.objects.filter(pk=request.user.email).values()[0]['is_admin'], 'search': results,  'funds': User.objects.filter(pk=request.user.email).values()[0]['funds']})
+        return render(request, 'all_events.html', {'events': all_events, 'departments': departments, 'tags': all_tags, 'sort': sort, 'dept': dept, 'minPrice': minPrice, 'maxPrice': maxPrice, 'start_date': start_date, 'end_date': end_date, 'selected_tags': selected_tags, 'is_admin': User.objects.filter(pk=request.user.email).values()[0]['is_admin'], 'search': results,  'funds': User.objects.filter(pk=request.user.email).values()[0]['funds']})
 
     return HttpResponseRedirect(reverse('homepage'))
 
@@ -547,8 +598,10 @@ def extra_event_params(events):
     for event in events:
         event['club_name'] = Organization.objects.filter(
             pk=event['organization_id']).values_list('name', flat=True)[0]
-        event['time'] = datetime_to_string(
-            event['start_time'], event['end_time'])
+        # event['time'] = datetime_to_string(
+        #     event['start_time'], event['end_time'])
+        # event['time'] = event['start_time'] + \
+        #     "  - " + event['end_time']
         event['attendees'] = Registration.objects.filter(
             event=event['event_id']).count()
         new_event = Event.objects.get(pk=event['event_id'])

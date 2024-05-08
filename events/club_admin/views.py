@@ -20,29 +20,33 @@ def admin_dash(request):
     clubs = list(user_clubs)
     # print(user_clubs)
 
-    return render(request, 'admin_dash.html', {'clubs': clubs, 'admin_id': admin_orgs_ids[0]})
+    return render(request, 'admin_dash.html', {'clubs': clubs, 'admin_id': admin_orgs_ids[0], 'funds': User.objects.filter(pk=request.user.email).values()[0]['funds']})
 
 
 def admin_dash_club(request, club):
     organization = Organization.objects.get(name=club)
-    
+
     # Fetch current events (events whose end_time is in the future)
-    current_events = Event.objects.filter(organization=organization, end_time__gte=timezone.now()).values()
+    current_events = Event.objects.filter(
+        organization=organization, end_time__gte=timezone.now()).values()
 
     # Fetch past events (events whose end_time is in the past)
-    past_events = Event.objects.filter(organization=organization, end_time__lt=timezone.now()).values()
+    past_events = Event.objects.filter(
+        organization=organization, end_time__lt=timezone.now()).values()
 
     # Create a dictionary to store registered users for each event
     # Fetch registered users for each current event
     for event in current_events:
-       event["registered_user"] = Registration.objects.filter(event=event["event_id"]).values()
+        event["registered_user"] = Registration.objects.filter(
+            event=event["event_id"]).values()
 
     # Fetch registered users for each past event
     for event in past_events:
-        event["registered_user"]  = Registration.objects.filter(event=event["event_id"]).values_list('user_email', flat=True)
-
+        event["registered_user"] = Registration.objects.filter(
+            event=event["event_id"]).values_list('user_email', flat=True)
 
     return render(request, 'admin_dash_club.html', {'club': club, 'current_events': current_events, 'past_events': past_events})
+
 
 def edit_event(request, club, event_id):
     event = Event.objects.get(pk=event_id)
@@ -56,7 +60,7 @@ def edit_event(request, club, event_id):
     else:
         form = EventEditForm(instance=event)
 
-    return render(request, 'event_admin_edit.html', {'form': form, 'event': event, 'club': club})
+    return render(request, 'event_admin_edit.html', {'form': form, 'event': event, 'club': club, 'funds': User.objects.filter(pk=request.user.email).values()[0]['funds']})
 
 
 @api_view(['GET', 'POST'])
@@ -82,8 +86,8 @@ def create_event(request):
 
             return HttpResponseRedirect(reverse('real_homepage'))
         else:
-            return render(request, 'createEvent.html', {'form': form})
-    return render(request, 'createEvent.html', {'form': EventForm()})
+            return render(request, 'createEvent.html', {'form': form, 'funds': User.objects.filter(pk=request.user.email).values()[0]['funds']})
+    return render(request, 'createEvent.html', {'form': EventForm(),  'funds': User.objects.filter(pk=request.user.email).values()[0]['funds']})
 
 
 @api_view(['POST'])

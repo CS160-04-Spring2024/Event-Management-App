@@ -10,7 +10,13 @@
 <div class="container-fluid mb-5 mx-5">
     <div class="row mt-2">
         <div class="col-md-2">
+        {% if club.club_logo != "null" %}
+        <!-- <p>{{card.club_logo}}</p> -->
             <img src="{{club.club_logo}}" alt="" height="150px">
+        {% else %}
+        <img src="https://www.sjsu.edu/_images/news/news_prez-seal-communications_010621.jpg" alt="" height="150px">
+        {% endif %}
+
         </div>
         <div class="col-md-4 mt-5">
             <h3>{{club.name}}</h3>
@@ -72,7 +78,7 @@
                         </div>
                         <div class="col d-flex">
                             <i class="bi bi-clock mx-1"></i>
-                            <p class="" style="font-size: medium;">{{event.time}}</p>
+                            <p class="" style="font-size: medium;">{{event.start_time}} - {{event.end_time}}</p>
                         </div>
                         <hr>
                         <a href="{% url 'event' event_id=event.event_id %}" class="stretched-link" style="text-decoration: none;">{{event.attendance}} people registered</a>
