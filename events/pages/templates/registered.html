@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="col d-flex">
                                     <i class="bi bi-clock mx-1"></i>
-                                    <p class="" style="font-size: small;">{{event.time}}</p>
+                                    <p class="" style="font-size: small;">{{event.start_time}} - {{event.end_time}}</p>
                                 </div>
                                 <div class="row gap-2">
                                     {% for tag2 in event.tag_list %}
@@ -99,7 +99,7 @@
                                             </div>
                                             <div class="col d-flex">
                                                 <i class="bi bi-clock mx-1"></i>
-                                                <p class="" style="font-size: small;">{{event.time}}</p>
+                                                <p class="" style="font-size: small;">{{event.start_time}} - {{event.end_time}}</p>
                                             </div>
                                             <div class="row gap-2">
                                                 {% for tag2 in event.tag_list %}
