@@ -145,7 +145,6 @@
             </div>
 
 
-
             <ul class="navbar-nav gap-2" style="margin-left: auto;">
                 <li class="nav-item active">
                     <a class="nav-link text-light" href="{% url 'all_clubs'%}">CLUBS</a>
@@ -156,20 +155,23 @@
                 <li class="nav-item">
                     <a class="nav-link text-light" href="{% url 'all_events'%}" tabindex="-1" >EVENTS</a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link text-light" href="{% url 'user_events' %}" tabindex="-1" >REGISTERED</a>
                 </li>
-                <li class="nav-item">
-                    <!-- Adding subnav for admin roles -->
-                    <!-- <a class="nav-link" href="#" tabindex="-1" >Registered</a> -->
-                    {% if is_admin == True %}
-                        <div class="subnav">
-                            <a class="nav-link subnavbtn text-light" href="{% url 'adminDash' %}" tabindex="-1">ADMIN </a>
-                        </div>
-                        {% endif %}
+                
+                {% if is_admin == True %}
 
+                    <li class="nav-item">
+                        <!-- Adding subnav for admin roles -->
+                        <!-- <a class="nav-link" href="#" tabindex="-1" >Registered</a> -->
+                            <div class="subnav">
+                                <a class="nav-link subnavbtn text-light" href="{% url 'adminDash' %}" tabindex="-1">ADMIN </a>
+                            </div>
 
-                </li>
+                    </li>
+                {% endif %}
+
             </ul>
 
 

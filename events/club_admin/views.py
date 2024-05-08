@@ -24,14 +24,25 @@ def admin_dash(request):
 
 
 def admin_dash_club(request, club):
-
-    # Assuming 'club' parameter is the name of the club. Adjust the filter accordingly if it's an ID or another field.
     organization = Organization.objects.get(name=club)
-    # Fetch events for the organization
-    events = Event.objects.filter(organization=organization)
+    
+    # Fetch current events (events whose end_time is in the future)
+    current_events = Event.objects.filter(organization=organization, end_time__gte=timezone.now()).values()
 
-    return render(request, 'admin_dash_club.html', {'club': club, 'events': events})
+    # Fetch past events (events whose end_time is in the past)
+    past_events = Event.objects.filter(organization=organization, end_time__lt=timezone.now()).values()
 
+    # Create a dictionary to store registered users for each event
+    # Fetch registered users for each current event
+    for event in current_events:
+       event["registered_user"] = Registration.objects.filter(event=event["event_id"]).values()
+
+    # Fetch registered users for each past event
+    for event in past_events:
+        event["registered_user"]  = Registration.objects.filter(event=event["event_id"]).values_list('user_email', flat=True)
+
+
+    return render(request, 'admin_dash_club.html', {'club': club, 'current_events': current_events, 'past_events': past_events})
 
 def edit_event(request, club, event_id):
     event = Event.objects.get(pk=event_id)
