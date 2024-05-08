@@ -13,6 +13,8 @@ import json
 import datetime
 import pytz
 from django.db import connection
+from django.utils import timezone
+
 # Create your views here.
 
 
@@ -184,13 +186,13 @@ def profile(request):
         if request.method == 'POST':
             person = User.objects.get(pk=request.user.email)
             profile_form = ProfileForm(request.POST, instance=person)
-            admin_form = AdminForm(request.POST)
             if profile_form.is_valid():
-                if admin_form.is_valid() and profile_form.cleaned_data['is_admin'] == True:
-                    admin = admin_form.save(commit=False)
-                    admin.user = User.objects.get(pk=request.user.email)
-                    admin = admin.save()
-                # profile.user = request.user
+
+                pf = profile_form.save(commit=False)
+                pf.is_admin = User.objects.filter(
+                    pk=request.user.email).values()[0]['is_admin']
+                pf = pf.save()
+
                 profile_form.save()
 
                 return HttpResponseRedirect(reverse('real_homepage'))
