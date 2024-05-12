@@ -5,7 +5,7 @@
 To set up, build, and run the project for the first time:
 
 1. Clone the repository to your local system and open the project in Visual Studio Code or a similar code editor.
-   `git clone https://github.com/CS160-04-Spring2024/Event-Management-App.git`
+   - `git clone https://github.com/CS160-04-Spring2024/Event-Management-App.git`
 
 2. Install Docker Desktop if you don’t have it already:
    [Docker Desktop](https://www.docker.com/products/docker-desktop/)
@@ -19,7 +19,7 @@ To set up, build, and run the project for the first time:
 ### Running The Web App using Docker:
 
 - Navigate over to the project directory and start the docker container with the command:
-  `docker-compose up`
+   * `docker-compose up`
 
 ### Running The Web App locally (requires Python +3.10):
 
@@ -29,8 +29,8 @@ To set up, build, and run the project for the first time:
   - Windows : `py -m venv {env_name}`
 
 - Recommended (contd.): Activate the new Python environment
-  Mac OS - `source {env_name}/bin/activate`
-  Windows - `{env_name}\Scripts\activate`
+  - Mac OS : `source {env_name}/bin/activate`
+  - Windows : `{env_name}\Scripts\activate`
 
 - Recommended (contd.): Potential error on Windows machines:-
 
