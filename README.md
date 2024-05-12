@@ -41,11 +41,11 @@ To set up, build, and run the project for the first time:
   - Attempt to run the script again
 
 - Install the requirements needed for the project by running the following command line:
-  `pip3 install -r  .\requirements.txt`
+  - `pip3 install -r  .\requirements.txt`
 
 - Navigate to the events directory and run the project on your local server by calling manage.py with the following command line:
-  `python manage.py runserver`
+  - `python manage.py runserver`
 
 - Navigate to your localhost at the appropriate port:
   Open the landing page through the link provided, which should look something like:
-  `http://127.0.0.1:8000/`
+  - `http://127.0.0.1:8000/`
